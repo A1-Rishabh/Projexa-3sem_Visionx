@@ -21,7 +21,7 @@ export const PaymentOptions = ({
   selectedDate = '',
   selectedTime = '',
   patient = {},
-  selectedMethod = 'clinic',
+  selectedMethod = 'qr',
   onChangeMethod,
   paymentStatus = 'idle', // 'idle' | 'awaiting' | 'paid' | 'failed'
   onPaymentSuccess,
@@ -232,22 +232,22 @@ export const PaymentOptions = ({
           Payment Incomplete or Cancelled
         </h3>
         <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', margin: '0 0 16px 0' }}>
-          Don't worry — your appointment slot is still safe. You can retry with another payment option or choose "Pay at clinic".
+          Your appointment slot is held for a limited time. Please complete the digital payment via UPI or Cards to confirm your booking.
         </p>
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
           <button
             type="button"
-            onClick={() => onChangeMethod('clinic', 'idle')}
+            onClick={() => onChangeMethod('qr', 'idle')}
             className="btn btn-primary"
           >
-            Switch to Pay at Clinic
+            <RefreshCw size={14} /> Try UPI QR Code
           </button>
           <button
             type="button"
-            onClick={() => onChangeMethod(selectedMethod, 'idle')}
+            onClick={() => onChangeMethod('card', 'idle')}
             className="btn btn-secondary"
           >
-            <RefreshCw size={14} /> Retry Payment
+            <CreditCard size={14} /> Pay via Card / Net Banking
           </button>
         </div>
       </div>
@@ -257,52 +257,19 @@ export const PaymentOptions = ({
   // DEFAULT: RENDER PAYMENT OPTION SELECTOR
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      <label style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--text-main)', display: 'block' }}>
-        Choose How to Pay
-      </label>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <label style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--text-main)', margin: 0 }}>
+          Digital Payment Required for Slot Confirmation
+        </label>
+        <span style={{ fontSize: '0.72rem', color: '#16A34A', fontWeight: '700', backgroundColor: '#DCFCE7', padding: '2px 8px', borderRadius: '4px' }}>
+          100% Refundable up to 2h before
+        </span>
+      </div>
 
-      {/* 4 SELECTABLE OPTION CARDS */}
+      {/* SELECTABLE ONLINE PAYMENT OPTIONS */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
-        {/* OPTION 1: PAY AT CLINIC (DEFAULT) */}
-        <div
-          onClick={() => onChangeMethod('clinic', 'idle')}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '12px 16px',
-            borderRadius: '12px',
-            border: selectedMethod === 'clinic' ? '2px solid var(--primary-teal)' : '1px solid var(--border-color)',
-            backgroundColor: selectedMethod === 'clinic' ? 'var(--mint)' : '#ffffff',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease',
-            minHeight: '48px'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <input
-              type="radio"
-              name="paymentMethod"
-              checked={selectedMethod === 'clinic'}
-              onChange={() => onChangeMethod('clinic', 'idle')}
-              style={{ accentColor: 'var(--primary-teal)', width: '18px', height: '18px', cursor: 'pointer' }}
-            />
-            <div>
-              <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--text-main)' }}>
-                Pay at Clinic (Cash or Card)
-              </div>
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                Pay directly at the consultation reception desk upon check-in.
-              </div>
-            </div>
-          </div>
-          <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--primary-teal)', backgroundColor: '#ffffff', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
-            Default
-          </span>
-        </div>
-
-        {/* OPTION 2: SCAN UPI QR CODE */}
+        {/* OPTION 1: SCAN UPI QR CODE (DEFAULT) */}
         <div
           onClick={() => onChangeMethod('qr', 'idle')}
           style={{
@@ -329,15 +296,15 @@ export const PaymentOptions = ({
             <div>
               <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <QrCode size={16} color="var(--primary-teal)" />
-                <span>Scan UPI QR Code</span>
+                <span>Instant UPI QR Code</span>
               </div>
               <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                Instant instant scan using any UPI App (GPay, PhonePe, Paytm, BHIM)
+                Instant scan using Google Pay, PhonePe, Paytm, or any BHIM UPI app
               </div>
             </div>
           </div>
-          <span style={{ fontSize: '0.74rem', fontWeight: '700', color: 'var(--primary-teal)' }}>
-            {formatINR(amount)}
+          <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--primary-teal)', backgroundColor: '#ffffff', padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border-color)' }}>
+            Recommended
           </span>
         </div>
 

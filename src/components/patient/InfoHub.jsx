@@ -28,6 +28,7 @@ export const InfoHub = ({
   onNavigateToAppointments, 
   onNavigateToRecords, 
   onNavigateToProfile,
+  onStartBooking,
   showToast 
 }) => {
   const [copiedAddress, setCopiedAddress] = useState(false);
@@ -197,7 +198,7 @@ export const InfoHub = ({
         {/* Quick Top CTA */}
         <button
           type="button"
-          onClick={onNavigateToDoctors}
+          onClick={() => onStartBooking ? onStartBooking() : onNavigateToDoctors()}
           className="btn btn-primary btn-sm"
           style={{ minHeight: '40px' }}
         >
@@ -301,7 +302,7 @@ export const InfoHub = ({
             ) : (
               <button
                 type="button"
-                onClick={onNavigateToDoctors}
+                onClick={() => onStartBooking ? onStartBooking() : onNavigateToDoctors()}
                 className="btn btn-primary btn-sm btn-block"
               >
                 Book a Visit

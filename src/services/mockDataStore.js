@@ -265,7 +265,7 @@ const INITIAL_MEDICAL_RECORDS = {
   },
   'P-1002': {
     patientId: 'P-1002',
-    lastViewedBy: 'Dr. Marcus Vance (DOC-102)',
+    lastViewedBy: 'Dr. Rohan Mehta (DOC-102)',
     lastViewedTime: '2026-09-22 04:30 PM',
     notesPublic: 'Routine baseline vitals documented. All systems normal.',
     notesPrivate: 'Patient requested allergen screening for seasonal rhinitis.',
@@ -273,7 +273,7 @@ const INITIAL_MEDICAL_RECORDS = {
       {
         id: 'VT-88',
         date: '2026-04-12',
-        doctorName: 'Dr. Marcus Vance',
+        doctorName: 'Dr. Rohan Mehta',
         diagnosis: 'J30.1 - Allergic Rhinitis due to Pollen',
         summary: 'Mild seasonal nasal congestion.',
         prescription: [
@@ -295,7 +295,7 @@ const INITIAL_MEDICAL_RECORDS = {
   },
   'P-1003': {
     patientId: 'P-1003',
-    lastViewedBy: 'Dr. Elena Rostova (DOC-103)',
+    lastViewedBy: 'Dr. Meera Krishnan (DOC-103)',
     lastViewedTime: '2026-09-20 11:00 AM',
     notesPublic: 'Blood glucose level check recommended before next quarterly review.',
     notesPrivate: 'Patient displays mild lumbar spine stiffness.',
@@ -307,7 +307,7 @@ const INITIAL_MEDICAL_RECORDS = {
 const INITIAL_CLINIC_INFO = {
   name: 'Jivaka Clinic',
   tagline: 'Connected Clinical Excellence, Trusted Specialists, Elevated Care',
-  phone: '+1 (555) 924-4370',
+  phone: '[Phone number]',
   email: 'care@jivakaclinic.org',
   address: '450 Health Sciences Parkway, Suite 200, Metro Health District',
   operatingHours: {
@@ -338,7 +338,7 @@ export const initializeStore = () => {
   }
   if (!localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS)) {
     localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify([
-      { id: 'LOG-1', timestamp: '2026-09-23 09:14 AM', doctorId: 'DOC-101', action: 'Accessed Patient Record P-1001 (John Doe)' }
+      { id: 'LOG-1', timestamp: '2026-09-23 09:14 AM', doctorId: 'DOC-101', action: 'Accessed Patient Record P-1001 (Aarav Sharma)' }
     ]));
   }
 };

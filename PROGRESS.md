@@ -708,6 +708,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 46.88s; tested data persistence in localStorage, doctor vitals/visit modals, and family dependents add/edit/delete flows.
 - Notes: Git commit made for version continuity.
 
+### Task 2.19: Complete end-to-end appointment booking flow with doctor selector, mandatory online payment, and invoice generation
+- Status: DONE
+- Completed: 2026-11-18 02:30 IST
+- Files changed or added: src/components/patient/BookingWizardModal.jsx, src/components/patient/PaymentOptions.jsx, src/components/patient/PatientPortal.jsx, src/components/patient/InfoHub.jsx, src/services/mockDataStore.js
+- Summary: (1) Transformed `BookingWizardModal.jsx` to support dual booking entries: booking from a specific doctor begins directly at Step 1, while booking without a doctor ("Book Appointment" from dashboard or appointments list) launches Step 0 ("Choose a Doctor") with a searchable doctor list, department filters, upcoming availability, and consultation fee in INR (`formatINR`); (2) Added a doctor recap pill with a "Change Doctor" action in subsequent steps that preserves entered visit reason and slot dates; (3) Bound active patient context with a target patient chip showing the booking patient's name, relation (Self or Dependent), and ID; (4) Standardized 30-minute consultation slots with clear 2-hour free cancellation notice; (5) Enforced mandatory online checkout (Instant UPI QR, UPI ID, Net Banking/Cards) via `PaymentOptions.jsx` with "Pay at Clinic" removed; (6) Built an in-modal confirmation screen featuring check-in token (`CHK-...`), TXN ID, and one-click access to view and print the GST-compliant medical invoice via `ReceiptModal.jsx`; (7) Replaced all remaining non-Indian doctor and patient references (`Dr. Marcus Vance`, `Dr. Elena Rostova`, `John Doe`) with verified Indian names (`Dr. Rohan Mehta`, `Dr. Meera Krishnan`, `Aarav Sharma`), and eliminated duplicate syntax from `PaymentOptions.jsx`.
+- Bugs fixed: Fixed Unterminated regular expression / duplicate JSX tags in `PaymentOptions.jsx`; resolved doctorless modal launch blockage where `BookingWizardModal` failed to render without a preselected doctor; resolved non-Indian doctor name audit references in `mockDataStore.js`.
+- Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 5.15s.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

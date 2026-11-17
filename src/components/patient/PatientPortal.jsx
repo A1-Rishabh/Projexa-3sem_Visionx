@@ -117,6 +117,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
 
   // Booking Wizard Modal State
   const [bookingDoctor, setBookingDoctor] = useState(null);
+  const [preselectedDept, setPreselectedDept] = useState('');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   // Theme & Accessibility Mode
@@ -208,10 +209,13 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
       const targetDoc = doctors.find((d) => d.id === initialBookingPref.doctorId);
       if (targetDoc) {
         setBookingDoctor(targetDoc);
+        setPreselectedDept('');
         setIsBookingOpen(true);
       }
     } else if (initialBookingPref?.department) {
-      setActiveTab('doctors');
+      setPreselectedDept(initialBookingPref.department);
+      setBookingDoctor(null);
+      setIsBookingOpen(true);
     }
   }, [initialBookingPref]);
 
@@ -239,8 +243,9 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
     };
   }, []);
 
-  const handleStartBooking = (doctor) => {
+  const handleStartBooking = (doctor = null) => {
     setBookingDoctor(doctor);
+    setPreselectedDept('');
     setIsBookingOpen(true);
   };
 
@@ -690,7 +695,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                         {displayName}
                       </div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                        {currentPatient.email || 'patient.google@example.com'}
+                        {currentPatient.email || 'patient@example.com'}
                       </div>
                     </div>
                   </div>
@@ -1268,6 +1273,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
             onNavigateToAppointments={() => setActiveTab('appointments')}
             onNavigateToRecords={() => setActiveTab('records')}
             onNavigateToProfile={() => setActiveTab('profile')}
+            onStartBooking={() => handleStartBooking(null)}
             showToast={showToast}
           />
         )}
@@ -1280,7 +1286,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           <PatientAppointments 
             patient={{ ...currentPatient, name: displayName }} 
             showToast={showToast} 
-            onBookNew={(doc) => doc ? handleStartBooking(doc) : setActiveTab('doctors')}
+            onBookNew={(doc) => handleStartBooking(doc || null)}
           />
         )}
 
@@ -1325,7 +1331,8 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
         selectedDoctor={bookingDoctor}
-        patient={currentPatient}
+        preselectedDepartment={preselectedDept}
+        patient={{ ...currentPatient, name: displayName }}
         onBookingConfirmed={() => setActiveTab('appointments')}
         showToast={showToast}
       />
