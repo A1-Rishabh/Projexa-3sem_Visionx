@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:44 IST
-Current task: 2.8 Medical Records
+Last updated: 2026-11-17 14:46 IST
+Current task: 2.9 Profile Settings and emergency card
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -56,7 +56,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ DONE
 - 2.6 Receipts and payment history .............................. DONE
 - 2.7 My Appointments: status fix, reschedule, cancel dialog .... DONE
-- 2.8 Medical Records ........................................... TODO
+- 2.8 Medical Records ........................................... DONE
+- 2.9 Profile Settings and emergency card ....................... TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -250,6 +251,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled in 4.96s, 0 errors); tested `.ics` calendar generation, cancel confirmation dialog, and reschedule navigation.
 - Notes: Tight spacing and compact cards maintain clean rhythm without excess whitespace.
 
+### Task 2.8: Medical Records
+- Status: DONE
+- Completed: 2026-11-17 14:46 IST
+- Files changed or added: src/components/patient/PatientMedicalRecords.jsx
+- Summary: Enhanced Medical Records with visible allergies alert chip next to blood group at the top; added measurement dates and stability trend indicators ("Stable →", "Optimal →") across all 4 vitals cards; added filter tabs (All, Clinical Visits, Prescriptions, Diagnostic Labs, Billing & Receipts); grouped visit history by year into collapsible accordions preventing repetitive blocks; added Download action alongside View PDF on pathology reports; replaced copy-pasted doctor notes with real Attending Physician Clinical Guidance (diet, aerobic walking, medication schedule, follow-up timeline); added confidential EHR privacy notice under medical data standards.
+- Bugs fixed: Fixed repeating unorganized visit entries by year grouping and collapsible views; added prominent top-level allergy alert.
+- Verified by: Built production bundle with `npm run build` (compiled in 5.97s, 0 errors); tested year collapsing/expanding and filter tab transitions.
+- Notes: Aligned grids and removed unnecessary white gaps for a tight clinical dashboard feel.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -425,6 +435,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Fixed status discrepancy bug between toast notification and card badges; added cancellation modal safeguard.
 - Verified by: Built production bundle with `npm run build` (compiled in 4.96s, 0 errors); tested `.ics` calendar generation, cancel confirmation dialog, and reschedule navigation.
 - Notes: Tight spacing and compact cards maintain clean rhythm without excess whitespace.
+
+### Task 2.8: Medical Records
+- Status: DONE
+- Completed: 2026-11-17 14:46 IST
+- Files changed or added: src/components/patient/PatientMedicalRecords.jsx
+- Summary: Enhanced Medical Records with visible allergies alert chip next to blood group at the top; added measurement dates and stability trend indicators ("Stable →", "Optimal →") across all 4 vitals cards; added filter tabs (All, Clinical Visits, Prescriptions, Diagnostic Labs, Billing & Receipts); grouped visit history by year into collapsible accordions preventing repetitive blocks; added Download action alongside View PDF on pathology reports; replaced copy-pasted doctor notes with real Attending Physician Clinical Guidance (diet, aerobic walking, medication schedule, follow-up timeline); added confidential EHR privacy notice under medical data standards.
+- Bugs fixed: Fixed repeating unorganized visit entries by year grouping and collapsible views; added prominent top-level allergy alert.
+- Verified by: Built production bundle with `npm run build` (compiled in 5.97s, 0 errors); tested year collapsing/expanding and filter tab transitions.
+- Notes: Aligned grids and removed unnecessary white gaps for a tight clinical dashboard feel.
 
 ---
 
