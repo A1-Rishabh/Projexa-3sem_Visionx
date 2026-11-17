@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:43 IST
-Current task: 1.5 Sign up page
+Last updated: 2026-11-17 13:58 IST
+Current task: 1.6 Google sign-in integration
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -43,8 +43,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 1.2 Landing page: About, Departments, Doctors ................. DONE
 - 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ DONE
 - 1.4 Login page ................................................ DONE
-- 1.5 Sign up page ............................................... IN PROGRESS
-- 1.6 Google sign-in integration ................................ TODO
+- 1.5 Sign up page ............................................... DONE
+- 1.6 Google sign-in integration ................................ IN PROGRESS
 - 1.7 Forgot password and role-based redirect .................. TODO
 - 1.8 Phase 1 report (see report contents below) ................. TODO
 
@@ -146,6 +146,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Ran `npm run build` which succeeded in 6.62s with 0 errors.
 - Notes: Auth system detected as custom localStorage mock store.
 
+### Task 1.5: Sign up page
+- Status: DONE
+- Completed: 2026-11-17 13:58 IST
+- Files changed or added: src/components/auth/SignUpPage.jsx, src/App.jsx
+- Summary: Created dedicated `SignUpPage.jsx` using `AuthLayout` split layout with name, phone, email, password strength meter (weak/medium/strong), confirm password match validation, official Google "G" signup button, and 6-digit OTP verification modal with 60-second countdown and auto-advancing digit inputs. Connected client-side routing in `App.jsx` for `/`, `/login`, and `/signup`.
+- Bugs fixed: Disconnected signup flow in legacy monolithic LoginPage replaced with accessible standalone registration route and OTP verification.
+- Verified by: Ran `npm run build` which compiled in 6.73s with 0 errors.
+- Notes: Tested routing transitions between Landing, Login, and Sign Up.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
@@ -154,6 +163,7 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2026-11-17: User-supplied logo placed at `/public/images/logo.jpg`, referenced in `index.html` as favicon and rendered by `Logo.jsx` with undistorted `object-fit: contain`.
 - 2026-11-17: Toasts timed to exactly 3000ms with polite aria-live announcement.
 - 2026-11-17: Auth system detected as custom mock store with localStorage persistence.
+- 2026-11-17: Integrated client-side history routing for `/`, `/login`, and `/signup` without adding heavy external dependencies.
 
 ## Waiting on me
 - [x] Logo file (Provided by user and integrated)
