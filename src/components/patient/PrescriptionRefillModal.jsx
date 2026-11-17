@@ -11,9 +11,9 @@ export const PrescriptionRefillModal = ({ isOpen, onClose, patient, showToast })
   if (!isOpen) return null;
 
   const currentMeds = [
-    { name: 'Lisinopril 10mg', dose: '1 Tablet Daily (Morning)', doctor: 'Dr. Sarah Jenkins' },
-    { name: 'Aspirin (Low Dose) 81mg', dose: '1 Tablet Daily With Food', doctor: 'Dr. Sarah Jenkins' },
-    { name: 'Ibuprofen 400mg', dose: 'As Needed (Max 3x/day)', doctor: 'Dr. Aris Thorne' },
+    { name: 'Lisinopril 10mg', dose: '1 Tablet Daily (Morning)', doctor: 'Dr. Ananya Sharma' },
+    { name: 'Aspirin (Low Dose) 81mg', dose: '1 Tablet Daily With Food', doctor: 'Dr. Ananya Sharma' },
+    { name: 'Ibuprofen 400mg', dose: 'As Needed (Max 3x/day)', doctor: 'Dr. Vikram Malhotra' },
     { name: 'Other Prescribed Medication', dose: 'Custom request', doctor: 'Attending Physician' }
   ];
 

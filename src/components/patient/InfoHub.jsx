@@ -48,11 +48,13 @@ export const InfoHub = ({
   }, []);
 
   const cleanName = useMemo(() => {
-    return (patient?.name || 'John Doe')
+    const raw = patient?.name;
+    if (!raw || raw === 'John Doe') return 'Rahul Sharma';
+    return raw
       .replace(/^Dr\.\s*/i, '')
       .replace(/\s*\(Google User\)/i, '')
       .replace(/\s*\(Demo\)/i, '')
-      .trim() || 'John Doe';
+      .trim() || 'Rahul Sharma';
   }, [patient?.name]);
 
   const patientFirstName = cleanName.split(' ')[0] || 'Patient';
@@ -203,11 +205,11 @@ export const InfoHub = ({
         </button>
       </div>
 
-      {/* ABOVE-THE-FOLD PRIMARY DASHBOARD GRID (4 CARDS: Clean, Compact, Equal rhythm) */}
+      {/* ABOVE-THE-FOLD PRIMARY DASHBOARD GRID (3 CLINICAL CARDS) */}
       <div 
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '16px'
         }}
       >
@@ -371,131 +373,7 @@ export const InfoHub = ({
           </div>
         </div>
 
-        {/* CARD 3: QUICK ACTIONS */}
-        <div
-          style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '16px',
-            padding: '20px',
-            border: '1px solid var(--border-color)',
-            boxShadow: 'var(--shadow-sm)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: '220px'
-          }}
-        >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: 'var(--mint)', color: 'var(--primary-teal)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Sparkles size={18} />
-              </div>
-              <h2 style={{ fontSize: '1rem', fontWeight: '700', color: 'var(--text-main)', margin: 0, fontFamily: 'Fraunces, serif' }}>
-                Quick Actions
-              </h2>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-              <button
-                type="button"
-                onClick={onNavigateToDoctors}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 8px',
-                  borderRadius: '10px',
-                  backgroundColor: 'var(--warm-cream)',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-main)',
-                  gap: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  minHeight: '44px'
-                }}
-              >
-                <Calendar size={18} color="var(--primary-teal)" />
-                <span style={{ fontSize: '0.76rem', fontWeight: '700' }}>Book Visit</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onNavigateToRecords}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 8px',
-                  borderRadius: '10px',
-                  backgroundColor: 'var(--warm-cream)',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-main)',
-                  gap: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  minHeight: '44px'
-                }}
-              >
-                <FileText size={18} color="var(--primary-teal)" />
-                <span style={{ fontSize: '0.76rem', fontWeight: '700' }}>Records</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onNavigateToProfile}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 8px',
-                  borderRadius: '10px',
-                  backgroundColor: 'var(--warm-cream)',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-main)',
-                  gap: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  minHeight: '44px'
-                }}
-              >
-                <User size={18} color="var(--primary-teal)" />
-                <span style={{ fontSize: '0.76rem', fontWeight: '700' }}>Profile</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onNavigateToProfile}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '12px 8px',
-                  borderRadius: '10px',
-                  backgroundColor: 'var(--warm-cream)',
-                  border: '1px solid var(--border-color)',
-                  color: 'var(--text-main)',
-                  gap: '6px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  minHeight: '44px'
-                }}
-              >
-                <ShieldCheck size={18} color="var(--primary-teal)" />
-                <span style={{ fontSize: '0.76rem', fontWeight: '700' }}>Emergency</span>
-              </button>
-            </div>
-          </div>
-
-          <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid var(--border-color)', fontSize: '0.74rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
-            Need prescription refill? View Records.
-          </div>
-        </div>
-
-        {/* CARD 4: REMINDERS & HEALTH TIPS */}
+        {/* CARD 3: REMINDERS & HEALTH TIPS */}
         <div
           style={{
             backgroundColor: '#ffffff',

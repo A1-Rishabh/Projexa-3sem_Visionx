@@ -22,7 +22,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
   const [doctors, setDoctors] = useState(getDoctors());
   const [selectedSpec, setSelectedSpec] = useState('all');
   const [availabilityFilter, setAvailabilityFilter] = useState('all');
-  const [feeFilter, setFeeFilter] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
   const [searchTerm, setSearchTerm] = useState('');
   const [avatarErrors, setAvatarErrors] = useState({});
@@ -63,12 +62,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
       if (availabilityFilter === 'today') {
         if (doc.isHoliday || !doc.availableSlots || doc.availableSlots.length === 0) return false;
       }
-      // Fee Range
-      if (feeFilter === 'under-1000') {
-        if (doc.fee >= 1000) return false;
-      } else if (feeFilter === '1000-1500') {
-        if (doc.fee < 1000 || doc.fee > 1500) return false;
-      }
       // Search
       if (searchTerm.trim()) {
         const q = searchTerm.toLowerCase();
@@ -88,15 +81,9 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
         const bSlots = (!b.isHoliday && b.availableSlots) ? b.availableSlots.length : 0;
         return bSlots - aSlots;
       }
-      if (sortBy === 'fee-low') {
-        return (a.fee || 0) - (b.fee || 0);
-      }
-      if (sortBy === 'fee-high') {
-        return (b.fee || 0) - (a.fee || 0);
-      }
       return 0;
     });
-  }, [doctors, selectedSpec, availabilityFilter, feeFilter, sortBy, searchTerm]);
+  }, [doctors, selectedSpec, availabilityFilter, sortBy, searchTerm]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -192,24 +179,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
             <option value="today">Available Today</option>
           </select>
 
-          {/* FEE RANGE FILTER */}
-          <select
-            value={feeFilter}
-            onChange={(e) => setFeeFilter(e.target.value)}
-            aria-label="Filter by fee range"
-            style={{
-              padding: '8px 12px',
-              borderRadius: '8px',
-              border: '1px solid var(--border-color)',
-              fontSize: '0.84rem',
-              backgroundColor: '#ffffff'
-            }}
-          >
-            <option value="all">All Fee Ranges</option>
-            <option value="under-1000">Under ₹1,000</option>
-            <option value="1000-1500">₹1,000 – ₹1,500</option>
-          </select>
-
           {/* SORT BY */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <ArrowUpDown size={15} color="var(--primary-teal)" />
@@ -229,8 +198,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
             >
               <option value="rating">Highest Rated</option>
               <option value="soonest">Soonest Available</option>
-              <option value="fee-low">Fee: Low to High</option>
-              <option value="fee-high">Fee: High to Low</option>
             </select>
           </div>
         </div>
@@ -412,13 +379,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
                       <span>Hours:</span>
                       <strong style={{ color: 'var(--text-main)' }}>{doc.hours}</strong>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Award size={13} color="var(--primary-teal)" />
-                      <span>Consultation Fee:</span>
-                      <strong style={{ color: 'var(--primary-teal)', fontSize: '0.85rem' }}>
-                        {formatINR(doc.fee)}
-                      </strong>
-                    </div>
                   </div>
                 </div>
 
@@ -455,14 +415,13 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
             No physicians match your filter
           </h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', maxWidth: '400px', margin: '0 auto 16px' }}>
-            Try clearing the search query or adjusting your specialization and fee filters.
+            Try clearing the search query or adjusting your specialization and availability filters.
           </p>
           <button
             type="button"
             onClick={() => {
               setSelectedSpec('all');
               setAvailabilityFilter('all');
-              setFeeFilter('all');
               setSearchTerm('');
             }}
             className="btn btn-secondary btn-sm"
@@ -583,9 +542,6 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
               </span>
               <span style={{ fontSize: '0.78rem', padding: '4px 10px', borderRadius: '6px', backgroundColor: 'var(--mint)', color: 'var(--primary-teal)', fontWeight: '700' }}>
                 ⭐ {profileModalDoc.experience || '10+ Years'} Experience
-              </span>
-              <span style={{ fontSize: '0.78rem', padding: '4px 10px', borderRadius: '6px', backgroundColor: '#FEF3C7', color: '#92400E', fontWeight: '700' }}>
-                💰 Fee: {formatINR(profileModalDoc.fee)}
               </span>
             </div>
 

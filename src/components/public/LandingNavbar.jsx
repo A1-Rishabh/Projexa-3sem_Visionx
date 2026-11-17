@@ -128,10 +128,10 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
             type="button"
             onClick={() => onNavigateToAuth('patient')}
             className="btn btn-primary btn-sm"
-            style={{ borderRadius: '9999px', padding: '8px 20px' }}
+            style={{ borderRadius: '9999px', padding: '8px 22px' }}
           >
             <User size={15} />
-            <span>Patient Portal / Sign In</span>
+            <span>Sign In</span>
           </button>
         </div>
 
@@ -200,7 +200,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               className="btn btn-primary btn-block"
             >
               <User size={16} />
-              <span>Patient Portal / Sign In</span>
+              <span>Sign In</span>
             </button>
 
             <button

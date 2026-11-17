@@ -62,13 +62,13 @@ const createGoogleSession = (isSignUp = false) => {
     googlePatient = {
       id: `P-${1000 + patients.length + 1}`,
       email: 'patient.google@example.com',
-      name: 'John Doe',
+      name: 'Rahul Sharma',
       phone: '+91 98765 12345',
       gender: 'Male',
       age: 34,
       bloodGroup: 'O+',
       allergies: 'None recorded',
-      emergencyContact: 'Jane Doe (+91 98765 54321)',
+      emergencyContact: 'Priya Sharma (+91 98765 43210)',
       isGoogleAuth: true,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200',
       vitals: {
@@ -82,8 +82,9 @@ const createGoogleSession = (isSignUp = false) => {
     };
     patients.push(googlePatient);
     localStorage.setItem('aegis_patients', JSON.stringify(patients));
-  } else if (googlePatient.name && (googlePatient.name.includes('Dr.') || googlePatient.name.includes('Google User'))) {
-    googlePatient.name = 'John Doe';
+  } else if (googlePatient.name && (googlePatient.name.includes('Dr.') || googlePatient.name.includes('Google User') || googlePatient.name === 'John Doe')) {
+    googlePatient.name = 'Rahul Sharma';
+    googlePatient.emergencyContact = 'Priya Sharma (+91 98765 43210)';
     localStorage.setItem('aegis_patients', JSON.stringify(patients));
   }
 

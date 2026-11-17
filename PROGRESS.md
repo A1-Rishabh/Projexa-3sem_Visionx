@@ -663,6 +663,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: Executed `npm run build` which succeeded with 0 errors. Verified interactive notifications panel and toggle states.
 - Notes: Git commit made for version continuity.
 
+### Task 2.14: Indian names, fee removal, clinical guidance removal, header cleanup & portal footer
+- Status: DONE
+- Completed: 2026-11-17 22:25 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/components/public/LandingHero.jsx, src/components/public/LandingDoctors.jsx, src/components/patient/DoctorDirectory.jsx, src/components/patient/PatientMedicalRecords.jsx, src/components/patient/InfoHub.jsx, src/components/patient/PatientPortal.jsx, src/components/patient/PrescriptionRefillModal.jsx, src/components/patient/CareTeamMessagingModal.jsx, src/components/auth/LoginPage.jsx, src/services/mockDataStore.js, src/services/googleAuth.js, src/index.css, supabase/seed.sql
+- Summary: Replaced all western doctor, patient, and dependent names with authentic Indian names (Dr. Ananya Sharma, Dr. Rohan Mehta, Dr. Meera Krishnan, Dr. Vikram Malhotra, Rahul Sharma, Priya Sharma, Aarav Sharma, Ananya Iyer, Suresh Verma). Removed consultation fee displays, fee filters, and fee sorting from doctor directory and landing cards. Removed "Attending Physician Clinical Guidance" advisory box from medical records. Removed "Quick Actions" widget from InfoHub and balanced dashboard into 3 clinical cards. Removed Care Team button from header and profile dropdown. Changed public navbar button label to "Sign In". Replaced landing hero booking card with an expanded clinical showcase. Added complete clinic footer to the Patient Portal. Implemented comprehensive CSS dark mode overrides for all surfaces, modals, dropdowns, and tables.
+- Bugs fixed: Removed consultation fees and commercial fee tags to emphasize pure clinical care; eliminated broken white cards in dark mode; fixed excessive vertical margins and container padding.
+- Verified by: `npm run build` succeeded in 6.24s with 0 errors.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

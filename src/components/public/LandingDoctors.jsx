@@ -232,23 +232,23 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                 </p>
               </div>
 
-              {/* FOOTER: FEE & BOOK BUTTON */}
+              {/* FOOTER: CLINICAL OPD & BOOK BUTTON */}
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  paddingTop: '16px',
+                  paddingTop: '14px',
                   borderTop: '1px solid var(--border-color)',
                   gap: '8px'
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    Fee (Sample)
+                  <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: '700' }}>
+                    Consultation
                   </div>
-                  <div style={{ fontSize: '1.12rem', fontWeight: '800', color: 'var(--deep-teal)' }}>
-                    {formatINR(doc.fee)}
+                  <div style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
+                    In-Clinic OPD
                   </div>
                 </div>
 
@@ -256,7 +256,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                   type="button"
                   onClick={() => onBookDoctor(doc)}
                   className="btn btn-primary btn-sm"
-                  style={{ borderRadius: '9999px', padding: '8px 16px', fontWeight: '700' }}
+                  style={{ borderRadius: '9999px', padding: '8px 18px', fontWeight: '700' }}
                 >
                   <span>Book visit</span>
                   <ArrowRight size={14} />

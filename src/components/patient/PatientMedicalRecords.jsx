@@ -501,28 +501,6 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
               )}
             </div>
 
-            {/* RENAMED: ATTENDING PHYSICIAN HEALTHCARE GUIDANCE & RECOMMENDATIONS */}
-            <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                <Sparkles size={18} color="var(--primary-teal)" />
-                <h2 style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, fontFamily: 'Fraunces, serif' }}>
-                  Attending Physician Clinical Guidance
-                </h2>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: '#F0FDF4', borderLeft: '3px solid #16A34A', fontSize: '0.82rem', color: '#166534', lineHeight: 1.45 }}>
-                  <strong>Cardiovascular Care:</strong> Maintain prescribed low-sodium diet (&lt; 2g sodium/day). Monitor morning blood pressure once weekly.
-                </div>
-                <div style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: 'var(--warm-cream)', borderLeft: '3px solid var(--primary-teal)', fontSize: '0.82rem', color: 'var(--text-main)', lineHeight: 1.45 }}>
-                  <strong>Physical Activity:</strong> 30 minutes of brisk aerobic walking 5 days per week. Avoid heavy weight straining until next review.
-                </div>
-                <div style={{ padding: '10px 12px', borderRadius: '8px', backgroundColor: '#EFF6FF', borderLeft: '3px solid #2563EB', fontSize: '0.82rem', color: '#1E40AF', lineHeight: 1.45 }}>
-                  <strong>Follow-Up Protocol:</strong> Fasting lipid profile re-check recommended in 6 months with Dr. Sarah Jenkins.
-                </div>
-              </div>
-            </div>
-
           </div>
         )}
 

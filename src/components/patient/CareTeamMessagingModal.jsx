@@ -18,7 +18,7 @@ export const CareTeamMessagingModal = ({ isOpen, onClose, patient, showToast }) 
   const [threads, setThreads] = useState([
     {
       id: 'TH-1',
-      recipient: 'Dr. Sarah Jenkins',
+      recipient: 'Dr. Ananya Sharma',
       role: 'Attending Cardiologist',
       subject: 'Post-visit BP monitoring question',
       unread: false,
@@ -28,12 +28,12 @@ export const CareTeamMessagingModal = ({ isOpen, onClose, patient, showToast }) 
           sender: 'patient',
           senderName: patient?.name || 'You',
           time: 'Yesterday, 04:15 PM',
-          text: 'Good afternoon Dr. Jenkins, I logged a blood pressure of 122/82 this morning. Should I continue the same Lisinopril 10mg dosage?'
+          text: 'Good afternoon Dr. Sharma, I logged a blood pressure of 122/82 this morning. Should I continue the same Lisinopril 10mg dosage?'
         },
         {
           id: 'M-2',
           sender: 'doctor',
-          senderName: 'Dr. Sarah Jenkins',
+          senderName: 'Dr. Ananya Sharma',
           time: 'Today, 09:30 AM',
           text: 'Hello! That is a very reassuring reading. Yes, please maintain your current dosage of Lisinopril 10mg once daily after breakfast. Keep recording readings twice weekly.'
         }

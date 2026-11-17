@@ -148,10 +148,10 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: HERO IMAGE + QUICK BOOKING CARD */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* RIGHT COLUMN: HERO CLINICAL SHOWCASE WITH VALUE PILLS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
-          {/* HERO IMAGE CONTAINER */}
+          {/* HERO IMAGE CONTAINER WITH CLINICAL OVERLAY */}
           <div
             style={{
               position: 'relative',
@@ -159,138 +159,101 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
               overflow: 'hidden',
               boxShadow: 'var(--shadow-lg)',
               border: '1px solid var(--border-color)',
-              aspectRatio: '16 / 10',
+              minHeight: '340px',
               backgroundColor: 'var(--mint-light)',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
+              backgroundImage: 'url(https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=900)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
             }}
           >
-            <img
-              src="/images/hero.webp"
-              alt="Compassionate healthcare consultation at Jivaka Clinic"
-              loading="eager"
-              width="600"
-              height="375"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-              onError={(e) => {
-                // Fallback to warm visual card if WebP placeholder is not yet replaced
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-
-            {/* ILLUSTRATIVE CARD OVERLAY */}
+            {/* GRADIENT OVERLAY */}
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(135deg, rgba(15, 79, 74, 0.85) 0%, rgba(15, 107, 99, 0.75) 100%)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                padding: '24px',
+                background: 'linear-gradient(180deg, rgba(15, 79, 74, 0.25) 0%, rgba(15, 79, 74, 0.88) 100%)'
+              }}
+            />
+
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 2,
+                padding: '28px',
                 color: '#ffffff'
               }}
             >
-              <div style={{ fontSize: '0.85rem', color: 'var(--mint)', fontWeight: '700', marginBottom: '4px' }}>
-                Jivaka Center of Clinical Excellence
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '9999px', backgroundColor: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(8px)', fontSize: '0.78rem', fontWeight: '700', marginBottom: '8px', color: '#ffffff' }}>
+                <ShieldCheck size={14} color="#DCEFE6" />
+                NABH Accredited Healthcare Center
               </div>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: '700' }}>
-                Dedicated Outpatient Clinics & Diagnostics
-              </div>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.45rem', fontWeight: '700', margin: '0 0 6px 0', color: '#ffffff' }}>
+                Jivaka Center for Advanced Clinical Practice
+              </h2>
+              <p style={{ fontSize: '0.88rem', color: '#DCEFE6', margin: 0, lineHeight: 1.5, maxWidth: '480px' }}>
+                Compassionate outpatient care, multispecialty consultations, and certified diagnostic pathology under one roof.
+              </p>
             </div>
           </div>
 
-          {/* QUICK-BOOKING CARD */}
-          <div
-            className="card-interactive"
-            style={{
-              padding: '24px',
-              backgroundColor: '#ffffff',
-              borderRadius: '18px',
-              boxShadow: 'var(--shadow-md)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div className="mint-icon-box" style={{ width: '38px', height: '38px' }}>
-                <Stethoscope size={18} />
+          {/* CLINICAL VALUE CARDS ROW */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+            <div
+              style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '16px',
+                padding: '16px 14px',
+                border: '1px solid var(--border-color)',
+                boxShadow: 'var(--shadow-sm)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
+                18+
               </div>
-              <div>
-                <h3 style={{ fontSize: '1.05rem', fontWeight: '700', margin: 0, color: 'var(--text-main)' }}>
-                  Quick Appointment Booking
-                </h3>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>
-                  Select specialty to view open consultation hours
-                </p>
+              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
+                Senior Specialists
               </div>
             </div>
 
-            <form onSubmit={handleQuickBookSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: showBranchSelector ? '1fr 1fr' : '1fr', gap: '12px' }}>
-                
-                {/* DEPARTMENT DROPDOWN */}
-                <div className="form-group" style={{ margin: 0 }}>
-                  <label htmlFor="quick-dept-select">Department / Specialty</label>
-                  <select
-                    id="quick-dept-select"
-                    value={selectedDept}
-                    onChange={(e) => setSelectedDept(e.target.value)}
-                    style={{ width: '100%' }}
-                  >
-                    {departments.map((d) => (
-                      <option key={d} value={d}>
-                        {d}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* LOCATION DROPDOWN (ONLY IF >1 BRANCH) */}
-                {showBranchSelector && (
-                  <div className="form-group" style={{ margin: 0 }}>
-                    <label htmlFor="quick-branch-select">Clinic Branch</label>
-                    <select
-                      id="quick-branch-select"
-                      value={selectedBranch}
-                      onChange={(e) => setSelectedBranch(e.target.value)}
-                      style={{ width: '100%' }}
-                    >
-                      {clinic.branches.map((b) => (
-                        <option key={b.id} value={b.id}>
-                          {isPlaceholder(b.label) ? 'Main Clinic' : b.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+            <div
+              style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '16px',
+                padding: '16px 14px',
+                border: '1px solid var(--border-color)',
+                boxShadow: 'var(--shadow-sm)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
+                Same-Day
               </div>
-
-              {/* DATE PICKER */}
-              <div className="form-group" style={{ margin: 0 }}>
-                <label htmlFor="quick-date-select">Preferred Date</label>
-                <input
-                  id="quick-date-select"
-                  type="date"
-                  value={selectedDate}
-                  min={new Date().toISOString().split('T')[0]}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  style={{ width: '100%' }}
-                />
+              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
+                Lab Diagnostics
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-block"
-                style={{ marginTop: '4px', borderRadius: '12px', fontWeight: '700' }}
-              >
-                <span>Find Available Doctor</span>
-                <ArrowRight size={16} />
-              </button>
-            </form>
+            <div
+              style={{
+                backgroundColor: '#ffffff',
+                borderRadius: '16px',
+                padding: '16px 14px',
+                border: '1px solid var(--border-color)',
+                boxShadow: 'var(--shadow-sm)',
+                textAlign: 'center'
+              }}
+            >
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
+                99.4%
+              </div>
+              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
+                Patient Trust
+              </div>
+            </div>
           </div>
 
         </div>

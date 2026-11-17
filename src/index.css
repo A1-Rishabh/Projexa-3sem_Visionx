@@ -551,9 +551,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   --card-bg: #1B2B28;
   --text-main: #ECF5F3;
   --text-secondary: #94A8A4;
-  --text-muted: #6C817D;
+  --text-muted: #7A918D;
   --border-color: #263C38;
   --border-hover: #35524D;
+  --mint: #163630;
+  --mint-light: #1A3E38;
 }
 
 [data-theme="dark"] body {
@@ -563,6 +565,28 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 [data-theme="dark"] .frosted-navbar-dark {
   background: rgba(12, 30, 28, 0.96) !important;
+  border-bottom: 1px solid #1E3430 !important;
+}
+
+/* Comprehensive dark mode card & surface overrides */
+[data-theme="dark"] .card-interactive,
+[data-theme="dark"] .card,
+[data-theme="dark"] div[style*="background-color: #ffffff"],
+[data-theme="dark"] div[style*="backgroundColor: '#ffffff'"],
+[data-theme="dark"] div[style*="background-color: rgb(255, 255, 255)"],
+[data-theme="dark"] div[style*="backgroundColor: rgb(255, 255, 255)"],
+[data-theme="dark"] div[role="menu"],
+[data-theme="dark"] div[role="dialog"] {
+  background-color: #1B2B28 !important;
+  border-color: #263C38 !important;
+  color: #ECF5F3 !important;
+}
+
+[data-theme="dark"] div[style*="var(--warm-cream)"],
+[data-theme="dark"] div[style*="#FAF6EC"],
+[data-theme="dark"] div[style*="#F4F9F6"] {
+  background-color: #172624 !important;
+  border-color: #263C38 !important;
 }
 
 [data-theme="dark"] input, 
@@ -580,14 +604,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.25) !important;
 }
 
-[data-theme="dark"] .card-interactive {
-  background-color: #1B2B28 !important;
-  border-color: #263C38 !important;
+[data-theme="dark"] .mobile-bottom-tab-bar {
+  background: rgba(15, 35, 32, 0.96) !important;
+  border-top-color: #263C38 !important;
 }
 
-[data-theme="dark"] .mobile-bottom-tab-bar {
-  background: rgba(15, 35, 32, 0.95) !important;
-  border-top-color: #263C38 !important;
+[data-theme="dark"] table th {
+  color: #94A8A4 !important;
+  border-bottom-color: #263C38 !important;
+}
+
+[data-theme="dark"] table td {
+  border-bottom-color: #223733 !important;
+}
+
+[data-theme="dark"] table tr:hover td {
+  background-color: rgba(22, 54, 48, 0.4) !important;
 }
 
 [data-text-size="large"] {

@@ -414,10 +414,10 @@ export const LoginPage = ({
               onChange={(e) => setDoctorId(e.target.value)}
               style={{ width: '100%', fontWeight: '600' }}
             >
-              <option value="DOC-101">Dr. Sarah Jenkins (Cardiology • Room 204B)</option>
-              <option value="DOC-102">Dr. Marcus Vance (Neurology • Room 310A)</option>
-              <option value="DOC-103">Dr. Priya Sharma (Pediatrics • Room 108C)</option>
-              <option value="DOC-104">Dr. Aris Thorne (General Medicine • Room 102A)</option>
+              <option value="DOC-101">Dr. Ananya Sharma (Cardiology • Room 204B)</option>
+              <option value="DOC-102">Dr. Rohan Mehta (Pediatrics • Room 108C)</option>
+              <option value="DOC-103">Dr. Meera Krishnan (Neurology • Room 310A)</option>
+              <option value="DOC-104">Dr. Vikram Malhotra (Orthopedics • Room 105A)</option>
             </select>
           </div>
 

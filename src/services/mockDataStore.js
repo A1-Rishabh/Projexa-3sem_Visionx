@@ -14,13 +14,13 @@ const STORAGE_KEYS = {
 const INITIAL_DOCTORS = [
   {
     id: 'DOC-101',
-    name: 'Dr. Sarah Jenkins',
-    title: 'MD, FACC - Senior Cardiologist',
+    name: 'Dr. Ananya Sharma',
+    title: 'MD, DM (Cardiology), FACC - Senior Consultant Cardiologist',
     specialization: 'Cardiology',
-    qualifications: 'MD (Harvard), Fellowship in Interventional Cardiology',
+    qualifications: 'MD, DM (AIIMS New Delhi), Fellowship in Interventional Cardiology',
     experience: '14 Years',
     room: 'Room 204 (2nd Floor)',
-    fee: 1200, // Sample consultation fee in INR (to be configured by clinic)
+    fee: 1200,
     rating: 4.9,
     reviewsCount: 128,
     avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300',
@@ -31,13 +31,13 @@ const INITIAL_DOCTORS = [
   },
   {
     id: 'DOC-102',
-    name: 'Dr. Marcus Vance',
-    title: 'MD, FAAP - Pediatric Specialist',
+    name: 'Dr. Rohan Mehta',
+    title: 'MD (Pediatrics), DCH, FAAP - Senior Pediatric Specialist',
     specialization: 'Pediatrics',
-    qualifications: 'MD (Johns Hopkins), Pediatric Medicine Board Certified',
+    qualifications: 'MD (PGIMER Chandigarh), Pediatric Medicine Board Certified',
     experience: '9 Years',
     room: 'Room 108 (1st Floor)',
-    fee: 800, // Sample consultation fee in INR (to be configured by clinic)
+    fee: 800,
     rating: 4.85,
     reviewsCount: 94,
     avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300',
@@ -48,13 +48,13 @@ const INITIAL_DOCTORS = [
   },
   {
     id: 'DOC-103',
-    name: 'Dr. Elena Rostova',
-    title: 'MD, PhD - Consultant Neurologist',
+    name: 'Dr. Meera Krishnan',
+    title: 'MD, DM (Neurology) - Consultant Neurologist',
     specialization: 'Neurology',
-    qualifications: 'MD, PhD (Stanford Medicine), Neurological Surgery Fellow',
+    qualifications: 'MD, DM (NIMHANS Bengaluru), Neurovascular Specialist',
     experience: '16 Years',
     room: 'Room 312 (3rd Floor)',
-    fee: 1400, // Sample consultation fee in INR (to be configured by clinic)
+    fee: 1400,
     rating: 4.96,
     reviewsCount: 156,
     avatar: 'https://images.unsplash.com/photo-1594824813566-78a99478f244?auto=format&fit=crop&q=80&w=300',
@@ -65,13 +65,13 @@ const INITIAL_DOCTORS = [
   },
   {
     id: 'DOC-104',
-    name: 'Dr. Aris Thorne',
-    title: 'MD, FAAOS - Orthopedic Surgeon',
+    name: 'Dr. Vikram Malhotra',
+    title: 'MS (Ortho), MCh - Senior Orthopedic Surgeon',
     specialization: 'Orthopedics',
-    qualifications: 'MD (Columbia), Sports Medicine Specialist',
+    qualifications: 'MS (CMC Vellore), Sports Medicine & Joint Reconstruction Fellow',
     experience: '11 Years',
     room: 'Room 105 (1st Floor)',
-    fee: 950, // Sample consultation fee in INR (to be configured by clinic)
+    fee: 950,
     rating: 4.78,
     reviewsCount: 82,
     avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300',
@@ -86,13 +86,13 @@ const INITIAL_PATIENTS = [
   {
     id: 'P-1001',
     email: 'patient@example.com',
-    phone: '+1 (555) 234-5678',
-    name: 'John Doe',
+    phone: '+91 98765 12345',
+    name: 'Rahul Sharma',
     gender: 'Male',
     age: 38,
     bloodGroup: 'A+',
-    allergies: 'Penicillin, Shellfish',
-    emergencyContact: 'Jane Doe (+1 555-987-6543)',
+    allergies: 'Penicillin',
+    emergencyContact: 'Priya Sharma (+91 98765 43210)',
     vitals: {
       bloodPressure: '120/80 mmHg',
       heartRate: '72 bpm',
@@ -104,14 +104,14 @@ const INITIAL_PATIENTS = [
   },
   {
     id: 'P-1002',
-    email: 'emma.w@example.com',
-    phone: '+1 (555) 876-5432',
-    name: 'Emma Watson',
+    email: 'ananya.iyer@example.com',
+    phone: '+91 98765 23456',
+    name: 'Ananya Iyer',
     gender: 'Female',
     age: 29,
     bloodGroup: 'O+',
     allergies: 'Latex',
-    emergencyContact: 'Mark Watson (+1 555-333-2211)',
+    emergencyContact: 'Murthy Iyer (+91 98765 33211)',
     vitals: {
       bloodPressure: '115/75 mmHg',
       heartRate: '68 bpm',
@@ -123,14 +123,14 @@ const INITIAL_PATIENTS = [
   },
   {
     id: 'P-1003',
-    email: 'robert.vance@example.com',
-    phone: '+1 (555) 444-9988',
-    name: 'Robert Vance',
+    email: 'suresh.verma@example.com',
+    phone: '+91 98765 34567',
+    name: 'Suresh Verma',
     gender: 'Male',
     age: 54,
     bloodGroup: 'B+',
     allergies: 'Sulfa Antibiotics',
-    emergencyContact: 'Carol Vance (+1 555-222-1100)',
+    emergencyContact: 'Kavita Verma (+91 98765 22110)',
     vitals: {
       bloodPressure: '135/88 mmHg',
       heartRate: '78 bpm',
@@ -153,10 +153,10 @@ const INITIAL_APPOINTMENTS = [
   {
     id: 'APT-801',
     doctorId: 'DOC-101',
-    doctorName: 'Dr. Sarah Jenkins',
+    doctorName: 'Dr. Ananya Sharma',
     patientId: 'P-1001',
-    patientName: 'John Doe',
-    patientPhone: '+1 (555) 234-5678',
+    patientName: 'Rahul Sharma',
+    patientPhone: '+91 98765 12345',
     date: getTodayStr(0),
     time: '09:00 AM',
     room: 'Room 204 (2nd Floor)',
@@ -168,10 +168,10 @@ const INITIAL_APPOINTMENTS = [
   {
     id: 'APT-802',
     doctorId: 'DOC-101',
-    doctorName: 'Dr. Sarah Jenkins',
+    doctorName: 'Dr. Ananya Sharma',
     patientId: 'P-1002',
-    patientName: 'Emma Watson',
-    patientPhone: '+1 (555) 876-5432',
+    patientName: 'Ananya Iyer',
+    patientPhone: '+91 98765 23456',
     date: getTodayStr(0),
     time: '11:30 AM',
     room: 'Room 204 (2nd Floor)',
@@ -183,10 +183,10 @@ const INITIAL_APPOINTMENTS = [
   {
     id: 'APT-803',
     doctorId: 'DOC-102',
-    doctorName: 'Dr. Marcus Vance',
+    doctorName: 'Dr. Rohan Mehta',
     patientId: 'P-1003',
-    patientName: 'Robert Vance',
-    patientPhone: '+1 (555) 444-9988',
+    patientName: 'Suresh Verma',
+    patientPhone: '+91 98765 34567',
     date: getTodayStr(1),
     time: '09:30 AM',
     room: 'Room 108 (1st Floor)',
@@ -198,10 +198,10 @@ const INITIAL_APPOINTMENTS = [
   {
     id: 'APT-799',
     doctorId: 'DOC-101',
-    doctorName: 'Dr. Sarah Jenkins',
+    doctorName: 'Dr. Ananya Sharma',
     patientId: 'P-1001',
-    patientName: 'John Doe',
-    patientPhone: '+1 (555) 234-5678',
+    patientName: 'Rahul Sharma',
+    patientPhone: '+91 98765 12345',
     date: getTodayStr(-7),
     time: '10:00 AM',
     room: 'Room 204 (2nd Floor)',
@@ -215,7 +215,7 @@ const INITIAL_APPOINTMENTS = [
 const INITIAL_MEDICAL_RECORDS = {
   'P-1001': {
     patientId: 'P-1001',
-    lastViewedBy: 'Dr. Sarah Jenkins (DOC-101)',
+    lastViewedBy: 'Dr. Ananya Sharma (DOC-101)',
     lastViewedTime: '2026-09-23 09:14 AM',
     notesPublic: 'Patient is maintaining healthy low-sodium diet. Continue current medication regimen.',
     notesPrivate: 'Patient inquired about strenuous athletic conditioning. Advised baseline stress test first.',
@@ -223,7 +223,7 @@ const INITIAL_MEDICAL_RECORDS = {
       {
         id: 'VT-101',
         date: '2026-09-16',
-        doctorName: 'Dr. Sarah Jenkins',
+        doctorName: 'Dr. Ananya Sharma',
         diagnosis: 'I10 - Essential Primary Hypertension',
         summary: 'Elevated systolic blood pressure noted during routine check-up.',
         prescription: [
@@ -234,7 +234,7 @@ const INITIAL_MEDICAL_RECORDS = {
       {
         id: 'VT-98',
         date: '2026-05-10',
-        doctorName: 'Dr. Aris Thorne',
+        doctorName: 'Dr. Vikram Malhotra',
         diagnosis: 'M25.561 - Pain in Right Knee',
         summary: 'Mild patellar tendon strain post-marathon training.',
         prescription: [
@@ -247,7 +247,7 @@ const INITIAL_MEDICAL_RECORDS = {
         id: 'LAB-409',
         title: 'Comprehensive Lipid Panel',
         date: '2026-09-15',
-        issuedBy: 'Metropolitan Central Pathology Lab',
+        issuedBy: 'Jivaka Central Diagnostic Pathology Lab',
         summary: 'Total Cholesterol: 192 mg/dL, HDL: 54 mg/dL, LDL: 118 mg/dL, Triglycerides: 110 mg/dL.',
         fileType: 'PDF',
         fileSize: '1.4 MB'
@@ -346,7 +346,24 @@ export const initializeStore = () => {
 // Accessors & Mutators
 export const getDoctors = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.DOCTORS));
+  const raw = localStorage.getItem(STORAGE_KEYS.DOCTORS);
+  if (!raw) return INITIAL_DOCTORS;
+  try {
+    const docs = JSON.parse(raw);
+    let changed = false;
+    docs.forEach(d => {
+      if (d.name === 'Dr. Sarah Jenkins') { d.name = 'Dr. Ananya Sharma'; d.title = 'MD, DM (Cardiology), FACC - Senior Consultant Cardiologist'; d.qualifications = 'MD, DM (AIIMS New Delhi)'; changed = true; }
+      if (d.name === 'Dr. Marcus Vance') { d.name = 'Dr. Rohan Mehta'; d.title = 'MD (Pediatrics), DCH, FAAP - Senior Pediatric Specialist'; d.qualifications = 'MD (PGIMER Chandigarh)'; changed = true; }
+      if (d.name === 'Dr. Elena Rostova') { d.name = 'Dr. Meera Krishnan'; d.title = 'MD, DM (Neurology) - Consultant Neurologist'; d.qualifications = 'MD, DM (NIMHANS Bengaluru)'; changed = true; }
+      if (d.name === 'Dr. Aris Thorne') { d.name = 'Dr. Vikram Malhotra'; d.title = 'MS (Ortho), MCh - Senior Orthopedic Surgeon'; d.qualifications = 'MS (CMC Vellore)'; changed = true; }
+    });
+    if (changed) {
+      localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(docs));
+    }
+    return docs;
+  } catch (e) {
+    return INITIAL_DOCTORS;
+  }
 };
 
 export const updateDoctorProfile = (doctorId, updatedData) => {
@@ -367,8 +384,16 @@ export const getPatients = () => {
     const patients = JSON.parse(raw);
     let changed = false;
     patients.forEach(p => {
-      if (p.name && (p.name.includes('Dr.') || p.name.includes('Google User'))) {
-        p.name = p.name.replace(/^Dr\.\s*/i, '').replace(/\s*\(Google User\)/i, '').trim() || 'John Doe';
+      if (p.name && (p.name.includes('Dr.') || p.name.includes('Google User') || p.name === 'John Doe')) {
+        p.name = 'Rahul Sharma';
+        changed = true;
+      }
+      if (p.id === 'P-1002' && p.name === 'Emma Watson') {
+        p.name = 'Ananya Iyer';
+        changed = true;
+      }
+      if (p.id === 'P-1003' && p.name === 'Robert Vance') {
+        p.name = 'Suresh Verma';
         changed = true;
       }
     });
@@ -476,9 +501,11 @@ export const getSavedSession = () => {
   if (!s) return null;
   try {
     const session = JSON.parse(s);
-    if (session?.user?.name && (session.user.name.includes('Dr.') || session.user.name.includes('Google User'))) {
-      session.user.name = session.user.name.replace(/^Dr\.\s*/i, '').replace(/\s*\(Google User\)/i, '').trim() || 'John Doe';
-      localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+    if (session?.user?.name) {
+      if (session.user.name.includes('Dr.') || session.user.name.includes('Google User') || session.user.name === 'John Doe') {
+        session.user.name = 'Rahul Sharma';
+        localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+      }
     }
     return session;
   } catch (e) {

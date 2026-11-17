@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { BottomTabBar } from '../common/BottomTabBar';
+import { LandingFooter } from '../public/LandingFooter';
 import { getDoctors } from '../../services/mockDataStore';
 
 import { InfoHub } from './InfoHub';
@@ -59,7 +60,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
       id: 'notif-2',
       category: 'Upcoming Visit',
       title: 'Cardiology Consultation Tomorrow',
-      description: 'Confirmed visit with Dr. Sarah Jenkins tomorrow at 10:00 AM (Room 204B). Please arrive 10 minutes prior.',
+      description: 'Confirmed visit with Dr. Ananya Sharma tomorrow at 10:00 AM (Room 204B). Please arrive 10 minutes prior.',
       time: '2h ago',
       unread: true,
       actionTab: 'appointments',
@@ -99,14 +100,14 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
     }
   };
 
-  // Patient Name Sanitization helper (removes accidental 'Dr.' or '(Google User)' tags)
+  // Patient Name Sanitization helper (removes accidental 'Dr.' or '(Google User)' tags, defaults to Rahul Sharma)
   const cleanPatientName = (name) => {
-    if (!name) return 'John Doe';
+    if (!name || name === 'John Doe') return 'Rahul Sharma';
     return name
       .replace(/^Dr\.\s*/i, '')
       .replace(/\s*\(Google User\)/i, '')
       .replace(/\s*\(Demo\)/i, '')
-      .trim() || 'John Doe';
+      .trim() || 'Rahul Sharma';
   };
 
   const displayName = cleanPatientName(currentPatient.name);
@@ -162,9 +163,9 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
 
   // Family Dependents
   const familyMembers = [
-    { id: 'P-1001', name: 'John Doe', relation: 'Self', bloodGroup: 'A+', allergies: 'Penicillin' },
-    { id: 'P-1002', name: 'Jane Doe', relation: 'Spouse', bloodGroup: 'B+', allergies: 'Sulfa Drugs' },
-    { id: 'P-1003', name: 'Leo Doe', relation: 'Child', bloodGroup: 'O+', allergies: 'None' }
+    { id: 'P-1001', name: 'Rahul Sharma', relation: 'Self', bloodGroup: 'A+', allergies: 'Penicillin' },
+    { id: 'P-1002', name: 'Priya Sharma', relation: 'Spouse', bloodGroup: 'B+', allergies: 'Sulfa Drugs' },
+    { id: 'P-1003', name: 'Aarav Sharma', relation: 'Child', bloodGroup: 'O+', allergies: 'None' }
   ];
 
   const switchDependent = (member) => {
@@ -304,54 +305,9 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           })}
         </nav>
 
-        {/* RIGHT ACTIONS: CARE TEAM, NOTIFICATION BELL & USER PROFILE CHIP */}
+        {/* RIGHT ACTIONS: NOTIFICATION BELL & USER PROFILE CHIP */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           
-          {/* CARE TEAM MESSAGES BUTTON */}
-          <button
-            type="button"
-            onClick={() => setIsMessagingOpen(true)}
-            aria-label="Care Team Messages"
-            title="Care Team Messages & Consultations"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '8px 14px',
-              borderRadius: '9999px',
-              backgroundColor: 'rgba(255, 255, 255, 0.12)',
-              border: '1px solid rgba(255, 255, 255, 0.22)',
-              color: '#ffffff',
-              cursor: 'pointer',
-              minHeight: '44px',
-              fontSize: '0.84rem',
-              fontWeight: '600',
-              transition: 'all 0.18s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-            }}
-          >
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-              <MessageSquare size={16} color="#DCEFE6" />
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '-3px',
-                  right: '-4px',
-                  width: '7px',
-                  height: '7px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--warm-accent)'
-                }}
-              />
-            </div>
-            <span className="hidden-mobile">Care Team</span>
-          </button>
-
           {/* NOTIFICATION BELL & POPUP */}
           <div style={{ position: 'relative' }} ref={notificationsRef}>
             <button
@@ -821,41 +777,6 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                     <ShieldCheck size={16} color="var(--primary-teal)" />
                     <span>Emergency Card</span>
                   </button>
-
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
-                      setIsMessagingOpen(true);
-                      setIsProfileDropdownOpen(false);
-                    }}
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      padding: '10px 12px',
-                      borderRadius: '10px',
-                      fontSize: '0.86rem',
-                      fontWeight: '600',
-                      color: 'var(--text-main)',
-                      backgroundColor: 'transparent',
-                      textAlign: 'left',
-                      transition: 'all 0.15s ease',
-                      minHeight: '42px',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = 'var(--warm-cream)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                    }}
-                  >
-                    <MessageSquare size={16} color="var(--primary-teal)" />
-                    <span>Care Team Messages</span>
-                  </button>
                 </div>
 
                 {/* FAMILY / DEPENDENTS SECTION */}
@@ -1207,6 +1128,9 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           </div>
         )}
       </main>
+
+      {/* PORTAL CLINICAL FOOTER */}
+      <LandingFooter onNavigateToAuth={() => {}} />
 
       {/* MOBILE BOTTOM NAVIGATION BAR */}
       <BottomTabBar activeTab={activeTab} onTabChange={setActiveTab} />
