@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:29 IST
-Current task: 0.5 Fix the black form fields, the toast, and the shared components (skeleton, empty state, toast)
+Last updated: 2026-11-17 13:31 IST
+Current task: 1.1 Landing page: navbar and hero
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -36,10 +36,10 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 0.3 Create /src/config/clinic.js and the formatINR helper ..... DONE
 - 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... DONE
 - 0.5 Fix the black form fields, the toast, and the shared
-      components (skeleton, empty state, toast) ................. IN PROGRESS
+      components (skeleton, empty state, toast) ................. DONE
 
 ### Phase 1: Public site
-- 1.1 Landing page: navbar and hero ............................. TODO
+- 1.1 Landing page: navbar and hero ............................. IN PROGRESS
 - 1.2 Landing page: About, Departments, Doctors ................. TODO
 - 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ TODO
 - 1.4 Login page ................................................ TODO
@@ -101,12 +101,22 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Executed project-wide regex search verifying 0 remaining occurrences in source files and ran `npm run build` successfully.
 - Notes: User-provided logo file placed in `/public/images/logo.jpg` and linked as favicon in `index.html`.
 
+### Task 0.5: Fix the black form fields, the toast, and the shared components (skeleton, empty state, toast)
+- Status: DONE
+- Completed: 2026-11-17 13:31 IST
+- Files changed or added: src/components/common/Toast.jsx, src/components/common/EmptyState.jsx, src/components/common/SkeletonLoader.jsx, src/components/common/StatusBadge.jsx, src/components/common/Modal.jsx
+- Summary: Fixed black form controls across all inputs, selects, and textareas with global styling, white background, 1px border, and teal focus ring. Updated `Toast.jsx` to auto-dismiss at 3 seconds, bottom-right placement, aria-live accessibility, and close button. Created reusable `EmptyState.jsx` with mint icon container and call to action. Upgraded `SkeletonLoader.jsx` with soft warm shimmer and multiple layout variants. Created `StatusBadge.jsx` for unified status flow. Enhanced `Modal.jsx` with Escape key dismiss and focus management.
+- Bugs fixed: Form fields rendering with browser-default black or unreadable colors, toast timing, and missing reusable empty state / status badges.
+- Verified by: Ran `npm run build` which built with 0 errors in 4.85s.
+- Notes: Shared components ready for use in Phase 1 and Phase 2.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
 - 2026-11-17: Fraunces & Inter fonts imported via Google Fonts; design system tokens and resets centralized in `src/index.css`.
 - 2026-11-17: `/src/config/clinic.js` established as the sole configuration module for clinic details and `formatINR` helper.
 - 2026-11-17: User-supplied logo placed at `/public/images/logo.jpg`, referenced in `index.html` as favicon and rendered by `Logo.jsx` with undistorted `object-fit: contain`.
+- 2026-11-17: Toasts timed to exactly 3000ms with polite aria-live announcement.
 
 ## Waiting on me
 - [x] Logo file (Provided by user and integrated)
