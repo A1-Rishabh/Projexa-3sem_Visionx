@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:35 IST
-Current task: 1.2 Landing page: About, Departments, Doctors
+Last updated: 2026-11-17 13:38 IST
+Current task: 1.3 Landing page: Why choose us, Locations, CTA, Footer
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -40,8 +40,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 
 ### Phase 1: Public site
 - 1.1 Landing page: navbar and hero ............................. DONE
-- 1.2 Landing page: About, Departments, Doctors ................. IN PROGRESS
-- 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ TODO
+- 1.2 Landing page: About, Departments, Doctors ................. DONE
+- 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ IN PROGRESS
 - 1.4 Login page ................................................ TODO
 - 1.5 Sign up page ............................................... TODO
 - 1.6 Google sign-in integration ................................ TODO
@@ -118,6 +118,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Bugs fixed: None.
 - Verified by: Verified responsive breakpoints (360px, 768px, 1024px, 1440px) in CSS and ran `npm run build` which compiled in 5.70s with 0 errors.
 - Notes: Created valid WebP placeholder files in `/public/images/` without external hotlinking.
+
+### Task 1.2: Landing page: About, Departments, Doctors
+- Status: DONE
+- Completed: 2026-11-17 13:38 IST
+- Files changed or added: src/components/public/LandingAbout.jsx, src/components/public/LandingDepartments.jsx, src/components/public/LandingDoctors.jsx, src/index.css
+- Summary: Built the About section with clinic philosophy and count-up stats using bracketed [00] placeholders. Built Departments section with General Medicine, Pediatrics, Cardiology, and Diagnostics cards featuring mint icon boxes, concise descriptions, and interactive "Learn more" modal. Built Doctors section rendering physician profiles with initials avatar fallback, qualifications, room assignments, sample INR consultation fees (`formatINR`), and a responsive horizontal snap-scroll carousel on mobile.
+- Bugs fixed: None.
+- Verified by: Executed `npm run build` which compiled with 0 errors in 5.16s.
+- Notes: Used Fraunces headings, Inter body, and INR currency helper exclusively.
 
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
