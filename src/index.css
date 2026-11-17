@@ -100,12 +100,17 @@ body {
   min-height: 100vh;
 }
 
-/* Headings in Fraunces with normal letter spacing */
+/* Headings in Fraunces with normal letter spacing and lighter 500 weight */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   letter-spacing: normal;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--text-main);
+}
+
+/* Ensure sticky navbar never covers section headings when jumped to via anchor */
+section[id] {
+  scroll-margin-top: 88px;
 }
 
 /* Global Form Controls Fix (Never Black!) */

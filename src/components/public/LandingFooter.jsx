@@ -79,32 +79,32 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
             <h4
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.08rem',
+                fontSize: '1.05rem',
                 color: '#ffffff',
-                fontWeight: '700',
+                fontWeight: 500,
                 letterSpacing: 'normal'
               }}
             >
-              Quick Navigation
+              Navigation
             </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.9rem' }}>
-              <a href="#about" style={{ color: '#bcd0cb', textDecoration: 'none' }}>About the Clinic</a>
-              <a href="#departments" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Medical Departments</a>
-              <a href="#doctors" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Our Specialists</a>
-              <a href="#locations" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Location & Hours</a>
-              <button
-                type="button"
-                onClick={() => onNavigateToAuth('patient')}
-                style={{ textAlign: 'left', color: '#DCEFE6', fontWeight: '700', fontSize: '0.9rem' }}
-              >
-                Patient Portal
-              </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem' }}>
+              <a href="#about" style={{ color: '#bcd0cb', textDecoration: 'none' }}>About</a>
+              <a href="#departments" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Departments</a>
+              <a href="#doctors" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Doctors</a>
+              <a href="#locations" style={{ color: '#bcd0cb', textDecoration: 'none' }}>Location</a>
               <button
                 type="button"
                 onClick={() => onNavigateToAuth('doctor')}
-                style={{ textAlign: 'left', color: '#bcd0cb', fontSize: '0.9rem' }}
+                style={{ textAlign: 'left', color: '#bcd0cb', fontSize: '0.88rem', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
               >
-                Doctor / Staff Portal
+                Staff Login
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigateToAuth('patient')}
+                style={{ textAlign: 'left', color: 'var(--mint)', fontWeight: '600', fontSize: '0.88rem', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+              >
+                Sign In
               </button>
             </div>
           </div>
@@ -114,9 +114,9 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
             <h4
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.08rem',
+                fontSize: '1.05rem',
                 color: '#ffffff',
-                fontWeight: '700'
+                fontWeight: 500
               }}
             >
               Consultation Hours
@@ -124,7 +124,7 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem', color: '#bcd0cb' }}>
               {branch.hours?.map((h, i) => (
                 <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontWeight: '600', color: '#ffffff' }}>{h.days}</span>
+                  <span style={{ fontWeight: '500', color: '#ffffff' }}>{h.days}</span>
                   <span>{h.time}</span>
                 </div>
               ))}
@@ -136,9 +136,9 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
             <h4
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '1.08rem',
+                fontSize: '1.05rem',
                 color: '#ffffff',
-                fontWeight: '700'
+                fontWeight: 500
               }}
             >
               Clinic Address

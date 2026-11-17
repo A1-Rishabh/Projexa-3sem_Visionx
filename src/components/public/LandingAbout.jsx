@@ -1,59 +1,44 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Award, HeartPulse, Users, ShieldCheck, Stethoscope, Clock, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { Award, HeartPulse, Users, ShieldCheck, Clock, FileCheck, Stethoscope, HeartHandshake } from 'lucide-react';
 
 export const LandingAbout = () => {
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasAnimated) {
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
+  // All stats shown as [00], suffixes styled without orange accent
   const stats = [
-    { label: 'Senior Medical Consultants', value: '18', suffix: '+', icon: Award },
-    { label: 'Outpatient Specialty Units', value: '6', suffix: ' Units', icon: HeartPulse },
-    { label: 'Verified Consultations', value: '24', suffix: 'k+', icon: Users },
-    { label: 'Clinical Satisfaction Rating', value: '99.4', suffix: '%', icon: ShieldCheck }
+    { label: 'Doctors', value: '[00]', icon: Award },
+    { label: 'Specialty areas', value: '[00]', icon: HeartPulse },
+    { label: 'Patient visits', value: '[00]', icon: Users },
+    { label: 'Patient satisfaction', value: '[00]%', icon: ShieldCheck }
   ];
 
-  const clinicalPillars = [
+  // Merged Why Jivaka care points into About (no repeated points, no unverified claims)
+  const carePoints = [
     {
-      title: 'Attentive Doctor Time',
-      desc: 'Average 25+ minutes per consultation for comprehensive evaluation.'
+      icon: Clock,
+      title: 'Attentive Doctor Consultations',
+      desc: 'Our doctors take the time needed to listen, perform careful examinations, and explain your treatment plan clearly.'
     },
     {
-      title: 'Multidisciplinary Care',
-      desc: 'Coordinated referrals and collaborative diagnosis between specialists.'
+      icon: Stethoscope,
+      title: 'Coordinated Family Care',
+      desc: 'From routine health checks to ongoing chronic condition support, our clinic cares for your entire family.'
     },
     {
-      title: 'Sterile Facility Standards',
-      desc: 'NABH-compliant air filtration, ultrasonic sterilization & clean suites.'
+      icon: HeartPulse,
+      title: 'On-Site Diagnostic Sampling',
+      desc: 'Routine blood draws, urine tests, and diagnostic panels handled directly at the clinic.'
     },
     {
-      title: 'Digital Health Locker',
-      desc: 'Instant, encrypted access to lab reports and digital prescriptions.'
+      icon: FileCheck,
+      title: 'Digital Health Records',
+      desc: 'Access your doctor notes, verified prescriptions, and test results through your patient portal account.'
     }
   ];
 
   return (
     <section
       id="about"
-      ref={sectionRef}
       style={{
-        padding: '88px 24px',
+        padding: '64px 24px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
@@ -61,18 +46,18 @@ export const LandingAbout = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.1fr 0.9fr',
-          gap: '56px',
+          gridTemplateColumns: '1.05fr 0.95fr',
+          gap: '44px',
           alignItems: 'center'
         }}
         className="about-grid-container"
       >
-        {/* LEFT COLUMN: THE CLINICAL HERITAGE STORY */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+        {/* LEFT COLUMN: THE CLINIC STORY & CARE POINTS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <div
             style={{
-              fontSize: '0.85rem',
-              fontWeight: '700',
+              fontSize: '0.82rem',
+              fontWeight: '600',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
               letterSpacing: '0.08em'
@@ -84,112 +69,109 @@ export const LandingAbout = () => {
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2.1rem, 3.6vw, 2.8rem)',
-              lineHeight: 1.22,
-              color: 'var(--deep-teal)'
+              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+              lineHeight: 1.25,
+              fontWeight: 500,
+              color: 'var(--deep-teal)',
+              margin: 0
             }}
           >
-            Rooted in Medical Excellence, Ethical Practice & Compassionate Care.
+            Care focused on listening, diagnosis, and patient trust.
           </h2>
 
           <p
             style={{
-              fontSize: '1.05rem',
+              fontSize: '1rem',
               color: 'var(--text-secondary)',
-              lineHeight: 1.7
+              lineHeight: 1.65,
+              margin: 0
             }}
           >
-            Named after the legendary ancient physician Jivaka—famed for profound diagnostic skill and ethical care—our institution is founded upon a fundamental principle: <strong>medicine must never be rushed</strong>. We believe optimal health outcomes emerge when doctors have ample time to listen, investigate thoroughly, and build enduring patient trust.
+            Named after the ancient healer Jivaka, our clinic is founded on unhurried, patient-centered diagnosis. We believe good medicine begins when doctors have the time to listen carefully and treat each patient with thorough attention.
           </p>
 
-          <p
-            style={{
-              fontSize: '0.98rem',
-              color: 'var(--text-secondary)',
-              lineHeight: 1.7
-            }}
-          >
-            Our senior medical faculty brings decades of combined tertiary experience from prestigious institutions including AIIMS, PGIMER, and CMC Vellore. Supported by our on-site automated pathology lab and seamless digital patient records, we provide coordinated healthcare for the entire family.
-          </p>
-
-          {/* 4 CLINICAL PILLARS */}
+          {/* MERGED CARE POINTS (WHY JIVAKA) */}
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '14px',
-              marginTop: '10px'
+              gap: '12px',
+              marginTop: '6px'
             }}
           >
-            {clinicalPillars.map((pillar) => (
-              <div
-                key={pillar.title}
-                style={{
-                  backgroundColor: '#ffffff',
-                  padding: '14px 16px',
-                  borderRadius: '14px',
-                  border: '1px solid var(--border-color)',
-                  boxShadow: 'var(--shadow-sm)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <CheckCircle2 size={16} color="var(--primary-teal)" />
-                  <span style={{ fontSize: '0.90rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
-                    {pillar.title}
-                  </span>
+            {carePoints.map((pt) => {
+              const Icon = pt.icon;
+              return (
+                <div
+                  key={pt.title}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    padding: '16px',
+                    borderRadius: '14px',
+                    border: '1px solid var(--border-color)',
+                    boxShadow: 'var(--shadow-sm)'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <div className="mint-icon-box" style={{ width: '28px', height: '28px', borderRadius: '8px' }}>
+                      <Icon size={15} />
+                    </div>
+                    <span style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)' }}>
+                      {pt.title}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+                    {pt.desc}
+                  </p>
                 </div>
-                <p style={{ fontSize: '0.80rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.45 }}>
-                  {pillar.desc}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* RIGHT COLUMN: INSTITUTIONAL STATS GRID */}
+        {/* RIGHT COLUMN: STATS GRID ([00] PLACEHOLDERS, NO ORANGE ACCENT ON SUFFIX) */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '20px'
+            gap: '16px'
           }}
           className="about-stats-grid"
         >
-          {stats.map((stat, idx) => {
+          {stats.map((stat) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
                 className="card-interactive"
                 style={{
-                  padding: '30px 24px',
+                  padding: '24px 20px',
                   backgroundColor: '#ffffff',
-                  borderRadius: '20px',
+                  borderRadius: '16px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '14px',
+                  gap: '10px',
                   border: '1px solid var(--border-color)',
-                  boxShadow: '0 4px 16px rgba(15, 79, 74, 0.05)'
+                  boxShadow: 'var(--shadow-sm)'
                 }}
               >
-                <div className="mint-icon-box" style={{ width: '46px', height: '46px', borderRadius: '14px' }}>
-                  <Icon size={22} />
+                <div className="mint-icon-box" style={{ width: '40px', height: '40px', borderRadius: '10px' }}>
+                  <Icon size={20} />
                 </div>
 
                 <div
                   style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '2.4rem',
-                    fontWeight: '800',
+                    fontSize: '2.1rem',
+                    fontWeight: 500,
                     color: 'var(--deep-teal)',
                     lineHeight: 1
                   }}
                 >
                   <span>{stat.value}</span>
-                  <span style={{ color: 'var(--warm-accent)' }}>{stat.suffix}</span>
                 </div>
 
-                <div style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
+                <div style={{ fontSize: '0.84rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
                   {stat.label}
                 </div>
               </div>

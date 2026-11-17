@@ -4,7 +4,6 @@ import { LandingHero } from './LandingHero';
 import { LandingAbout } from './LandingAbout';
 import { LandingDepartments } from './LandingDepartments';
 import { LandingDoctors } from './LandingDoctors';
-import { LandingWhyChooseUs } from './LandingWhyChooseUs';
 import { LandingLocations } from './LandingLocations';
 import { LandingCtaBand } from './LandingCtaBand';
 import { LandingFooter } from './LandingFooter';
@@ -31,13 +30,13 @@ export const LandingPage = ({ onNavigateToAuth, onQuickBookDoctor, showToast }) 
       />
 
       <main id="main-content">
-        {/* 2. HERO WITH QUICK-BOOKING CARD & MOBILE STICKY CTA */}
+        {/* 2. HERO */}
         <LandingHero
           onStartBooking={handleStartBooking}
           onSignIn={() => onNavigateToAuth('patient')}
         />
 
-        {/* 3. ABOUT WITH COUNT-UP STATS PLACEHOLDERS */}
+        {/* 3. ABOUT (WITH MERGED CARE POINTS & CLEAN STATS) */}
         <LandingAbout />
 
         {/* 4. DEPARTMENTS */}
@@ -45,25 +44,22 @@ export const LandingPage = ({ onNavigateToAuth, onQuickBookDoctor, showToast }) 
           onSelectDepartment={(deptName) => handleStartBooking({ department: deptName })}
         />
 
-        {/* 5. DOCTORS WITH SNAP-SCROLL MOBILE CAROUSEL */}
+        {/* 5. DOCTORS */}
         <LandingDoctors
           onBookDoctor={handleBookDoctor}
         />
 
-        {/* 6. WHY CHOOSE US TRUST POINTS */}
-        <LandingWhyChooseUs />
-
-        {/* 7. LOCATIONS / FIND US */}
+        {/* 6. LOCATIONS / FIND US */}
         <LandingLocations showToast={showToast} />
 
-        {/* 8. FINAL CTA BAND WITH WARM ACCENT GLOW */}
+        {/* 7. FINAL CTA BAND WITH WARM ACCENT GLOW */}
         <LandingCtaBand
           onStartBooking={() => handleStartBooking()}
           onSignIn={() => onNavigateToAuth('patient')}
         />
       </main>
 
-      {/* 9. FOOTER */}
+      {/* 8. FOOTER */}
       <LandingFooter
         onNavigateToAuth={(role) => onNavigateToAuth(role)}
       />

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Calendar, Stethoscope, MapPin, ArrowRight, ShieldCheck, Clock, CheckCircle2, Award, FileText } from 'lucide-react';
-import { clinic, isPlaceholder } from '../../config/clinic';
+import { Calendar, Stethoscope, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const LandingHero = ({ onStartBooking, onSignIn }) => {
-  const [selectedDept, setSelectedDept] = useState('General Medicine');
+  const [selectedDept] = useState('General Medicine');
 
   const handleScrollToSection = (sectionId) => {
     const el = document.getElementById(sectionId);
@@ -17,88 +16,85 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
       className="landing-hero-section"
       style={{
         position: 'relative',
-        padding: '64px 24px 88px',
+        padding: '36px 24px 48px',
         maxWidth: '1280px',
-        margin: '0 auto',
-        overflow: 'hidden'
+        margin: '0 auto'
       }}
     >
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.18fr 0.82fr',
-          gap: '48px',
+          gridTemplateColumns: '1.15fr 0.85fr',
+          gap: '36px',
           alignItems: 'center'
         }}
         className="hero-grid-container"
       >
-        {/* LEFT COLUMN: HEADLINE, ACCREDITATION, ACTIONS, TRUST HIGHLIGHTS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* LEFT COLUMN: HEADLINE, COPY, ACTIONS, CHECKMARKS */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/* INSTITUTIONAL ACCREDITATION BADGE */}
+          {/* SMALL WELCOME BADGE */}
           <div
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: '6px',
               backgroundColor: 'var(--mint)',
               color: 'var(--deep-teal)',
-              padding: '6px 16px',
+              padding: '4px 14px',
               borderRadius: '9999px',
-              fontSize: '0.84rem',
-              fontWeight: '700',
-              width: 'fit-content',
-              border: '1px solid rgba(15, 107, 99, 0.18)',
-              boxShadow: '0 1px 4px rgba(15, 79, 74, 0.04)'
+              fontSize: '0.82rem',
+              fontWeight: '600',
+              width: 'fit-content'
             }}
           >
-            <ShieldCheck size={16} color="var(--primary-teal)" />
-            <span>NABH Accredited In-Clinic Care • Verified Senior Faculty</span>
+            <span>Outpatient Medical Care</span>
           </div>
 
-          {/* MAIN HEADLINE */}
+          {/* MAIN HEADLINE (Fraunces 500, lighter, smaller) */}
           <h1
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2.4rem, 4.6vw, 3.4rem)',
-              lineHeight: 1.16,
-              fontWeight: '700',
+              fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+              lineHeight: 1.2,
+              fontWeight: 500,
               color: 'var(--deep-teal)',
-              letterSpacing: 'normal'
+              letterSpacing: 'normal',
+              margin: 0
             }}
           >
-            Excellence in Clinical Medicine, Guided by Integrity & Compassion.
+            Personalized medical care from doctors who take the time to listen.
           </h1>
 
-          {/* SUPPORT TEXT */}
+          {/* SHORT GROUNDED COPY */}
           <p
             style={{
-              fontSize: '1.12rem',
+              fontSize: '1.02rem',
               color: 'var(--text-secondary)',
-              lineHeight: 1.65,
-              maxWidth: '580px'
+              lineHeight: 1.6,
+              maxWidth: '540px',
+              margin: 0
             }}
           >
-            Consult with distinguished senior physicians from premier institutes (AIIMS, PGIMER, CMC Vellore). Experience unhurried 25+ minute appointments, zero waiting queues, and comprehensive on-site diagnostics.
+            Consult with our doctors in clinic, complete routine tests on site, and access your digital visit records anytime.
           </p>
 
           {/* ACTION BUTTONS ROW */}
-          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
             <button
               type="button"
               onClick={() => onStartBooking({ department: selectedDept })}
               className="btn btn-primary"
               style={{
-                fontSize: '1rem',
-                padding: '13px 30px',
+                fontSize: '0.96rem',
+                padding: '11px 26px',
                 borderRadius: '9999px',
-                boxShadow: '0 4px 16px rgba(15, 107, 99, 0.35)',
-                fontWeight: '700'
+                fontWeight: '600'
               }}
             >
-              <Calendar size={18} />
-              <span>Book a Consultation</span>
-              <ArrowRight size={18} />
+              <Calendar size={17} />
+              <span>Book an appointment</span>
+              <ArrowRight size={17} />
             </button>
 
             <button
@@ -106,200 +102,71 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
               onClick={() => handleScrollToSection('doctors')}
               className="btn btn-secondary"
               style={{
-                fontSize: '1rem',
-                padding: '13px 26px',
+                fontSize: '0.96rem',
+                padding: '11px 22px',
                 borderRadius: '9999px',
-                fontWeight: '600'
+                fontWeight: '500'
               }}
             >
-              <Stethoscope size={17} color="var(--primary-teal)" />
-              <span>Explore Specialists</span>
+              <Stethoscope size={16} color="var(--primary-teal)" />
+              <span>Our doctors</span>
             </button>
           </div>
 
-          {/* KEY CLINICAL TRUST BULLETS */}
+          {/* CHECKMARKS: TWO ROWS OF TWO */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '14px',
-              paddingTop: '20px',
+              gridTemplateColumns: 'repeat(2, minmax(180px, 1fr))',
+              gap: '10px 16px',
+              paddingTop: '16px',
               borderTop: '1px solid var(--border-color)'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: '600' }}>
-              <CheckCircle2 size={17} color="var(--primary-teal)" />
-              <span>Confirmed In-Clinic OPD Slots</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
+              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <span>In-person doctor visits</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: '600' }}>
-              <Clock size={17} color="var(--primary-teal)" />
-              <span>25+ Min Dedicated Doctor Time</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
+              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <span>Same-day appointment slots</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: '600' }}>
-              <Award size={17} color="var(--primary-teal)" />
-              <span>AIIMS & Premier Faculty Pedigree</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
+              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <span>On-site routine testing</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', fontSize: '0.88rem', color: 'var(--text-main)', fontWeight: '600' }}>
-              <FileText size={17} color="var(--primary-teal)" />
-              <span>Instant Digital Diagnostic Reports</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
+              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
+              <span>Digital prescriptions & notes</span>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: PREMIER CLINICAL SHOWCASE */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          
-          {/* HERO IMAGE CONTAINER WITH ACCREDITED OVERLAY */}
+        {/* RIGHT COLUMN: CLEAN CLINIC IMAGE (NO TEXT OVERLAY, NO DUPLICATE STATS) */}
+        <div>
           <div
             style={{
               position: 'relative',
-              borderRadius: '24px',
+              borderRadius: '20px',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              border: '1px solid rgba(15, 79, 74, 0.15)',
-              minHeight: '380px',
-              backgroundColor: 'var(--deep-teal)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              backgroundImage: 'url(https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1000)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              boxShadow: 'var(--shadow-md)',
+              border: '1px solid var(--border-color)',
+              height: '340px',
+              backgroundColor: 'var(--mint-light)'
             }}
           >
-            {/* GRADIENT OVERLAY */}
-            <div
+            <img
+              src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=900"
+              alt="Jivaka Clinic reception and consultation area"
               style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(180deg, rgba(15, 79, 74, 0.2) 0%, rgba(15, 79, 74, 0.92) 100%)'
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
               }}
+              loading="eager"
             />
-
-            {/* TOP RIGHT ACTIVE ON-SITE STATUS BADGE */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '20px',
-                right: '20px',
-                zIndex: 3,
-                backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                backdropFilter: 'blur(8px)',
-                padding: '6px 14px',
-                borderRadius: '9999px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
-                fontSize: '0.78rem',
-                fontWeight: '700',
-                color: 'var(--deep-teal)'
-              }}
-            >
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: '#16a34a'
-                }}
-              />
-              <span>Faculty Active On-Site</span>
-            </div>
-
-            {/* BOTTOM SHOWCASE CONTENT */}
-            <div
-              style={{
-                position: 'relative',
-                zIndex: 2,
-                padding: '28px',
-                color: '#ffffff'
-              }}
-            >
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '4px 12px',
-                  borderRadius: '9999px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.22)',
-                  backdropFilter: 'blur(8px)',
-                  fontSize: '0.78rem',
-                  fontWeight: '700',
-                  marginBottom: '10px',
-                  color: '#ffffff'
-                }}
-              >
-                <ShieldCheck size={14} color="#DCEFE6" />
-                NABH Level-3 Compliant Clinic
-              </div>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.45rem', fontWeight: '700', margin: '0 0 6px 0', color: '#ffffff' }}>
-                Center for Advanced Outpatient Practice
-              </h2>
-              <p style={{ fontSize: '0.88rem', color: '#DCEFE6', margin: 0, lineHeight: 1.5, maxWidth: '440px' }}>
-                State-of-the-art sterile consultation suites, digitized health records, and computerized pathology testing.
-              </p>
-            </div>
           </div>
-
-          {/* CLINICAL VALUE CARDS ROW */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                padding: '16px 14px',
-                border: '1px solid var(--border-color)',
-                boxShadow: 'var(--shadow-sm)',
-                textAlign: 'center'
-              }}
-            >
-              <div style={{ fontSize: '1.45rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
-                18+
-              </div>
-              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
-                Senior Specialists
-              </div>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                padding: '16px 14px',
-                border: '1px solid var(--border-color)',
-                boxShadow: 'var(--shadow-sm)',
-                textAlign: 'center'
-              }}
-            >
-              <div style={{ fontSize: '1.45rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
-                &lt; 4 hrs
-              </div>
-              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
-                Digital Lab Reports
-              </div>
-            </div>
-
-            <div
-              style={{
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                padding: '16px 14px',
-                border: '1px solid var(--border-color)',
-                boxShadow: 'var(--shadow-sm)',
-                textAlign: 'center'
-              }}
-            >
-              <div style={{ fontSize: '1.45rem', fontWeight: '800', color: 'var(--primary-teal)', fontFamily: 'Fraunces, serif' }}>
-                99.4%
-              </div>
-              <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '2px' }}>
-                Patient Trust
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -323,11 +190,11 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
         }}
       >
         <div>
-          <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
-            Need an In-Clinic Specialist?
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+            Consult our doctors
           </div>
-          <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
-            Confirmed Same-Day Slots
+          <div style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)' }}>
+            In-clinic appointments
           </div>
         </div>
 
@@ -336,15 +203,14 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
           onClick={() => onStartBooking({ department: selectedDept })}
           className="btn btn-primary"
           style={{
-            padding: '10px 20px',
+            padding: '9px 18px',
             borderRadius: '9999px',
-            fontSize: '0.90rem',
-            boxShadow: '0 2px 10px rgba(15, 107, 99, 0.3)',
-            fontWeight: '700'
+            fontSize: '0.88rem',
+            fontWeight: '600'
           }}
         >
-          <span>Book Visit</span>
-          <ArrowRight size={16} />
+          <span>Book visit</span>
+          <ArrowRight size={15} />
         </button>
       </div>
     </section>

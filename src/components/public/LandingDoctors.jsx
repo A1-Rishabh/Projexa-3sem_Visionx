@@ -1,31 +1,17 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, ArrowRight, ShieldCheck, CheckCircle2, GraduationCap } from 'lucide-react';
+import { ArrowRight, User } from 'lucide-react';
 import { getDoctors } from '../../services/mockDataStore';
+import { Modal } from '../common/Modal';
 
 export const LandingDoctors = ({ onBookDoctor }) => {
   const [doctors] = useState(() => getDoctors());
-  const [brokenImages, setBrokenImages] = useState({});
-
-  const handleImageError = (docId) => {
-    setBrokenImages((prev) => ({ ...prev, [docId]: true }));
-  };
-
-  const getInitials = (name) => {
-    if (!name) return 'DR';
-    return name
-      .replace(/^Dr\.\s*/i, '')
-      .split(' ')
-      .map((n) => n[0])
-      .slice(0, 2)
-      .join('')
-      .toUpperCase();
-  };
+  const [selectedDoctorModal, setSelectedDoctorModal] = useState(null);
 
   return (
     <section
       id="doctors"
       style={{
-        padding: '88px 24px',
+        padding: '64px 24px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
@@ -33,60 +19,37 @@ export const LandingDoctors = ({ onBookDoctor }) => {
       {/* HEADER */}
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          marginBottom: '44px',
-          flexWrap: 'wrap',
-          gap: '20px'
+          marginBottom: '36px',
+          maxWidth: '640px'
         }}
       >
-        <div style={{ maxWidth: '640px' }}>
-          <div
-            style={{
-              fontSize: '0.85rem',
-              fontWeight: '700',
-              color: 'var(--primary-teal)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              marginBottom: '8px'
-            }}
-          >
-            Senior Medical Faculty
-          </div>
-          <h2
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2.1rem, 3.6vw, 2.7rem)',
-              lineHeight: 1.22,
-              color: 'var(--deep-teal)',
-              marginBottom: '12px'
-            }}
-          >
-            Meet our board-certified clinical specialists.
-          </h2>
-          <p style={{ fontSize: '1.02rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-            Each physician brings extensive tertiary hospital experience, evidence-based practices, and an unhurried, attentive approach to outpatient consultations.
-          </p>
-        </div>
-
         <div
           style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: 'var(--mint)',
-            color: 'var(--deep-teal)',
-            padding: '8px 16px',
-            borderRadius: '9999px',
-            fontWeight: '700',
-            fontSize: '0.86rem',
-            border: '1px solid rgba(15, 107, 99, 0.18)'
+            fontSize: '0.82rem',
+            fontWeight: '600',
+            color: 'var(--primary-teal)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            marginBottom: '6px'
           }}
         >
-          <ShieldCheck size={18} color="var(--primary-teal)" />
-          <span>Active Senior Physicians On-Site</span>
+          Our Doctors
         </div>
+        <h2
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+            lineHeight: 1.25,
+            fontWeight: 500,
+            color: 'var(--deep-teal)',
+            marginBottom: '10px'
+          }}
+        >
+          Experienced doctors dedicated to your care.
+        </h2>
+        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+          Consult with our medical practitioners for routine checkups, specialized consultations, and ongoing family healthcare.
+        </p>
       </div>
 
       {/* DOCTORS CAROUSEL / GRID */}
@@ -94,196 +57,194 @@ export const LandingDoctors = ({ onBookDoctor }) => {
         className="doctors-carousel"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+          gap: '20px'
         }}
       >
-        {doctors.map((doc) => {
-          const isBroken = brokenImages[doc.id];
-          const nextSlot = doc.availableSlots?.[0] || '10:00 AM';
-
+        {doctors.map((doc, idx) => {
           return (
             <div
-              key={doc.id}
+              key={doc.id || idx}
               className="card-interactive doctor-card-snap"
               style={{
                 backgroundColor: '#ffffff',
-                borderRadius: '20px',
-                padding: '26px',
+                borderRadius: '16px',
+                padding: '22px',
                 border: '1px solid var(--border-color)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 4px 16px rgba(15, 79, 74, 0.05)'
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
               <div>
-                {/* DOCTOR PHOTO / INITIALS AVATAR */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                {/* ONE CONSISTENT DOCTOR AVATAR STYLE (INITIALS AVATAR UNTIL REAL PHOTOS EXIST) */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
                   <div
                     style={{
-                      width: '70px',
-                      height: '70px',
-                      borderRadius: '16px',
-                      overflow: 'hidden',
+                      width: '56px',
+                      height: '56px',
+                      borderRadius: '14px',
                       backgroundColor: 'var(--mint)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0,
-                      boxShadow: '0 2px 10px rgba(15, 79, 74, 0.12)'
+                      color: 'var(--primary-teal)',
+                      fontWeight: '700',
+                      fontSize: '1.05rem',
+                      fontFamily: 'var(--font-heading)'
                     }}
                   >
-                    {!isBroken && doc.avatar ? (
-                      <img
-                        src={doc.avatar}
-                        alt={`Portrait of ${doc.name}`}
-                        loading="lazy"
-                        width="70"
-                        height="70"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        onError={() => handleImageError(doc.id)}
-                      />
-                    ) : (
-                      <div
-                        style={{
-                          fontSize: '1.30rem',
-                          fontWeight: '800',
-                          fontFamily: 'var(--font-heading)',
-                          color: 'var(--primary-teal)'
-                        }}
-                      >
-                        {getInitials(doc.name)}
-                      </div>
-                    )}
+                    DR
                   </div>
 
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        padding: '3px 9px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#dcfce7',
-                        color: 'var(--primary-teal)',
-                        fontSize: '0.72rem',
-                        fontWeight: '700',
-                        marginBottom: '4px'
-                      }}
-                    >
-                      <CheckCircle2 size={11} />
-                      <span>Available today</span>
-                    </div>
-
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <h3
                       style={{
                         fontFamily: 'var(--font-heading)',
-                        fontSize: '1.20rem',
-                        fontWeight: '700',
+                        fontSize: '1.15rem',
+                        fontWeight: 500,
                         color: 'var(--text-main)',
                         margin: 0,
-                        lineHeight: 1.25
+                        lineHeight: 1.3
                       }}
                     >
-                      {doc.name}
+                      [Doctor name]
                     </h3>
 
-                    <div style={{ fontSize: '0.84rem', fontWeight: '700', color: 'var(--primary-teal)' }}>
-                      {doc.specialization}
+                    <div style={{ fontSize: '0.84rem', fontWeight: '500', color: 'var(--primary-teal)', marginTop: '2px' }}>
+                      [Specialty]
                     </div>
                   </div>
                 </div>
 
-                {/* QUALIFICATIONS & EXPERIENCE */}
-                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '14px', lineHeight: 1.45 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600', color: 'var(--deep-teal)' }}>
-                    <GraduationCap size={15} color="var(--primary-teal)" />
-                    <span>{doc.title}</span>
-                  </div>
-                  <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
-                    {doc.experience} of Tertiary Clinical Experience
-                  </div>
-                </div>
-
-                {/* ROOM & RATING */}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '8px 12px',
-                    borderRadius: '10px',
-                    backgroundColor: 'var(--warm-cream)',
-                    fontSize: '0.78rem',
-                    color: 'var(--text-main)',
-                    marginBottom: '16px'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '600' }}>
-                    <MapPin size={13} color="var(--primary-teal)" />
-                    <span>{doc.room}</span>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '700' }}>
-                    <Star size={13} fill="#E8A25C" color="#E8A25C" />
-                    <span>{doc.rating}</span>
-                    <span style={{ color: 'var(--text-muted)', fontWeight: '400' }}>({doc.reviewsCount} reviews)</span>
-                  </div>
-                </div>
-
-                {/* BIO */}
+                {/* TWO-LINE BIO CLAMP WITH VIEW PROFILE */}
                 <p
                   style={{
-                    fontSize: '0.86rem',
+                    fontSize: '0.85rem',
                     color: 'var(--text-secondary)',
                     lineHeight: 1.5,
-                    marginBottom: '18px',
+                    marginBottom: '8px',
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                     overflow: 'hidden'
                   }}
                 >
-                  {doc.bio}
+                  {doc.bio || 'General outpatient consultation, diagnosis, and treatment planning.'}
                 </p>
-              </div>
-
-              {/* FOOTER: CLINICAL OPD & BOOK BUTTON (NO FEES DISPLAYED) */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  paddingTop: '16px',
-                  borderTop: '1px solid var(--border-color)',
-                  gap: '8px'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', textTransform: 'uppercase', fontWeight: '700' }}>
-                    Consultation
-                  </div>
-                  <div style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
-                    In-Clinic OPD
-                  </div>
-                </div>
 
                 <button
                   type="button"
-                  onClick={() => onBookDoctor(doc)}
-                  className="btn btn-primary btn-sm"
-                  style={{ borderRadius: '9999px', padding: '8px 20px', fontWeight: '700', fontSize: '0.84rem' }}
+                  onClick={() => setSelectedDoctorModal(doc)}
+                  style={{
+                    fontSize: '0.80rem',
+                    color: 'var(--primary-teal)',
+                    fontWeight: '600',
+                    padding: 0,
+                    marginBottom: '16px',
+                    background: 'none',
+                    border: 'none',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    textDecoration: 'underline'
+                  }}
                 >
-                  <span>Book visit</span>
-                  <ArrowRight size={14} />
+                  View profile
+                </button>
+              </div>
+
+              {/* FOOTER: BOOK BUTTON */}
+              <div
+                style={{
+                  paddingTop: '14px',
+                  borderTop: '1px solid var(--border-color)',
+                  display: 'flex',
+                  justifyContent: 'flex-end'
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => onBookDoctor(doc)}
+                  className="btn btn-primary btn-sm btn-block"
+                  style={{ borderRadius: '9999px', padding: '7px 16px', fontWeight: '600', fontSize: '0.84rem' }}
+                >
+                  <span>Book appointment</span>
+                  <ArrowRight size={13} />
                 </button>
               </div>
             </div>
           );
         })}
       </div>
+
+      {/* DOCTOR PROFILE MODAL */}
+      <Modal
+        isOpen={!!selectedDoctorModal}
+        onClose={() => setSelectedDoctorModal(null)}
+        title="Doctor Profile"
+        maxWidth="480px"
+      >
+        {selectedDoctorModal && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div
+                style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '12px',
+                  backgroundColor: 'var(--mint)',
+                  color: 'var(--primary-teal)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: '700',
+                  fontSize: '1rem',
+                  fontFamily: 'var(--font-heading)'
+                }}
+              >
+                DR
+              </div>
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.15rem', fontWeight: 500, margin: 0, color: 'var(--deep-teal)' }}>
+                  [Doctor name]
+                </h3>
+                <div style={{ fontSize: '0.84rem', color: 'var(--primary-teal)', fontWeight: '500' }}>
+                  [Specialty]
+                </div>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '0.90rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+              {selectedDoctorModal.bio || 'Consulting outpatient physician at Jivaka Clinic.'}
+            </p>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '8px', paddingTop: '12px', borderTop: '1px solid var(--border-color)' }}>
+              <button
+                type="button"
+                onClick={() => setSelectedDoctorModal(null)}
+                className="btn btn-secondary btn-sm"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const d = selectedDoctorModal;
+                  setSelectedDoctorModal(null);
+                  onBookDoctor(d);
+                }}
+                className="btn btn-primary btn-sm"
+                style={{ fontWeight: '600' }}
+              >
+                <span>Book appointment</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </section>
   );
 };

@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  AlertCircle, 
-  ExternalLink, 
-  Copy, 
-  Check, 
-  Navigation,
-  Compass,
-  CheckCircle2,
-  ShieldCheck
-} from 'lucide-react';
+import { MapPin, Phone, Clock, AlertCircle, Copy, Check, Navigation } from 'lucide-react';
 import { clinic, isPlaceholder, getMapEmbedUrl, getDirectionsUrl } from '../../config/clinic';
 
 export const LandingLocations = ({ showToast }) => {
   const [activeBranchId, setActiveBranchId] = useState(clinic.branches[0]?.id || 'main');
   const [copiedText, setCopiedText] = useState(false);
-  const [locationMessage, setLocationMessage] = useState('');
 
   const branches = clinic.branches || [];
-  const currentBranch = branches.find((b) => b.id === activeBranchId) || branches[0];
+  const currentBranch = branches.find((b) => b.id === activeBranchId) || branches[0] || {};
   const hasMultipleBranches = branches.length > 1;
 
   const isQueryPlaceholder = isPlaceholder(currentBranch?.mapQuery);
@@ -29,59 +15,22 @@ export const LandingLocations = ({ showToast }) => {
   const isPhonePlaceholder = isPlaceholder(currentBranch?.phone);
   const isEmergencyPlaceholder = isPlaceholder(currentBranch?.emergency);
 
-  const displayAddress = isAddressPlaceholder 
-    ? 'Jivaka Health Tower, 4th Cross, Indiranagar, Bengaluru, Karnataka 560038' 
-    : currentBranch.address;
-
-  const displayPhone = isPhonePlaceholder 
-    ? '+91 98765 43210' 
-    : currentBranch.phone;
-
-  const displayEmergency = isEmergencyPlaceholder 
-    ? '1800-200-4567' 
-    : currentBranch.emergency;
-
-  const clinicAmenities = [
-    'Complimentary Patient Valet & Parking',
-    'Full Wheelchair Access & Stretcher Lift',
-    'On-Site 24/7 Accredited Pharmacy',
-    'Air-Conditioned Waiting Lounges'
-  ];
-
   // Copy address handler
   const handleCopyAddress = () => {
-    navigator.clipboard.writeText(displayAddress);
+    if (isAddressPlaceholder || !currentBranch?.address) return;
+    navigator.clipboard.writeText(currentBranch.address);
     setCopiedText(true);
-    if (showToast) showToast('Clinic address copied to clipboard', 'success');
+    if (showToast) showToast('Address copied to clipboard', 'success');
     setTimeout(() => setCopiedText(false), 2000);
   };
 
-  // Optional "Use my location" handler
-  const handleUseMyLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationMessage('Geolocation is not supported by your browser.');
-      return;
-    }
-
-    setLocationMessage('Locating nearest Jivaka Clinic center...');
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocationMessage(`Showing nearest center: ${isPlaceholder(currentBranch.label) ? 'Main Healthcare Campus' : currentBranch.label}`);
-        setTimeout(() => setLocationMessage(''), 4000);
-      },
-      (err) => {
-        setLocationMessage('Location permission was denied or unavailable.');
-        setTimeout(() => setLocationMessage(''), 4000);
-      },
-      { timeout: 8000 }
-    );
-  };
+  const hasRealMap = !isAddressPlaceholder && !isQueryPlaceholder;
 
   return (
     <section
       id="locations"
       style={{
-        padding: '88px 24px',
+        padding: '64px 24px',
         backgroundColor: '#ffffff',
         borderTop: '1px solid var(--border-color)'
       }}
@@ -89,57 +38,34 @@ export const LandingLocations = ({ showToast }) => {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* SECTION HEADER */}
-        <div style={{ textAlign: 'center', maxWidth: '680px', margin: '0 auto 48px' }}>
+        <div style={{ maxWidth: '640px', marginBottom: '36px' }}>
           <div
             style={{
-              fontSize: '0.85rem',
-              fontWeight: '700',
+              fontSize: '0.82rem',
+              fontWeight: '600',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              marginBottom: '8px'
+              marginBottom: '6px'
             }}
           >
-            Location & Outpatient Timings
+            Location
           </div>
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2.1rem, 3.6vw, 2.7rem)',
-              lineHeight: 1.22,
+              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+              lineHeight: 1.25,
+              fontWeight: 500,
               color: 'var(--deep-teal)',
-              marginBottom: '14px'
+              marginBottom: '10px'
             }}
           >
-            Visit Our Main Healthcare Campus.
+            Clinic location and hours.
           </h2>
-          <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-            Centrally situated with direct road access, barrier-free patient drop-off, dedicated wheelchair ramps, and an in-house phlebotomy collection desk.
+          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+            Our clinic address, contact desk, and outpatient consultation hours.
           </p>
-
-          {/* AMENITIES PILLS */}
-          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', marginTop: '20px' }}>
-            {clinicAmenities.map((amenity) => (
-              <span
-                key={amenity}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  backgroundColor: 'var(--mint-light)',
-                  color: 'var(--deep-teal)',
-                  padding: '5px 12px',
-                  borderRadius: '9999px',
-                  fontSize: '0.78rem',
-                  fontWeight: '600',
-                  border: '1px solid rgba(15, 107, 99, 0.12)'
-                }}
-              >
-                <CheckCircle2 size={13} color="var(--primary-teal)" />
-                <span>{amenity}</span>
-              </span>
-            ))}
-          </div>
         </div>
 
         {/* BRANCH SELECTOR TABS (SHOWN AUTOMATICALLY IF >1 BRANCH) */}
@@ -147,9 +73,8 @@ export const LandingLocations = ({ showToast }) => {
           <div
             style={{
               display: 'flex',
-              justifyContent: 'center',
-              gap: '12px',
-              marginBottom: '32px',
+              gap: '10px',
+              marginBottom: '24px',
               flexWrap: 'wrap'
             }}
           >
@@ -158,107 +83,95 @@ export const LandingLocations = ({ showToast }) => {
                 key={b.id}
                 type="button"
                 onClick={() => setActiveBranchId(b.id)}
-                className={`btn ${activeBranchId === b.id ? 'btn-primary' : 'btn-secondary'}`}
-                style={{ borderRadius: '9999px', padding: '8px 24px' }}
+                className={`btn ${activeBranchId === b.id ? 'btn-primary' : 'btn-secondary'} btn-sm`}
+                style={{ borderRadius: '9999px', padding: '6px 18px' }}
               >
-                <MapPin size={16} />
-                <span>{isPlaceholder(b.label) ? `Branch (${b.id})` : b.label}</span>
+                <MapPin size={14} />
+                <span>{b.label}</span>
               </button>
             ))}
           </div>
         )}
 
-        {/* LOCATION DISPLAY: MAP (LEFT) & INFO CARD (RIGHT) */}
+        {/* LOCATION DISPLAY: MAP OR LOCATION COMING SOON (LEFT) & INFO CARD (RIGHT) */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: '1.15fr 0.85fr',
-            gap: '32px',
+            gap: '28px',
             alignItems: 'stretch'
           }}
           className="location-grid-container"
         >
-          {/* MAP OR VISUAL CAMPUS PANEL */}
+          {/* MAP OR "LOCATION COMING SOON" PANEL */}
           <div
             style={{
-              borderRadius: '20px',
+              borderRadius: '16px',
               overflow: 'hidden',
               border: '1px solid var(--border-color)',
-              minHeight: '400px',
-              backgroundColor: 'var(--mint)',
+              minHeight: '340px',
+              backgroundColor: 'var(--mint-light)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               boxShadow: 'var(--shadow-sm)'
             }}
           >
-            {!isQueryPlaceholder ? (
+            {hasRealMap ? (
               /* REAL GOOGLE MAPS EMBED IFRAME */
               <iframe
-                title={`Map of ${clinic.name} - ${currentBranch?.label || 'Main Campus'}`}
+                title={`Map of ${clinic.name} - ${currentBranch?.label || 'Clinic'}`}
                 src={getMapEmbedUrl(currentBranch.mapQuery)}
                 width="100%"
                 height="100%"
-                style={{ border: 0, minHeight: '400px', display: 'block' }}
+                style={{ border: 0, minHeight: '340px', display: 'block' }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
             ) : (
-              /* CLEAN ARCHITECTURAL CAMPUS CARD */
+              /* CLEAN "LOCATION COMING SOON" PANEL */
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '40px 28px',
+                  padding: '36px 24px',
                   textAlign: 'center',
                   color: 'var(--deep-teal)',
                   width: '100%',
-                  height: '100%',
-                  minHeight: '400px',
-                  background: 'linear-gradient(135deg, rgba(220, 239, 230, 0.5) 0%, rgba(250, 246, 236, 0.9) 100%)'
+                  height: '100%'
                 }}
               >
                 <div
                   style={{
-                    width: '68px',
-                    height: '68px',
+                    width: '56px',
+                    height: '56px',
                     borderRadius: '50%',
                     backgroundColor: '#ffffff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: '16px',
-                    boxShadow: '0 4px 16px rgba(15, 79, 74, 0.12)'
+                    marginBottom: '14px',
+                    boxShadow: 'var(--shadow-sm)'
                   }}
                 >
-                  <MapPin size={32} color="var(--primary-teal)" />
+                  <MapPin size={26} color="var(--primary-teal)" />
                 </div>
                 <h3
                   style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '1.4rem',
-                    fontWeight: '700',
-                    marginBottom: '8px',
+                    fontSize: '1.25rem',
+                    fontWeight: 500,
+                    marginBottom: '6px',
                     color: 'var(--deep-teal)'
                   }}
                 >
-                  Jivaka Main Healthcare Campus
+                  Location coming soon
                 </h3>
-                <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', maxWidth: '380px', lineHeight: 1.6, marginBottom: '20px' }}>
-                  {displayAddress}
+                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: 1.5, margin: 0 }}>
+                  Clinic address and map location will be updated once finalized.
                 </p>
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(displayAddress)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-sm"
-                  style={{ borderRadius: '9999px', padding: '8px 22px', fontWeight: '700' }}
-                >
-                  <Navigation size={15} />
-                  <span>Open in Google Maps</span>
-                </a>
               </div>
             )}
           </div>
@@ -268,143 +181,134 @@ export const LandingLocations = ({ showToast }) => {
             className="card-interactive"
             style={{
               backgroundColor: 'var(--warm-cream)',
-              borderRadius: '20px',
-              padding: '32px',
+              borderRadius: '16px',
+              padding: '28px',
               border: '1px solid var(--border-color)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              gap: '24px',
-              boxShadow: '0 4px 16px rgba(15, 79, 74, 0.05)'
+              gap: '20px',
+              boxShadow: 'var(--shadow-sm)'
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               
-              {/* BRANCH LABEL & STATUS BADGE */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.35rem', color: 'var(--deep-teal)', margin: 0 }}>
-                  {isPlaceholder(currentBranch.label) ? 'Main Healthcare Campus' : currentBranch.label}
+              {/* BRANCH LABEL */}
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 500, color: 'var(--deep-teal)', margin: 0 }}>
+                  {currentBranch.label || clinic.name}
                 </h3>
-
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '4px 12px',
-                    borderRadius: '9999px',
-                    backgroundColor: '#dcfce7',
-                    color: 'var(--primary-teal)',
-                    fontSize: '0.78rem',
-                    fontWeight: '700'
-                  }}
-                >
-                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--primary-teal)' }} />
-                  <span>OPD Open</span>
-                </span>
               </div>
 
               {/* ADDRESS */}
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="mint-icon-box" style={{ width: '40px', height: '40px', borderRadius: '12px' }}>
-                  <MapPin size={18} />
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px' }}>
+                  <MapPin size={16} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.74rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    Physical Address
+                  <div style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                    Address
                   </div>
-                  <div style={{ fontSize: '0.94rem', color: 'var(--text-main)', fontWeight: '600', lineHeight: 1.5 }}>
-                    {displayAddress}
+                  <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500', lineHeight: 1.45 }}>
+                    {currentBranch.address}
                   </div>
                 </div>
               </div>
 
               {/* PHONE */}
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="mint-icon-box" style={{ width: '40px', height: '40px', borderRadius: '12px' }}>
-                  <Phone size={18} />
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px' }}>
+                  <Phone size={16} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.74rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    OPD Appointments & Helpdesk
+                  <div style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                    Phone
                   </div>
-                  <a
-                    href={`tel:${displayPhone}`}
-                    style={{ fontSize: '0.95rem', color: 'var(--primary-teal)', fontWeight: '700', textDecoration: 'none' }}
-                  >
-                    {displayPhone}
-                  </a>
+                  {!isPhonePlaceholder ? (
+                    <a
+                      href={`tel:${currentBranch.phone}`}
+                      style={{ fontSize: '0.90rem', color: 'var(--primary-teal)', fontWeight: '600', textDecoration: 'none' }}
+                    >
+                      {currentBranch.phone}
+                    </a>
+                  ) : (
+                    <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500' }}>
+                      {currentBranch.phone}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* EMERGENCY LINE */}
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="mint-icon-box" style={{ width: '40px', height: '40px', borderRadius: '12px', backgroundColor: '#fee2e2', color: '#dc2626' }}>
-                  <AlertCircle size={18} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.74rem', fontWeight: '700', color: '#dc2626', textTransform: 'uppercase' }}>
-                    24/7 Emergency Triage Line
+              {/* EMERGENCY LINE (IF CONFIGURED) */}
+              {currentBranch.emergency && (
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#fee2e2', color: '#dc2626' }}>
+                    <AlertCircle size={16} />
                   </div>
-                  <a
-                    href={`tel:${displayEmergency}`}
-                    style={{ fontSize: '0.94rem', color: '#dc2626', fontWeight: '700', textDecoration: 'none' }}
-                  >
-                    {displayEmergency}
-                  </a>
+                  <div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: '600', color: '#dc2626', textTransform: 'uppercase' }}>
+                      Emergency
+                    </div>
+                    {!isEmergencyPlaceholder ? (
+                      <a
+                        href={`tel:${currentBranch.emergency}`}
+                        style={{ fontSize: '0.90rem', color: '#dc2626', fontWeight: '600', textDecoration: 'none' }}
+                      >
+                        {currentBranch.emergency}
+                      </a>
+                    ) : (
+                      <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500' }}>
+                        {currentBranch.emergency}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* OPERATING HOURS TABLE */}
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
-                <div style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--deep-teal)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={15} color="var(--primary-teal)" />
-                  <span>Outpatient Consultation Hours</span>
+              {/* OPERATING HOURS */}
+              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
+                <div style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--deep-teal)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Clock size={14} color="var(--primary-teal)" />
+                  <span>Consultation Hours</span>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
-                    <span>Monday – Saturday</span>
-                    <span style={{ fontWeight: '700', color: 'var(--text-main)' }}>8:00 AM – 8:00 PM</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.86rem', color: 'var(--text-secondary)' }}>
-                    <span>Sunday</span>
-                    <span style={{ fontWeight: '600', color: 'var(--primary-teal)' }}>Emergency Triage & In-House Lab Only</span>
-                  </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  {currentBranch.hours?.map((h, i) => (
+                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
+                      <span>{h.days}</span>
+                      <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{h.time}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
             </div>
 
             {/* ACTION BUTTONS */}
-            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1px solid var(--border-color)', paddingTop: '16px' }}>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(displayAddress)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-sm"
-                style={{ flex: 1, textDecoration: 'none', minWidth: '130px', fontWeight: '700' }}
-              >
-                <Navigation size={15} />
-                <span>Get directions</span>
-              </a>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
+              {hasRealMap && (
+                <a
+                  href={getDirectionsUrl(currentBranch.mapQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-sm"
+                  style={{ flex: 1, textDecoration: 'none', minWidth: '120px', fontWeight: '600' }}
+                >
+                  <Navigation size={14} />
+                  <span>Get directions</span>
+                </a>
+              )}
 
-              <a
-                href={`tel:${displayPhone}`}
-                className="btn btn-secondary btn-sm"
-                style={{ textDecoration: 'none', fontWeight: '600' }}
-              >
-                <Phone size={15} />
-                <span>Call clinic</span>
-              </a>
-
-              <button
-                type="button"
-                onClick={handleCopyAddress}
-                className="btn btn-secondary btn-sm"
-              >
-                {copiedText ? <Check size={15} color="var(--primary-teal)" /> : <Copy size={15} />}
-                <span>{copiedText ? 'Copied' : 'Copy address'}</span>
-              </button>
+              {!isAddressPlaceholder && (
+                <button
+                  type="button"
+                  onClick={handleCopyAddress}
+                  className="btn btn-secondary btn-sm"
+                  style={{ fontWeight: '500' }}
+                >
+                  {copiedText ? <Check size={14} color="var(--primary-teal)" /> : <Copy size={14} />}
+                  <span>{copiedText ? 'Copied' : 'Copy address'}</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stethoscope, HeartPulse, Sparkles, Activity, ArrowRight, Check, ShieldCheck, Microscope } from 'lucide-react';
+import { Stethoscope, HeartPulse, Sparkles, Activity, ArrowRight, Check, Microscope } from 'lucide-react';
 import { Modal } from '../common/Modal';
 
 export const LandingDepartments = ({ onSelectDepartment }) => {
@@ -8,62 +8,58 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
   const departments = [
     {
       id: 'gen-med',
-      name: 'General & Internal Medicine',
-      badge: 'Primary Care & Prevention',
+      name: 'General Medicine',
+      badge: 'Primary Care',
       icon: Activity,
-      lead: 'Dr. Ananya Sharma (MD AIIMS)',
-      description: 'Comprehensive adult health assessments, acute illness management, and long-term metabolic care.',
-      services: ['Executive Health Checks', 'Diabetes & Hypertension', 'Fever & Infection Triage', 'Geriatric Health'],
+      description: 'Adult health assessments, acute illness treatment, and management of chronic conditions.',
+      services: ['Routine health checkups', 'Diabetes & blood pressure care', 'Fever & infection care', 'Preventive health advice'],
       details: [
-        'Preventative wellness checks and bi-annual executive health profiles',
-        'Hypertension, lipid disorder, and type-2 diabetes therapeutic plans',
-        'Infectious disease recovery, fever workups, and seasonal immunization',
-        'Coordination with specialist consultants for multi-system conditions'
+        'Routine adult checkups and preventative health reviews',
+        'Ongoing care for high blood pressure and diabetes',
+        'Treatment for acute viral, respiratory, and bacterial infections',
+        'Referral coordination when specialist care is needed'
       ]
     },
     {
       id: 'cardiology',
-      name: 'Cardiology & Preventive Heart Care',
-      badge: 'Cardiovascular Diagnostics',
+      name: 'Cardiology',
+      badge: 'Heart Health',
       icon: HeartPulse,
-      lead: 'Dr. Rohan Mehta (DM PGIMER)',
-      description: 'Non-invasive cardiac evaluations, digital 12-lead ECG monitoring, and preventive cardiovascular wellness.',
-      services: ['12-Lead Digital ECG', 'Hypertension Profiling', 'Lipid Management', 'Arrhythmia Screening'],
+      description: 'Outpatient heart evaluations, digital 12-lead ECG monitoring, and cardiovascular risk assessments.',
+      services: ['Digital 12-lead ECG', 'Blood pressure monitoring', 'Cholesterol management', 'Heart health checkups'],
       details: [
-        '12-lead digital electrocardiogram (ECG) and baseline arrhythmia detection',
-        'Post-infarction outpatient follow-up and chronic hypertension stabilization',
-        'Cardiovascular risk stratification and lifestyle modification plans',
-        'Lipid profiling and preventive dietary protocols'
+        'Digital 12-lead electrocardiogram (ECG) on site',
+        'Blood pressure monitoring and stabilization',
+        'Cholesterol and lipid profile assessments',
+        'Dietary and lifestyle counseling for heart health'
       ]
     },
     {
       id: 'pediatrics',
-      name: 'Pediatrics & Adolescent Care',
-      badge: 'Infant to Young Adult',
+      name: 'Pediatrics',
+      badge: 'Child Care',
       icon: Sparkles,
-      lead: 'Dr. Meera Krishnan (MD CMC Vellore)',
-      description: 'Gentle, compassionate wellness care from infant milestones through adolescent developmental health.',
-      services: ['Newborn Assessments', 'National Immunization', 'Pediatric Asthma Care', 'Growth Milestone Tracking'],
+      description: 'Gentle, friendly care for infants, children, and adolescents.',
+      services: ['Childhood wellness exams', 'Vaccination schedules', 'Cough & cold care', 'Growth & milestone tracking'],
       details: [
-        'Newborn screening, growth chart tracking, and pediatric developmental assessments',
-        'Complete childhood immunization schedule aligned with national guidelines',
-        'Acute childhood infections, asthma nebulization, and seasonal allergies',
-        'Nutritional guidance and adolescent preventive health counseling'
+        'Newborn checkups and routine childhood developmental assessments',
+        'National childhood immunization schedules',
+        'Treatment for childhood coughs, colds, and fevers',
+        'Pediatric nutritional guidance'
       ]
     },
     {
       id: 'diagnostics',
-      name: 'Pathology & Diagnostic Laboratory',
-      badge: 'NABL Certified Diagnostics',
+      name: 'Diagnostics & Lab',
+      badge: 'On-Site Testing',
       icon: Microscope,
-      lead: 'Automated In-House Desk',
-      description: 'Accredited clinical pathology, rapid hematology panels, and secure digitized laboratory reports.',
-      services: ['Complete Hemogram (CBC)', 'Renal & Liver Panels', 'Thyroid & Lipids', 'Same-Day Digital PDFs'],
+      description: 'Routine blood tests, diagnostic sampling, and secure digital lab reports.',
+      services: ['Blood cell counts (CBC)', 'Sugar & diabetes tests', 'Kidney & liver panels', 'Digital PDF reports'],
       details: [
-        'Complete Blood Count (CBC), biochemistry, renal & hepatic panels',
-        'Rapid point-of-care capillary glucose, urinalysis, and infection markers',
-        'Digitally encrypted PDF reports delivered directly to your Patient Portal',
-        'Direct synchronization with doctor consultation records'
+        'Complete blood counts and basic hematology',
+        'Fasting glucose and HbA1c tests',
+        'Liver and kidney function panels',
+        'Digital PDF reports sent directly to your patient portal'
       ]
     }
   ];
@@ -72,7 +68,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
     <section
       id="departments"
       style={{
-        padding: '88px 24px',
+        padding: '64px 24px',
         backgroundColor: '#ffffff',
         borderTop: '1px solid var(--border-color)',
         borderBottom: '1px solid var(--border-color)'
@@ -81,32 +77,33 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* SECTION HEADER */}
-        <div style={{ maxWidth: '680px', marginBottom: '48px' }}>
+        <div style={{ maxWidth: '640px', marginBottom: '40px' }}>
           <div
             style={{
-              fontSize: '0.85rem',
-              fontWeight: '700',
+              fontSize: '0.82rem',
+              fontWeight: '600',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              marginBottom: '8px'
+              marginBottom: '6px'
             }}
           >
-            Clinical Disciplines & Centers of Excellence
+            Clinical Departments
           </div>
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2.1rem, 3.6vw, 2.7rem)',
-              lineHeight: 1.22,
+              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
+              lineHeight: 1.25,
+              fontWeight: 500,
               color: 'var(--deep-teal)',
-              marginBottom: '14px'
+              marginBottom: '10px'
             }}
           >
-            Specialized departments built for comprehensive, unhurried care.
+            Our core medical services.
           </h2>
-          <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-            Our integrated outpatient departments ensure you receive cohesive clinical attention—from routine preventative screenings to complex multisystem condition management.
+          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+            Whether you need a routine checkup or specialized consultation, our departments provide coordinated care under one roof.
           </p>
         </div>
 
@@ -114,8 +111,8 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '24px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '20px'
           }}
         >
           {departments.map((dept) => {
@@ -125,9 +122,9 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                 key={dept.id}
                 className="card-interactive"
                 style={{
-                  padding: '32px 26px',
+                  padding: '28px 22px',
                   backgroundColor: 'var(--warm-cream)',
-                  borderRadius: '20px',
+                  borderRadius: '16px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -137,18 +134,18 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
               >
                 <div>
                   {/* TOP BADGE & ICON */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-                    <div className="mint-icon-box" style={{ width: '48px', height: '48px', borderRadius: '14px' }}>
-                      <Icon size={24} />
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                    <div className="mint-icon-box" style={{ width: '44px', height: '44px', borderRadius: '12px' }}>
+                      <Icon size={22} />
                     </div>
 
                     <span
                       style={{
-                        fontSize: '0.74rem',
-                        fontWeight: '700',
+                        fontSize: '0.72rem',
+                        fontWeight: '600',
                         color: 'var(--primary-teal)',
                         backgroundColor: '#ffffff',
-                        padding: '4px 10px',
+                        padding: '3px 10px',
                         borderRadius: '9999px',
                         border: '1px solid rgba(15, 107, 99, 0.15)'
                       }}
@@ -160,8 +157,8 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                   <h3
                     style={{
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '1.30rem',
-                      fontWeight: '700',
+                      fontSize: '1.2rem',
+                      fontWeight: 500,
                       color: 'var(--deep-teal)',
                       marginBottom: '8px'
                     }}
@@ -169,32 +166,28 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                     {dept.name}
                   </h3>
 
-                  <div style={{ fontSize: '0.80rem', fontWeight: '700', color: 'var(--primary-teal)', marginBottom: '12px' }}>
-                    Lead: {dept.lead}
-                  </div>
-
                   <p
                     style={{
-                      fontSize: '0.90rem',
+                      fontSize: '0.88rem',
                       color: 'var(--text-secondary)',
-                      lineHeight: 1.6,
-                      marginBottom: '20px'
+                      lineHeight: 1.55,
+                      marginBottom: '16px'
                     }}
                   >
                     {dept.description}
                   </p>
 
                   {/* CLINICAL SERVICE PILLS */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
                     {dept.services.map((svc) => (
                       <span
                         key={svc}
                         style={{
-                          fontSize: '0.74rem',
-                          fontWeight: '600',
+                          fontSize: '0.72rem',
+                          fontWeight: '500',
                           color: 'var(--text-main)',
                           backgroundColor: '#ffffff',
-                          padding: '3px 9px',
+                          padding: '3px 8px',
                           borderRadius: '6px',
                           border: '1px solid var(--border-color)'
                         }}
@@ -206,31 +199,31 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                 </div>
 
                 {/* CARD FOOTER */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '18px', borderTop: '1px solid rgba(15, 79, 74, 0.1)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '16px', borderTop: '1px solid rgba(15, 79, 74, 0.08)' }}>
                   <button
                     type="button"
                     onClick={() => setSelectedDeptModal(dept)}
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '5px',
+                      gap: '4px',
                       color: 'var(--primary-teal)',
-                      fontWeight: '700',
-                      fontSize: '0.86rem',
+                      fontWeight: '600',
+                      fontSize: '0.84rem',
                       textDecoration: 'none'
                     }}
                   >
-                    <span>Clinical scope</span>
-                    <ArrowRight size={14} />
+                    <span>Learn more</span>
+                    <ArrowRight size={13} />
                   </button>
 
                   <button
                     type="button"
                     onClick={() => onSelectDepartment(dept.name)}
                     className="btn btn-primary btn-sm"
-                    style={{ borderRadius: '9999px', fontSize: '0.82rem', padding: '6px 16px', fontWeight: '700' }}
+                    style={{ borderRadius: '9999px', fontSize: '0.80rem', padding: '5px 14px', fontWeight: '600' }}
                   >
-                    <span>Book visit</span>
+                    <span>Book</span>
                   </button>
                 </div>
               </div>
@@ -240,42 +233,28 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
 
       </div>
 
-      {/* CLINICAL SCOPE MODAL */}
+      {/* LEARN MORE MODAL */}
       <Modal
         isOpen={!!selectedDeptModal}
         onClose={() => setSelectedDeptModal(null)}
-        title={selectedDeptModal?.name || 'Department Clinical Scope'}
-        maxWidth="560px"
+        title={selectedDeptModal?.name || 'Department Details'}
+        maxWidth="540px"
       >
         {selectedDeptModal && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <div className="mint-icon-box" style={{ width: '38px', height: '38px' }}>
-                <ShieldCheck size={20} color="var(--primary-teal)" />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.76rem', textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: '700' }}>
-                  Supervising Consultant
-                </div>
-                <div style={{ fontSize: '0.94rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
-                  {selectedDeptModal.lead}
-                </div>
-              </div>
-            </div>
-
-            <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
               {selectedDeptModal.description}
             </p>
 
             <div>
-              <div style={{ fontSize: '0.90rem', fontWeight: '700', color: 'var(--deep-teal)', marginBottom: '12px' }}>
-                Clinical Scope & Diagnostic Capabilities:
+              <div style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)', marginBottom: '10px' }}>
+                Services & Capabilities:
               </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', padding: 0 }}>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', padding: 0 }}>
                 {selectedDeptModal.details.map((item, idx) => (
-                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
-                    <div className="mint-icon-box" style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, marginTop: '2px' }}>
-                      <Check size={12} color="var(--primary-teal)" />
+                  <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.86rem', color: 'var(--text-main)', lineHeight: 1.5 }}>
+                    <div className="mint-icon-box" style={{ width: '18px', height: '18px', borderRadius: '50%', flexShrink: 0, marginTop: '2px' }}>
+                      <Check size={11} color="var(--primary-teal)" />
                     </div>
                     <span>{item}</span>
                   </li>
@@ -283,7 +262,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
               </ul>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '12px', paddingTop: '16px', borderTop: '1px solid var(--border-color)' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px', paddingTop: '14px', borderTop: '1px solid var(--border-color)' }}>
               <button
                 type="button"
                 onClick={() => setSelectedDeptModal(null)}
@@ -299,10 +278,10 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                   onSelectDepartment(dept);
                 }}
                 className="btn btn-primary btn-sm"
-                style={{ fontWeight: '700' }}
+                style={{ fontWeight: '600' }}
               >
-                <span>Book consultation in {selectedDeptModal.name.split('&')[0]}</span>
-                <ArrowRight size={15} />
+                <span>Book visit</span>
+                <ArrowRight size={14} />
               </button>
             </div>
           </div>

@@ -690,6 +690,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` succeeded in 35.19s with 0 errors (1559 modules transformed).
 - Notes: Git commit made for version continuity.
 
+### Task 2.17: Clean up landing page content and layout
+- Status: DONE
+- Completed: 2026-11-18 00:46 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/components/public/LandingHero.jsx, src/components/public/LandingAbout.jsx, src/components/public/LandingDepartments.jsx, src/components/public/LandingDoctors.jsx, src/components/public/LandingLocations.jsx, src/components/public/LandingCtaBand.jsx, src/components/public/LandingFooter.jsx, src/components/public/LandingPage.jsx, src/index.css
+- Summary: Thoroughly cleaned up public landing page content and layout per strict verification guidelines. Removed all accreditation claims (NABH, NABL, ABDM, ABHA) and hospital-name credentials (AIIMS, PGIMER, CMC Vellore). Replaced all statistics with [00] placeholders without orange accent suffixes. Replaced doctor names, credentials, experience, ratings, and reviews with [Doctor name] and [Specialty] placeholders; removed room numbers from public page. Removed 'zero waiting queues', 'Faculty Active On-Site', and static 'Available today' badges. Removed invented facilities (valet, 24/7 pharmacy, stretcher lift, air quality). Sourced all contact details strictly from clinic.js; location displays 'Location coming soon' panel until real address is populated. Merged 'Why Jivaka' care points into About section and removed duplicate stats. Applied lighter Fraunces 500 headings, smaller font sizes, and shorter copy. Replaced dental hero image with a general clinic image without text overlay. Reduced vertical padding so hero fits first screen. Standardized doctor initials avatar style with two-line bio clamp and 'View profile'. Sourced matching navbar and footer labels (About, Departments, Doctors, Location, Staff Login, Sign In). Added section scroll-margin-top to prevent sticky header overlap.
+- Bugs fixed: Eliminated unverified claims, brochures jargon, and fake contact information; resolved sticky navbar heading overlap; fixed layout whitespace and removed duplicate stats cards.
+- Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 11.78s.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

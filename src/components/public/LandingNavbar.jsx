@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, User, Stethoscope, AlertCircle } from 'lucide-react';
+import { Menu, X, ArrowRight, User, Stethoscope } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { clinic, isPlaceholder } from '../../config/clinic';
 
@@ -16,11 +16,10 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
   }, []);
 
   const navLinks = [
-    { label: 'About Clinic', href: '#about' },
-    { label: 'Specialties', href: '#departments' },
-    { label: 'Specialists', href: '#doctors' },
-    { label: 'Why Jivaka', href: '#why-us' },
-    { label: 'Location & Hours', href: '#locations' }
+    { label: 'About', href: '#about' },
+    { label: 'Departments', href: '#departments' },
+    { label: 'Doctors', href: '#doctors' },
+    { label: 'Location', href: '#locations' }
   ];
 
   const handleLinkClick = (e, href) => {
@@ -35,9 +34,6 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
       }
     }
   };
-
-  const branch = clinic.branches?.[0] || {};
-  const emergencyPhone = !isPlaceholder(branch.emergency) ? branch.emergency : '1800-200-4567';
 
   return (
     <header
@@ -66,7 +62,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
             maxWidth: '1280px',
             margin: '0 auto',
             padding: '0 24px',
-            height: '74px',
+            height: '70px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -104,7 +100,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
                   textDecoration: 'none',
                   color: 'var(--text-main)',
                   fontSize: '0.92rem',
-                  fontWeight: '600',
+                  fontWeight: '500',
                   transition: 'color 0.2s ease',
                   padding: '8px 4px',
                   position: 'relative'
@@ -138,7 +134,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               }}
             >
               <Stethoscope size={15} />
-              <span>Doctor Portal</span>
+              <span>Staff Login</span>
             </button>
 
             <button
@@ -147,10 +143,10 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               className="btn btn-primary btn-sm"
               style={{
                 borderRadius: '9999px',
-                padding: '8px 24px',
+                padding: '8px 22px',
                 fontSize: '0.88rem',
-                fontWeight: '700',
-                boxShadow: '0 2px 10px rgba(15, 107, 99, 0.3)'
+                fontWeight: '600',
+                boxShadow: '0 2px 10px rgba(15, 107, 99, 0.25)'
               }}
             >
               <User size={15} />
@@ -196,30 +192,6 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               animation: 'fadeIn 0.2s ease-out'
             }}
           >
-            {/* MOBILE QUICK HELPLINE */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '10px 14px',
-                borderRadius: '12px',
-                backgroundColor: 'rgba(239, 68, 68, 0.08)',
-                border: '1px solid rgba(239, 68, 68, 0.2)',
-                color: '#dc2626',
-                fontSize: '0.85rem',
-                fontWeight: '700'
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <AlertCircle size={16} />
-                <span>Emergency:</span>
-              </div>
-              <a href={`tel:${emergencyPhone}`} style={{ color: '#dc2626', textDecoration: 'none' }}>
-                {emergencyPhone}
-              </a>
-            </div>
-
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -248,7 +220,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
                 className="btn btn-primary btn-block"
               >
                 <User size={16} />
-                <span>Sign In (Patient Portal)</span>
+                <span>Sign In</span>
               </button>
 
               <button
@@ -260,7 +232,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
                 className="btn btn-outline-teal btn-block"
               >
                 <Stethoscope size={16} />
-                <span>Doctor / Staff Login</span>
+                <span>Staff Login</span>
               </button>
             </div>
           </div>
