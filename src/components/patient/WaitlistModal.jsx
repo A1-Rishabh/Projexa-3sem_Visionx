@@ -70,3 +70,4 @@ export const WaitlistModal = ({ isOpen, onClose, appointment, showToast }) => {
 };
 
 export default WaitlistModal;
+

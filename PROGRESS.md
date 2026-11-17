@@ -667,13 +667,22 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - 2026-11-17: Phase 1 completed and verified. Ready for Phase 2 upon user "continue" command.
 - 2026-11-17: Installed `qrcode.react` for live client-side UPI QR rendering without external APIs.
 - 2026-11-17: Dark mode and large text accessibility preferences stored in localStorage under `jivaka_theme` and `jivaka_text_size`.
+- 2026-11-17: Selected Supabase (Auth + PostgreSQL) as production database and auth backend.
+- 2026-11-17: Created `/supabase/schema.sql` with full table structures (`profiles`, `departments`, `doctors`, `doctor_schedules`, `appointments`, `medical_records`, `lab_reports`, `care_messages`), Row Level Security on every table (patients read/write own records only, doctor directory publicly readable), and auto-provisioning profile trigger on `auth.users`.
+- 2026-11-17: Created `/supabase/seed.sql` with sample clinical data based on existing doctors and departments (fees in INR, schedules), with every seeded row explicitly flagged with `is_sample = true` for easy identification and replacement.
+- 2026-11-17: Installed `@supabase/supabase-js` and created `src/services/supabase.js` for real Google OAuth (`signInWithGoogle`) and profile syncing.
+- 2026-11-17: Created `src/services/clinicService.js` with graceful dual-mode execution (real Supabase queries when `.env` is populated, with local fallback so offline development never crashes).
+- 2026-11-17: Built `ClinicalIntakeModal.jsx` for first-time Google sign-in patient onboarding to capture mandatory phone, date of birth, blood group, allergies, and emergency contact.
+- 2026-11-17: Removed all demo artifacts: removed quick-fill doctor pills and demo patient autofill from `LoginPage.jsx`, removed payment simulation buttons from `PaymentOptions.jsx`, and replaced bracketed stat counters in `LandingAbout.jsx` with clinical metrics.
+- 2026-11-17: Created `SUPABASE_SETUP.md` with step-by-step instructions for Google OAuth and database setup.
 
 ## Waiting on me
 - [x] Logo file (Provided by user and integrated)
+- [ ] Supabase Project URL and Anon Public Key (`.env`)
 - [ ] Clinic photos
 - [ ] Clinic address, phone, hours (clinic.js)
 - [ ] UPI ID and payee name
-- [ ] Google OAuth client ID
+- [ ] Google OAuth client ID & Secret (for Supabase Google Provider)
 - [ ] Razorpay test key
 
 ## Known issues and TODOs

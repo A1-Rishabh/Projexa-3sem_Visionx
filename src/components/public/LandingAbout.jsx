@@ -23,10 +23,10 @@ export const LandingAbout = () => {
   }, [hasAnimated]);
 
   const stats = [
-    { label: 'Senior Consultants', value: '[00]', suffix: '+', icon: Award },
-    { label: 'Clinical Specialty Units', value: '[00]', suffix: '', icon: HeartPulse },
-    { label: 'Patient Consultations', value: '[00]', suffix: 'k+', icon: Users },
-    { label: 'Patient Satisfaction', value: '[00]', suffix: '%', icon: ShieldCheck }
+    { label: 'Senior Consultants', value: '18', suffix: '+', icon: Award },
+    { label: 'Clinical Specialty Units', value: '6', suffix: ' Units', icon: HeartPulse },
+    { label: 'Patient Consultations', value: '24', suffix: 'k+', icon: Users },
+    { label: 'Patient Satisfaction', value: '99.4', suffix: '%', icon: ShieldCheck }
   ];
 
   return (

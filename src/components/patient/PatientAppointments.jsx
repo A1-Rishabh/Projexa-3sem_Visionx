@@ -19,6 +19,7 @@ import {
   FileText
 } from 'lucide-react';
 import { getAppointments, updateAppointmentStatus, getDoctors } from '../../services/mockDataStore';
+import { fetchAppointments, cancelAppointment } from '../../services/clinicService';
 import { Modal } from '../common/Modal';
 import { StatusBadge } from '../common/StatusBadge';
 import { ReceiptModal } from './ReceiptModal';
@@ -50,9 +51,18 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
     loadAppointments();
   }, [patient.id]);
 
-  const loadAppointments = () => {
+  const loadAppointments = async () => {
     const all = getAppointments();
     setAppointments(all.filter(a => a.patientId === patient.id));
+
+    try {
+      const liveApts = await fetchAppointments(patient.id);
+      if (liveApts && liveApts.length > 0) {
+        setAppointments(liveApts);
+      }
+    } catch (err) {
+      console.warn('Could not sync appointments with database:', err);
+    }
   };
 
   const todayStr = new Date().toISOString().split('T')[0];
@@ -147,8 +157,13 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
     return doctors.find(d => d.id === apt.doctorId || d.name === apt.doctorName) || null;
   };
 
-  const handleCancelSubmit = () => {
+  const handleCancelSubmit = async () => {
     if (!cancelModalApt) return;
+    try {
+      await cancelAppointment(cancelModalApt.id, cancelReason);
+    } catch (err) {
+      console.warn('Cancel sync:', err);
+    }
     updateAppointmentStatus(cancelModalApt.id, 'cancelled', { cancelReason });
     loadAppointments();
     setCancelModalApt(null);

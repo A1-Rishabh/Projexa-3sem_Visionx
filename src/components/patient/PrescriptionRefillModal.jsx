@@ -104,3 +104,4 @@ export const PrescriptionRefillModal = ({ isOpen, onClose, patient, showToast })
 };
 
 export default PrescriptionRefillModal;
+

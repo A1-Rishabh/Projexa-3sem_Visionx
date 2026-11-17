@@ -13,6 +13,7 @@ import {
   CreditCard
 } from 'lucide-react';
 import { saveAppointment } from '../../services/mockDataStore';
+import { bookAppointment } from '../../services/clinicService';
 import { Modal } from '../common/Modal';
 import { formatINR } from '../../config/clinic';
 import { PaymentOptions } from './PaymentOptions';
@@ -159,8 +160,8 @@ export const BookingWizardModal = ({
   };
 
   // Step 3 Confirmation (Pay at Clinic)
-  const handleConfirmPayAtClinic = () => {
-    const newApt = saveAppointment({
+  const handleConfirmPayAtClinic = async () => {
+    const aptPayload = {
       doctorId: selectedDoctor.id,
       doctorName: selectedDoctor.name,
       patientId: patient.id,
@@ -174,7 +175,14 @@ export const BookingWizardModal = ({
       paymentStatus: 'Pay at clinic',
       transactionId: null,
       visitReason
-    });
+    };
+
+    const newApt = saveAppointment(aptPayload);
+    try {
+      await bookAppointment(aptPayload);
+    } catch (err) {
+      console.warn('Booking sync to database:', err);
+    }
 
     if (showToast) {
       showToast(`Appointment confirmed with ${selectedDoctor.name} at ${selectedDoctor.room}!`, 'success');
@@ -184,8 +192,8 @@ export const BookingWizardModal = ({
   };
 
   // Step 3 Confirmation (Online Payment Success)
-  const handleOnlinePaymentSuccess = (methodLabel, txnId) => {
-    const newApt = saveAppointment({
+  const handleOnlinePaymentSuccess = async (methodLabel, txnId) => {
+    const aptPayload = {
       doctorId: selectedDoctor.id,
       doctorName: selectedDoctor.name,
       patientId: patient.id,
@@ -199,7 +207,14 @@ export const BookingWizardModal = ({
       paymentStatus: 'Paid',
       transactionId: txnId,
       visitReason
-    });
+    };
+
+    const newApt = saveAppointment(aptPayload);
+    try {
+      await bookAppointment(aptPayload);
+    } catch (err) {
+      console.warn('Booking sync to database:', err);
+    }
 
     if (showToast) {
       showToast(`Payment of ${formatINR(selectedDoctor.fee)} received! Appointment confirmed.`, 'success');

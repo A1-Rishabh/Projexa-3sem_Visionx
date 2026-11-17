@@ -5,7 +5,9 @@ import { SignUpPage } from './components/auth/SignUpPage';
 import { DoctorPortal } from './components/doctor/DoctorPortal';
 import { PatientPortal } from './components/patient/PatientPortal';
 import { Toast } from './components/common/Toast';
-import { getSavedSession, clearSession } from './services/mockDataStore';
+import { ClinicalIntakeModal } from './components/patient/ClinicalIntakeModal';
+import { getSavedSession, saveSession, clearSession } from './services/mockDataStore';
+import { supabase, isSupabaseConfigured, getProfile, signOutSupabase } from './services/supabase';
 
 export const App = () => {
   const [session, setSession] = useState(null);
@@ -18,14 +20,67 @@ export const App = () => {
   const [authRole, setAuthRole] = useState('patient');
   const [bookingPref, setBookingPref] = useState(null);
   const [toastData, setToastData] = useState({ message: '', type: 'success' });
+  const [intakePatient, setIntakePatient] = useState(null);
 
-  // Load saved session on mount
+  // Load saved session and listen to Supabase auth events
   useEffect(() => {
     const saved = getSavedSession();
     if (saved) {
       setSession(saved);
     }
+
+    if (isSupabaseConfigured()) {
+      // Check current session from Supabase
+      supabase.auth.getSession().then(({ data: { session: currentAuthSession } }) => {
+        if (currentAuthSession?.user) {
+          handleSupabaseAuthUser(currentAuthSession.user);
+        }
+      });
+
+      // Listen to auth changes (e.g. Google OAuth redirect)
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newAuthSession) => {
+        if (event === 'SIGNED_IN' && newAuthSession?.user) {
+          await handleSupabaseAuthUser(newAuthSession.user);
+        } else if (event === 'SIGNED_OUT') {
+          clearSession();
+          setSession(null);
+        }
+      });
+
+      return () => {
+        subscription?.unsubscribe();
+      };
+    }
   }, []);
+
+  const handleSupabaseAuthUser = async (user) => {
+    try {
+      const profile = await getProfile(user.id);
+      const userProfile = profile || {
+        id: user.id,
+        name: user.user_metadata?.full_name || user.user_metadata?.name || 'Patient',
+        email: user.email,
+        role: 'patient'
+      };
+
+      const userSession = {
+        role: userProfile.role || 'patient',
+        user: userProfile,
+        id: user.id
+      };
+
+      setSession(userSession);
+      saveSession(userSession);
+      navigateTo('portal');
+
+      // Check if first-time clinical intake is required
+      if (!userProfile.phone || !userProfile.date_of_birth) {
+        setIntakePatient(userProfile);
+      }
+    } catch (err) {
+      console.warn('Error syncing Supabase user profile:', err);
+    }
+  };
 
   // Listen to browser back/forward buttons
   useEffect(() => {
@@ -61,12 +116,25 @@ export const App = () => {
     navigateTo(newSession.role === 'doctor' ? 'doctor-portal' : 'portal');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await signOutSupabase();
+    } catch (err) {
+      console.warn('Supabase signout:', err);
+    }
     clearSession();
     setSession(null);
     setBookingPref(null);
     navigateTo('landing');
     showToast('Logged out of Jivaka Clinic platform', 'info');
+  };
+
+  const handleIntakeComplete = (updatedPatient) => {
+    setSession(prev => ({
+      ...prev,
+      user: updatedPatient
+    }));
+    setIntakePatient(null);
   };
 
   return (
@@ -120,6 +188,15 @@ export const App = () => {
         message={toastData.message}
         type={toastData.type}
         onClose={() => setToastData({ message: '', type: 'success' })}
+      />
+
+      {/* FIRST-TIME GOOGLE PATIENT CLINICAL INTAKE MODAL */}
+      <ClinicalIntakeModal
+        isOpen={!!intakePatient}
+        onClose={() => setIntakePatient(null)}
+        patient={intakePatient}
+        onComplete={handleIntakeComplete}
+        showToast={showToast}
       />
     </div>
   );

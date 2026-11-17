@@ -257,3 +257,4 @@ export const ReceiptModal = ({ isOpen, onClose, appointment, patient, showToast 
 };
 
 export default ReceiptModal;
+

@@ -118,3 +118,4 @@ export const PreVisitFormModal = ({ isOpen, onClose, appointment, showToast }) =
 };
 
 export default PreVisitFormModal;
+

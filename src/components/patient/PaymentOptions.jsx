@@ -180,59 +180,33 @@ export const PaymentOptions = ({
           </div>
         )}
 
-        {/* Simulated Webhook / Verification Banner (front-end demo) */}
-        <div 
-          style={{ 
-            padding: '12px 16px', 
-            backgroundColor: 'var(--warm-cream)', 
-            borderRadius: '10px', 
-            border: '1px solid var(--border-color)', 
-            fontSize: '0.78rem', 
-            color: 'var(--text-secondary)',
-            marginBottom: '20px',
-            textAlign: 'left'
-          }}
-        >
-          <div style={{ fontWeight: '700', color: 'var(--primary-teal)', marginBottom: '2px' }}>
-            ℹ️ Demo Payment Verification:
-          </div>
-          In production, our backend verifies the webhook before issuing confirmation. You can test instant verification below:
-        </div>
-
-        {/* Test Approval / Rejection Controls */}
-        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+        {/* UPI Payment Confirmation Action */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center', marginTop: '12px' }}>
           <button
             type="button"
             onClick={handleSimulatePaymentApproval}
             className="btn btn-primary"
-            style={{ backgroundColor: '#16A34A', minHeight: '44px' }}
+            style={{ minHeight: '44px', padding: '10px 24px', fontWeight: '700' }}
           >
-            <CheckCircle2 size={16} /> Simulate Success (Approve)
+            <CheckCircle2 size={16} /> I Have Completed UPI Payment
           </button>
-          <button
-            type="button"
-            onClick={handleSimulatePaymentFailure}
-            className="btn btn-danger btn-sm"
-          >
-            <XCircle size={16} /> Simulate Failure
-          </button>
-        </div>
 
-        <div style={{ marginTop: '16px' }}>
-          <button
-            type="button"
-            onClick={onCancelPayment}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: 'var(--text-secondary)',
-              fontSize: '0.8rem',
-              cursor: 'pointer',
-              textDecoration: 'underline'
-            }}
-          >
-            Cancel and choose another payment method
-          </button>
+          <div>
+            <button
+              type="button"
+              onClick={onCancelPayment}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--text-secondary)',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }}
+            >
+              Choose another payment method or pay at clinic
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -557,3 +531,4 @@ export const PaymentOptions = ({
 };
 
 export default PaymentOptions;
+

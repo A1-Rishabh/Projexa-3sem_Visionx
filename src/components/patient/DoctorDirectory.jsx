@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Star, 
   MapPin, 
@@ -15,10 +15,11 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { getDoctors } from '../../services/mockDataStore';
+import { fetchDoctors } from '../../services/clinicService';
 import { formatINR } from '../../config/clinic';
 
 export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
-  const [doctors] = useState(getDoctors());
+  const [doctors, setDoctors] = useState(getDoctors());
   const [selectedSpec, setSelectedSpec] = useState('all');
   const [availabilityFilter, setAvailabilityFilter] = useState('all');
   const [feeFilter, setFeeFilter] = useState('all');
@@ -26,6 +27,14 @@ export const DoctorDirectory = ({ onSelectDoctorToBook }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [avatarErrors, setAvatarErrors] = useState({});
   const [profileModalDoc, setProfileModalDoc] = useState(null);
+
+  useEffect(() => {
+    fetchDoctors().then((liveDoctors) => {
+      if (liveDoctors && liveDoctors.length > 0) {
+        setDoctors(liveDoctors);
+      }
+    });
+  }, []);
 
   // Doctor initials helper for avatar fallback
   const getInitials = (name = '') => {

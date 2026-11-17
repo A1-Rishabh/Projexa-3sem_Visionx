@@ -23,6 +23,7 @@ import {
   saveLastRoleTab 
 } from '../../services/mockDataStore';
 import { handleGoogleAuth } from '../../services/googleAuth';
+import { signInWithGoogle, isSupabaseConfigured } from '../../services/supabase';
 
 export const LoginPage = ({
   onLoginSuccess,
@@ -159,10 +160,18 @@ export const LoginPage = ({
     }, 600);
   };
 
-  // Google Sign-in Handler
+  // Google Sign-in Handler (Real Google OAuth with Supabase)
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
+      if (isSupabaseConfigured()) {
+        const res = await signInWithGoogle();
+        if (res.success) {
+          // Supabase redirects to Google consent screen
+          return;
+        }
+      }
+
       const result = await handleGoogleAuth({ isSignUp: false });
       setIsLoading(false);
       if (result.success) {
@@ -171,7 +180,7 @@ export const LoginPage = ({
       }
     } catch (err) {
       setIsLoading(false);
-      showToast('Google authentication encountered an error. Please try again.', 'error');
+      showToast(err.message || 'Google authentication encountered an error. Please try again.', 'error');
     }
   };
 
@@ -375,33 +384,6 @@ export const LoginPage = ({
             label="Continue with Google"
           />
 
-          {/* DEMO QUICK-FILL HELPER */}
-          <div
-            style={{
-              padding: '10px 14px',
-              borderRadius: '10px',
-              backgroundColor: 'var(--warm-cream)',
-              border: '1px dashed var(--border-color)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              fontSize: '0.8rem'
-            }}
-          >
-            <span style={{ color: 'var(--text-secondary)' }}>Demo Patient:</span>
-            <button
-              type="button"
-              onClick={fillPatientDemo}
-              style={{
-                color: 'var(--primary-teal)',
-                fontWeight: '700',
-                textDecoration: 'underline'
-              }}
-            >
-              Autofill (John Doe)
-            </button>
-          </div>
-
           {/* LINK TO SIGNUP */}
           <div style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '8px' }}>
             Don't have an account yet?{' '}
@@ -432,38 +414,11 @@ export const LoginPage = ({
               onChange={(e) => setDoctorId(e.target.value)}
               style={{ width: '100%', fontWeight: '600' }}
             >
-              <option value="DOC-101">Dr. Sarah Jenkins (Cardiology • Room 204)</option>
-              <option value="DOC-102">Dr. Marcus Vance (Pediatrics • Room 108)</option>
-              <option value="DOC-103">Dr. Elena Rostova (Neurology • Room 312)</option>
-              <option value="DOC-104">Dr. Aris Thorne (Orthopedics • Room 105)</option>
+              <option value="DOC-101">Dr. Sarah Jenkins (Cardiology • Room 204B)</option>
+              <option value="DOC-102">Dr. Marcus Vance (Neurology • Room 310A)</option>
+              <option value="DOC-103">Dr. Priya Sharma (Pediatrics • Room 108C)</option>
+              <option value="DOC-104">Dr. Aris Thorne (General Medicine • Room 102A)</option>
             </select>
-          </div>
-
-          {/* QUICK-FILL DOCTOR PILLS */}
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>
-              Quick Demo Fill:
-            </div>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              {['DOC-101', 'DOC-102', 'DOC-103', 'DOC-104'].map((id) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => fillDoctorDemo(id)}
-                  style={{
-                    padding: '4px 10px',
-                    borderRadius: '8px',
-                    fontSize: '0.78rem',
-                    fontWeight: '700',
-                    backgroundColor: doctorId === id ? 'var(--mint)' : '#ffffff',
-                    color: doctorId === id ? 'var(--deep-teal)' : 'var(--text-secondary)',
-                    border: `1px solid ${doctorId === id ? 'var(--primary-teal)' : 'var(--border-color)'}`
-                  }}
-                >
-                  {id}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* DOCTOR PASSWORD */}
