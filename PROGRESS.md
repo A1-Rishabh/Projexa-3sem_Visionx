@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:40 IST
-Current task: 1.4 Login page
+Last updated: 2026-11-17 13:43 IST
+Current task: 1.5 Sign up page
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -42,8 +42,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 1.1 Landing page: navbar and hero ............................. DONE
 - 1.2 Landing page: About, Departments, Doctors ................. DONE
 - 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ DONE
-- 1.4 Login page ................................................ IN PROGRESS
-- 1.5 Sign up page ............................................... TODO
+- 1.4 Login page ................................................ DONE
+- 1.5 Sign up page ............................................... IN PROGRESS
 - 1.6 Google sign-in integration ................................ TODO
 - 1.7 Forgot password and role-based redirect .................. TODO
 - 1.8 Phase 1 report (see report contents below) ................. TODO
@@ -137,6 +137,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Executed `npm run build` which succeeded with 0 errors in 5.11s.
 - Notes: Complete Landing Page is fully responsive across 360px, 768px, 1024px, and 1440px.
 
+### Task 1.4: Login page
+- Status: DONE
+- Completed: 2026-11-17 13:43 IST
+- Files changed or added: src/components/auth/AuthLayout.jsx, src/components/common/GoogleButton.jsx, src/components/auth/LoginPage.jsx, src/index.css
+- Summary: Redesigned the Login experience using `AuthLayout` split screen (Deep Teal branded value panel on desktop, stacked on mobile). Implemented Patient vs. Staff/Doctor role tabs, email/phone input, password with show/hide eye toggle, inline validation, loading states, official Google "G" sign-in button, "Forgot password" modal, demo patient & doctor autofill pills, and link to sign up.
+- Bugs fixed: Replaced legacy non-semantic layout and fixed black input field styling.
+- Verified by: Ran `npm run build` which succeeded in 6.62s with 0 errors.
+- Notes: Auth system detected as custom localStorage mock store.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
@@ -144,6 +153,7 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2026-11-17: `/src/config/clinic.js` established as the sole configuration module for clinic details and `formatINR` helper.
 - 2026-11-17: User-supplied logo placed at `/public/images/logo.jpg`, referenced in `index.html` as favicon and rendered by `Logo.jsx` with undistorted `object-fit: contain`.
 - 2026-11-17: Toasts timed to exactly 3000ms with polite aria-live announcement.
+- 2026-11-17: Auth system detected as custom mock store with localStorage persistence.
 
 ## Waiting on me
 - [x] Logo file (Provided by user and integrated)
