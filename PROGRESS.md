@@ -717,6 +717,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 5.15s.
 - Notes: Git commit made for version continuity.
 
+### Task 2.20: Harmonize Staff & Doctor Portal with Jivaka clinical design system and Indian currency
+- Status: DONE
+- Completed: 2026-11-18 02:45 IST
+- Files changed or added: src/components/doctor/DoctorPortal.jsx, src/components/doctor/DoctorDashboard.jsx, src/components/doctor/AppointmentManager.jsx, src/components/doctor/ScheduleManager.jsx, src/components/doctor/DoctorProfileEditor.jsx, src/components/doctor/PatientRecordsManager.jsx
+- Summary: Thoroughly updated all doctor/staff components to align with the Jivaka Clinic design system and project conventions: (1) In `DoctorPortal.jsx`, replaced legacy dark navy (`#0a2540`) and electric blue (`#0f62fe`) with Deep Teal (`var(--deep-teal)`), warm accent active states (`var(--warm-accent)`), initials avatar fallback, refined session timer badge (`var(--mint)` / `var(--primary-teal)`), and themed timeout modal; (2) In `DoctorDashboard.jsx`, styled the welcome hero banner with a Deep Teal gradient, Fraunces serif typography, and themed metric cards (Appointments, Pending, Completed) with mint and amber badge boxes, plus a warm-bordered clinical roster table; (3) In `AppointmentManager.jsx`, themed status filter chips, Fraunces date/time column, Jivaka primary teal action buttons, and updated the consultation completion modal with mint notices and warm borders; (4) In `ScheduleManager.jsx`, built an interactive 8-column Jivaka grid (Time + 7 Days) with mint open slots, lunch break badges, and holiday controls; (5) In `DoctorProfileEditor.jsx`, replaced the US Dollar fee field (`$ USD` and `DollarSign`) with Indian Rupee (`₹ INR` and `IndianRupee` icon), Fraunces typography, and warm borders; (6) In `PatientRecordsManager.jsx`, eliminated all old blues/navies from the RBAC header, patient sidebar, clinical vitals dashboard, visit timeline, diagnostic report previews, vitals entry modal, and prescription writer.
+- Bugs fixed: Eliminated legacy IBM blue and navy color codes across all staff views; replaced USD currency with INR in DoctorProfileEditor; fixed duplicate JSX in PatientRecordsManager.
+- Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 6.70s.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

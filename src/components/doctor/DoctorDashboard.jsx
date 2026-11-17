@@ -53,60 +53,61 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
       {/* WELCOME BANNER */}
       <div 
         style={{
-          background: 'linear-gradient(135deg, #0a2540 0%, #103154 100%)',
+          background: 'linear-gradient(135deg, var(--deep-teal) 0%, #0E6253 100%)',
           borderRadius: '16px',
           padding: '24px 32px',
           color: '#ffffff',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: 'var(--shadow-md)'
+          boxShadow: 'var(--shadow-md)',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#38bdf8', fontSize: '0.85rem', fontWeight: '700', marginBottom: '4px' }}>
-            <Sparkles size={16} /> Jivaka Clinic Clinical Command
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--warm-accent)', fontSize: '0.82rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '6px' }}>
+            <Sparkles size={16} color="var(--warm-accent)" /> Jivaka Clinic Clinical Command
           </div>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: '800', marginBottom: '6px' }}>
+          <h2 style={{ fontSize: '1.65rem', fontWeight: '800', fontFamily: 'Fraunces, serif', marginBottom: '6px', color: '#ffffff' }}>
             Good day, {doctor.name}
           </h2>
-          <p style={{ color: '#cbd5e1', fontSize: '0.9rem' }}>
-            {doctor.title} • Assigned to <span style={{ fontWeight: '700', color: '#ffffff' }}>{doctor.room}</span>
+          <p style={{ color: '#E2E8F0', fontSize: '0.88rem' }}>
+            {doctor.title} • Assigned Consultation Suite: <span style={{ fontWeight: '700', color: '#ffffff' }}>{doctor.room}</span>
           </p>
         </div>
 
         <button
           onClick={() => onNavigate('schedule')}
           className="btn btn-primary"
-          style={{ backgroundColor: '#0f62fe' }}
+          style={{ minHeight: '42px', fontSize: '0.86rem' }}
         >
-          <Calendar size={18} /> Manage Schedule
+          <Calendar size={17} /> Manage Schedule
         </button>
       </div>
 
       {/* THREE METRIC CARDS */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '18px' }}>
         
         <div 
           style={{
             backgroundColor: '#ffffff',
             borderRadius: '14px',
             padding: '20px',
-            border: '1px solid #e2e8f0',
+            border: '1px solid var(--border-color)',
             boxShadow: 'var(--shadow-sm)',
             display: 'flex',
             alignItems: 'center',
             gap: '16px'
           }}
         >
-          <div style={{ width: '48px', height: '48px', backgroundColor: '#edf5ff', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f62fe' }}>
-            <Calendar size={24} />
+          <div style={{ width: '48px', height: '48px', backgroundColor: 'var(--mint)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary-teal)' }}>
+            <Calendar size={22} />
           </div>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0a2540', lineHeight: 1 }}>
+            <div style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', lineHeight: 1 }}>
               {todayAppointments.length}
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '6px' }}>
               Today's Appointments
             </div>
           </div>
@@ -117,21 +118,21 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
             backgroundColor: '#ffffff',
             borderRadius: '14px',
             padding: '20px',
-            border: '1px solid #e2e8f0',
+            border: '1px solid var(--border-color)',
             boxShadow: 'var(--shadow-sm)',
             display: 'flex',
             alignItems: 'center',
             gap: '16px'
           }}
         >
-          <div style={{ width: '48px', height: '48px', backgroundColor: '#fff7ed', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
-            <Clock size={24} />
+          <div style={{ width: '48px', height: '48px', backgroundColor: '#FEF3C7', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#D97706' }}>
+            <Clock size={22} />
           </div>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0a2540', lineHeight: 1 }}>
+            <div style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', lineHeight: 1 }}>
               {pendingRequests.length}
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '6px' }}>
               Pending Requests
             </div>
           </div>
@@ -142,21 +143,21 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
             backgroundColor: '#ffffff',
             borderRadius: '14px',
             padding: '20px',
-            border: '1px solid #e2e8f0',
+            border: '1px solid var(--border-color)',
             boxShadow: 'var(--shadow-sm)',
             display: 'flex',
             alignItems: 'center',
             gap: '16px'
           }}
         >
-          <div style={{ width: '48px', height: '48px', backgroundColor: '#ecfdf5', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669' }}>
-            <CheckCircle size={24} />
+          <div style={{ width: '48px', height: '48px', backgroundColor: '#DCFCE7', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16A34A' }}>
+            <CheckCircle size={22} />
           </div>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#0a2540', lineHeight: 1 }}>
+            <div style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', lineHeight: 1 }}>
               {completedThisWeek.length}
             </div>
-            <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '600', marginTop: '4px' }}>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: '600', marginTop: '6px' }}>
               Consultations Completed
             </div>
           </div>
@@ -171,24 +172,24 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
           backgroundColor: '#ffffff',
           borderRadius: '16px',
           padding: '24px',
-          border: '1.5px solid #cbd5e1',
-          boxShadow: 'var(--shadow-md)',
-          transition: 'all 0.3s'
+          border: isRunningLate ? '2px solid #FCD34D' : '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-sm)',
+          transition: 'all 0.3s ease'
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.05em', color: '#0f62fe', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '0.74rem', fontWeight: '800', letterSpacing: '0.06em', color: 'var(--primary-teal)', textTransform: 'uppercase' }}>
               Next Patient In-Line
             </span>
             {isRunningLate && (
-              <span className="badge badge-pending" style={{ backgroundColor: '#fef3c7', color: '#92400e', borderColor: '#fcd34d' }}>
+              <span className="badge badge-pending" style={{ backgroundColor: '#FEF3C7', color: '#92400E', borderColor: '#FCD34D', gap: '4px' }}>
                 <AlertTriangle size={12} /> Running Late / Awaiting Check-In
               </span>
             )}
           </div>
 
-          <span style={{ fontSize: '0.85rem', fontWeight: '600', color: '#64748b' }}>
+          <span style={{ fontSize: '0.82rem', fontWeight: '600', color: 'var(--text-secondary)' }}>
             Today, {nextPatient ? nextPatient.time : 'No more patients queued'}
           </span>
         </div>
@@ -198,28 +199,29 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <div 
                 style={{
-                  width: '60px',
-                  height: '60px',
+                  width: '56px',
+                  height: '56px',
                   borderRadius: '50%',
-                  backgroundColor: '#0a2540',
+                  backgroundColor: 'var(--deep-teal)',
                   color: '#ffffff',
                   fontWeight: '800',
-                  fontSize: '1.25rem',
+                  fontSize: '1.15rem',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  boxShadow: 'var(--shadow-sm)'
                 }}
               >
-                {nextPatient.patientName.split(' ').map(n => n[0]).join('')}
+                {nextPatient.patientName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
               </div>
               <div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#0a2540', marginBottom: '4px' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', marginBottom: '4px' }}>
                   {nextPatient.patientName}
                 </h3>
-                <div style={{ display: 'flex', gap: '16px', fontSize: '0.85rem', color: '#64748b' }}>
-                  <span>ID: <strong style={{ color: '#16191f' }}>{nextPatient.patientId}</strong></span>
-                  <span>Reason: <strong style={{ color: '#16191f' }}>{nextPatient.visitReason}</strong></span>
-                  <span>Location: <strong style={{ color: '#16191f' }}>{doctor.room}</strong></span>
+                <div style={{ display: 'flex', gap: '16px', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                  <span>ID: <strong style={{ color: 'var(--text-main)' }}>{nextPatient.patientId}</strong></span>
+                  <span>Reason: <strong style={{ color: 'var(--text-main)' }}>{nextPatient.visitReason}</strong></span>
+                  <span>Location: <strong style={{ color: 'var(--text-main)' }}>{doctor.room}</strong></span>
                 </div>
               </div>
             </div>
@@ -229,77 +231,78 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
                 <button
                   onClick={() => handleCheckIn(nextPatient.id)}
                   className="btn btn-primary"
-                  style={{ backgroundColor: '#059669' }}
+                  style={{ backgroundColor: '#16A34A', borderColor: '#16A34A', minHeight: '40px', fontSize: '0.86rem' }}
                 >
-                  <UserCheck size={18} /> Check In Patient
+                  <UserCheck size={17} /> Check In Patient
                 </button>
               ) : (
-                <span className="badge badge-confirmed" style={{ padding: '8px 14px', fontSize: '0.85rem' }}>
-                  <CheckCircle size={16} /> Patient Checked In & Ready
+                <span className="badge badge-confirmed" style={{ padding: '8px 14px', fontSize: '0.84rem' }}>
+                  <CheckCircle size={15} /> Patient Checked In & Ready
                 </span>
               )}
 
               <button
                 onClick={() => onNavigate('appointments')}
                 className="btn btn-secondary"
+                style={{ minHeight: '40px', fontSize: '0.86rem' }}
               >
-                Open Consultation <ArrowRight size={16} />
+                Open Consultation <ArrowRight size={15} />
               </button>
             </div>
           </div>
         ) : (
-          <div style={{ textAlign: 'center', padding: '24px 0', color: '#64748b' }}>
-            <CheckCircle size={36} color="#10b981" style={{ margin: '0 auto 8px' }} />
+          <div style={{ textAlign: 'center', padding: '24px 0', color: 'var(--text-secondary)' }}>
+            <CheckCircle size={36} color="var(--primary-teal)" style={{ margin: '0 auto 8px' }} />
             <p style={{ fontWeight: '600' }}>All scheduled patients for today have been attended to!</p>
           </div>
         )}
       </div>
 
       {/* TODAY'S SCHEDULED APPOINTMENTS SUMMARY TABLE */}
-      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', padding: '24px', border: '1px solid #e2e8f0' }}>
+      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', padding: '24px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0a2540' }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', margin: 0 }}>
             Today's Clinical Roster
           </h3>
           <button
             onClick={() => onNavigate('appointments')}
-            style={{ fontSize: '0.85rem', fontWeight: '700', color: '#0f62fe' }}
+            style={{ fontSize: '0.84rem', fontWeight: '700', color: 'var(--primary-teal)', border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
           >
-            View All Appointments ({appointments.length})
+            View All Appointments ({appointments.length}) →
           </button>
         </div>
 
         {todayAppointments.length === 0 ? (
-          <div style={{ padding: '30px', textAlign: 'center', color: '#64748b' }}>
+          <div style={{ padding: '30px', textAlign: 'center', color: 'var(--text-secondary)' }}>
             No appointments scheduled for today.
           </div>
         ) : (
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.86rem' }}>
               <thead>
-                <tr style={{ borderBottom: '2px solid #f1f5f9', color: '#64748b' }}>
-                  <th style={{ padding: '12px' }}>Time</th>
-                  <th style={{ padding: '12px' }}>Patient</th>
-                  <th style={{ padding: '12px' }}>Reason</th>
-                  <th style={{ padding: '12px' }}>Status</th>
-                  <th style={{ padding: '12px' }}>Action</th>
+                <tr style={{ borderBottom: '2px solid var(--border-color)', color: 'var(--text-secondary)', backgroundColor: 'var(--warm-cream)' }}>
+                  <th style={{ padding: '12px 14px' }}>Time</th>
+                  <th style={{ padding: '12px 14px' }}>Patient</th>
+                  <th style={{ padding: '12px 14px' }}>Reason</th>
+                  <th style={{ padding: '12px 14px' }}>Status</th>
+                  <th style={{ padding: '12px 14px', textAlign: 'right' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {todayAppointments.map((apt) => (
-                  <tr key={apt.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px', fontWeight: '700', color: '#0a2540' }}>{apt.time}</td>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ fontWeight: '700' }}>{apt.patientName}</div>
-                      <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{apt.patientPhone}</div>
+                  <tr key={apt.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                    <td style={{ padding: '12px 14px', fontWeight: '700', color: 'var(--text-main)', fontFamily: 'Fraunces, serif' }}>{apt.time}</td>
+                    <td style={{ padding: '12px 14px' }}>
+                      <div style={{ fontWeight: '700', color: 'var(--text-main)' }}>{apt.patientName}</div>
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>{apt.patientPhone}</div>
                     </td>
-                    <td style={{ padding: '12px', color: '#475569' }}>{apt.visitReason}</td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '12px 14px', color: 'var(--text-secondary)' }}>{apt.visitReason}</td>
+                    <td style={{ padding: '12px 14px' }}>
                       <span className={`badge badge-${apt.status}`}>
                         {apt.status.toUpperCase()}
                       </span>
                     </td>
-                    <td style={{ padding: '12px' }}>
+                    <td style={{ padding: '12px 14px', textAlign: 'right' }}>
                       <button
                         onClick={() => onNavigate('appointments')}
                         className="btn btn-secondary btn-sm"

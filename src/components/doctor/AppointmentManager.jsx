@@ -174,9 +174,11 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                 fontWeight: '700',
                 fontSize: '0.8rem',
                 textTransform: 'capitalize',
-                transition: 'all 0.2s',
-                backgroundColor: filterStatus === st ? '#0a2540' : '#f1f5f9',
-                color: filterStatus === st ? '#ffffff' : '#64748b'
+                transition: 'all 0.15s ease',
+                backgroundColor: filterStatus === st ? 'var(--primary-teal)' : 'var(--warm-cream)',
+                color: filterStatus === st ? '#ffffff' : 'var(--text-secondary)',
+                border: filterStatus === st ? '1px solid var(--primary-teal)' : '1px solid var(--border-color)',
+                cursor: 'pointer'
               }}
             >
               {st} {st !== 'all' && `(${appointments.filter(a => a.status === st).length})`}
@@ -198,10 +200,10 @@ export const AppointmentManager = ({ doctor, showToast }) => {
       </div>
 
       {/* APPOINTMENTS TABLE */}
-      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
+      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.86rem' }}>
           <thead>
-            <tr style={{ backgroundColor: '#f8fafc', borderBottom: '2px solid #e2e8f0', color: '#0a2540', fontWeight: '700' }}>
+            <tr style={{ backgroundColor: 'var(--warm-cream)', borderBottom: '2px solid var(--border-color)', color: 'var(--text-main)', fontWeight: '700' }}>
               <th style={{ padding: '14px' }}>Date & Time</th>
               <th style={{ padding: '14px' }}>Patient Details</th>
               <th style={{ padding: '14px' }}>Room</th>
@@ -213,29 +215,29 @@ export const AppointmentManager = ({ doctor, showToast }) => {
           <tbody>
             {filteredAppointments.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ padding: '36px', textAlign: 'center', color: '#64748b' }}>
+                <td colSpan={6} style={{ padding: '36px', textAlign: 'center', color: 'var(--text-secondary)' }}>
                   No appointments match the selected filter.
                 </td>
               </tr>
             ) : (
               filteredAppointments.map(apt => (
-                <tr key={apt.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                <tr key={apt.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
                   
-                  <td style={{ padding: '14px', fontWeight: '700', color: '#0a2540' }}>
-                    <div>{apt.date}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#0f62fe', fontWeight: '600' }}>{apt.time}</div>
+                  <td style={{ padding: '14px', fontWeight: '700', color: 'var(--text-main)' }}>
+                    <div style={{ fontFamily: 'Fraunces, serif' }}>{apt.date}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--primary-teal)', fontWeight: '700' }}>{apt.time}</div>
                   </td>
 
                   <td style={{ padding: '14px' }}>
-                    <div style={{ fontWeight: '700', color: '#16191f' }}>{apt.patientName}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>ID: {apt.patientId} • {apt.patientPhone}</div>
+                    <div style={{ fontWeight: '700', color: 'var(--text-main)' }}>{apt.patientName}</div>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>ID: {apt.patientId} • {apt.patientPhone}</div>
                   </td>
 
-                  <td style={{ padding: '14px', fontSize: '0.85rem', color: '#475569', fontWeight: '600' }}>
+                  <td style={{ padding: '14px', fontSize: '0.82rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
                     {apt.room || doctor.room}
                   </td>
 
-                  <td style={{ padding: '14px', color: '#475569', maxWidth: '240px' }}>
+                  <td style={{ padding: '14px', color: 'var(--text-secondary)', maxWidth: '240px' }}>
                     {apt.visitReason}
                   </td>
 
@@ -257,7 +259,7 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                           <button
                             onClick={() => handleStatusChange(apt.id, 'confirmed')}
                             className="btn btn-primary btn-sm"
-                            style={{ backgroundColor: '#059669' }}
+                            style={{ backgroundColor: '#16A34A', borderColor: '#16A34A' }}
                           >
                             <Check size={14} /> Accept
                           </button>
@@ -280,7 +282,7 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                       )}
 
                       {apt.status === 'completed' && (
-                        <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: '600' }}>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
                           Record Finalized
                         </span>
                       )}
@@ -304,7 +306,7 @@ export const AppointmentManager = ({ doctor, showToast }) => {
         {selectedApt && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             
-            <div style={{ backgroundColor: '#edf5ff', padding: '12px 16px', borderRadius: '10px', fontSize: '0.85rem', color: '#0353e9' }}>
+            <div style={{ backgroundColor: 'var(--mint)', padding: '12px 16px', borderRadius: '10px', fontSize: '0.84rem', color: 'var(--deep-teal)', border: '1px solid rgba(14, 98, 83, 0.2)' }}>
               <strong>Appointment Details:</strong> {selectedApt.date} at {selectedApt.time} • {selectedApt.visitReason}
             </div>
 
@@ -315,7 +317,7 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                 type="text"
                 value={diagnosisCode}
                 onChange={(e) => setDiagnosisCode(e.target.value)}
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1' }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
               />
             </div>
 
@@ -326,14 +328,14 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                 rows={3}
                 value={clinicalSummary}
                 onChange={(e) => setClinicalSummary(e.target.value)}
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.875rem' }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.875rem' }}
               />
             </div>
 
             {/* Prescription Builder */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#0a2540' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif' }}>
                   Prescription Writer
                 </h4>
 
@@ -341,7 +343,7 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                   type="button"
                   onClick={handleDuplicatePreviousPrescription}
                   className="btn btn-secondary btn-sm"
-                  style={{ fontSize: '0.75rem', color: '#0f62fe' }}
+                  style={{ fontSize: '0.75rem', color: 'var(--primary-teal)' }}
                 >
                   <Copy size={12} /> Duplicate Previous Prescription
                 </button>
@@ -356,33 +358,33 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                       placeholder="Medication Name"
                       value={p.medication}
                       onChange={(e) => updatePrescriptionField(idx, 'medication', e.target.value)}
-                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     />
                     <input
                       type="text"
                       placeholder="Dosage (e.g. 10mg)"
                       value={p.dosage}
                       onChange={(e) => updatePrescriptionField(idx, 'dosage', e.target.value)}
-                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     />
                     <input
                       type="text"
                       placeholder="Frequency (e.g. 2x Daily)"
                       value={p.frequency}
                       onChange={(e) => updatePrescriptionField(idx, 'frequency', e.target.value)}
-                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     />
                     <input
                       type="text"
                       placeholder="Duration"
                       value={p.duration}
                       onChange={(e) => updatePrescriptionField(idx, 'duration', e.target.value)}
-                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.8rem' }}
+                      style={{ padding: '8px', borderRadius: '6px', border: '1px solid var(--border-color)', fontSize: '0.8rem' }}
                     />
                     <button
                       type="button"
                       onClick={() => removePrescriptionRow(idx)}
-                      style={{ color: '#ef4444', padding: '4px', cursor: 'pointer', textAlign: 'center' }}
+                      style={{ color: '#ef4444', padding: '4px', cursor: 'pointer', textAlign: 'center', background: 'none', border: 'none' }}
                     >
                       <Trash2 size={16} />
                     </button>
@@ -396,11 +398,14 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                     alignSelf: 'flex-start',
                     fontSize: '0.8rem',
                     fontWeight: '700',
-                    color: '#0f62fe',
+                    color: 'var(--primary-teal)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
-                    marginTop: '4px'
+                    marginTop: '4px',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer'
                   }}
                 >
                   <Plus size={14} /> Add Another Medication
@@ -415,8 +420,9 @@ export const AppointmentManager = ({ doctor, showToast }) => {
                 id="visibleToggle"
                 checked={isPatientVisible}
                 onChange={(e) => setIsPatientVisible(e.target.checked)}
+                style={{ accentColor: 'var(--primary-teal)', width: '16px', height: '16px' }}
               />
-              <label htmlFor="visibleToggle" style={{ fontSize: '0.85rem', fontWeight: '600', color: '#475569' }}>
+              <label htmlFor="visibleToggle" style={{ fontSize: '0.84rem', fontWeight: '600', color: 'var(--text-secondary)' }}>
                 Make notes & prescription visible to patient in their Medical Records portal
               </label>
             </div>

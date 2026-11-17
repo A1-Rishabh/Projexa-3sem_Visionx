@@ -77,7 +77,7 @@ export const ScheduleManager = ({ doctor, showToast }) => {
           backgroundColor: '#ffffff',
           borderRadius: '16px',
           padding: '20px 24px',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-color)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -87,33 +87,34 @@ export const ScheduleManager = ({ doctor, showToast }) => {
         }}
       >
         <div>
-          <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#0a2540', marginBottom: '4px' }}>
-            Interactive Weekly Schedule & Slot Manager
+          <h2 style={{ fontSize: '1.35rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', marginBottom: '4px' }}>
+            Weekly Schedule & OPD Slot Manager
           </h2>
-          <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-            Click any cell to cycle: <strong style={{ color: '#10b981' }}>Available</strong> → <strong style={{ color: '#64748b' }}>Blocked</strong> → <strong style={{ color: '#d97706' }}>Lunch Break</strong>
+          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0 }}>
+            Click any cell to toggle: <strong style={{ color: '#16A34A' }}>Open</strong> → <strong style={{ color: 'var(--text-secondary)' }}>Blocked</strong> → <strong style={{ color: '#D97706' }}>Lunch Break</strong>
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
           
           {/* SLOT DURATION DROPDOWN */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <label style={{ fontSize: '0.85rem', fontWeight: '700', color: '#0a2540' }}>Slot Duration:</label>
+            <label style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-main)' }}>Slot Duration:</label>
             <select
               value={slotDuration}
               onChange={(e) => setSlotDuration(e.target.value)}
               style={{
                 padding: '8px 12px',
                 borderRadius: '8px',
-                border: '1px solid #cbd5e1',
+                border: '1px solid var(--border-color)',
                 fontWeight: '600',
-                fontSize: '0.85rem',
-                outline: 'none'
+                fontSize: '0.84rem',
+                outline: 'none',
+                backgroundColor: '#ffffff'
               }}
             >
               <option value="15">15 Minutes</option>
-              <option value="30">30 Minutes</option>
+              <option value="30">30 Minutes (Standard)</option>
               <option value="45">45 Minutes</option>
               <option value="60">60 Minutes</option>
             </select>
@@ -123,17 +124,18 @@ export const ScheduleManager = ({ doctor, showToast }) => {
           <button
             onClick={() => setIsHoliday(!isHoliday)}
             className={`btn ${isHoliday ? 'btn-danger' : 'btn-secondary'}`}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', minHeight: '38px', fontSize: '0.82rem' }}
           >
-            <Palmtree size={16} />
-            {isHoliday ? 'Holiday Mode Active (All Blocked)' : 'Mark Holiday / Out of Clinic'}
+            <Palmtree size={15} />
+            {isHoliday ? 'Holiday Active (Slots Blocked)' : 'Mark Holiday / Leave'}
           </button>
 
           <button
             onClick={handleSaveSchedule}
             className="btn btn-primary"
+            style={{ minHeight: '38px', fontSize: '0.84rem' }}
           >
-            <Save size={16} /> Save Changes
+            <Save size={15} /> Save Changes
           </button>
 
         </div>
@@ -143,29 +145,43 @@ export const ScheduleManager = ({ doctor, showToast }) => {
       {isHoliday && (
         <div 
           style={{
-            backgroundColor: '#fee2e2',
-            border: '1px solid #fca5a5',
+            backgroundColor: '#FEE2E2',
+            border: '1px solid #FECACA',
             padding: '14px 20px',
             borderRadius: '12px',
-            color: '#991b1b',
+            color: '#991B1B',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            fontWeight: '600'
+            fontWeight: '600',
+            fontSize: '0.86rem'
           }}
         >
-          <AlertCircle size={20} />
+          <AlertCircle size={20} color="#DC2626" />
           <span>Clinic Holiday status is active. All appointment booking slots for your profile are currently disabled.</span>
         </div>
       )}
 
-      {/* 7-COLUMN WEEKLY GRID */}
-      <div className="schedule-grid-container">
-        
+      {/* 8-COLUMN WEEKLY GRID (Time + 7 Days) */}
+      <div 
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '90px repeat(7, minmax(100px, 1fr))',
+          gap: '6px',
+          backgroundColor: '#ffffff',
+          padding: '20px',
+          borderRadius: '16px',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-sm)',
+          overflowX: 'auto'
+        }}
+      >
         {/* TOP HEADER ROW */}
-        <div className="grid-header-cell">Time</div>
+        <div style={{ backgroundColor: 'var(--deep-teal)', color: '#ffffff', padding: '10px 8px', borderRadius: '8px', fontWeight: '700', textAlign: 'center', fontSize: '0.78rem' }}>
+          Time
+        </div>
         {daysOfWeek.map(day => (
-          <div key={day} className="grid-header-cell">
+          <div key={day} style={{ backgroundColor: 'var(--deep-teal)', color: '#ffffff', padding: '10px 8px', borderRadius: '8px', fontWeight: '700', textAlign: 'center', fontSize: '0.78rem' }}>
             {day}
           </div>
         ))}
@@ -174,18 +190,56 @@ export const ScheduleManager = ({ doctor, showToast }) => {
         {timeSlots.map(time => (
           <React.Fragment key={time}>
             {/* Leftmost time column */}
-            <div className="grid-time-cell">{time}</div>
+            <div style={{ backgroundColor: 'var(--warm-cream)', color: 'var(--text-secondary)', padding: '8px 4px', borderRadius: '8px', fontWeight: '700', textAlign: 'center', fontSize: '0.74rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {time}
+            </div>
 
             {/* 7 Day Cells */}
             {daysOfWeek.map(day => {
               const key = `${day}-${time}`;
               const cellStatus = isHoliday ? 'blocked' : (gridState[key] || 'available');
 
+              const getCellStyles = () => {
+                if (cellStatus === 'available') {
+                  return {
+                    backgroundColor: 'var(--mint)',
+                    border: '1px solid rgba(14, 98, 83, 0.22)',
+                    color: 'var(--primary-teal)'
+                  };
+                }
+                if (cellStatus === 'lunch') {
+                  return {
+                    backgroundColor: '#FEF3C7',
+                    border: '1px solid #FDE68A',
+                    color: '#92400E'
+                  };
+                }
+                return {
+                  backgroundColor: '#F1F5F9',
+                  border: '1px solid #E2E8F0',
+                  color: '#94A3B8'
+                };
+              };
+
+              const currentStyles = getCellStyles();
+
               return (
                 <div
                   key={key}
                   onClick={() => handleCellClick(day, time)}
-                  className={`grid-slot-cell grid-slot-${cellStatus}`}
+                  style={{
+                    ...currentStyles,
+                    borderRadius: '8px',
+                    padding: '8px 4px',
+                    cursor: isHoliday ? 'not-allowed' : 'pointer',
+                    textAlign: 'center',
+                    transition: 'all 0.15s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '36px',
+                    userSelect: 'none'
+                  }}
                 >
                   {cellStatus === 'available' && (
                     <span style={{ fontSize: '0.7rem', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '3px' }}>

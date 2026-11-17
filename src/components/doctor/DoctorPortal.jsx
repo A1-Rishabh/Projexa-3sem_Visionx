@@ -35,6 +35,17 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
   // Security Session Timeout Timer State (15 mins = 900 seconds)
   const [sessionSeconds, setSessionSeconds] = useState(900);
   const [showTimeoutModal, setShowTimeoutModal] = useState(false);
+  const [avatarError, setAvatarError] = useState(false);
+
+  // Doctor initials helper for avatar fallback
+  const getInitials = (name = '') => {
+    const clean = name.replace(/^Dr\.\s*/i, '').trim();
+    const parts = clean.split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return (clean[0] || 'D').toUpperCase();
+  };
 
   useEffect(() => {
     // Check pending appointments for notification bell
@@ -87,11 +98,11 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--slate-bg)' }}>
       
-      {/* FIXED LEFT SIDEBAR (220px DARK NAVY) */}
+      {/* FIXED LEFT SIDEBAR (240px JIVAKA DEEP TEAL) */}
       <aside
         style={{
           width: '240px',
-          backgroundColor: '#0a2540',
+          backgroundColor: 'var(--deep-teal)',
           color: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
@@ -101,12 +112,14 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
           top: 0,
           bottom: 0,
           left: 0,
-          zIndex: 100
+          zIndex: 100,
+          borderRight: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: 'var(--shadow-md)'
         }}
       >
         <div>
           {/* LOGO */}
-          <div style={{ padding: '0 4px 20px', borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+          <div style={{ padding: '0 4px 20px', borderBottom: '1px solid rgba(255, 255, 255, 0.12)' }}>
             <Logo size="medium" theme="light" />
           </div>
 
@@ -125,16 +138,26 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
                     gap: '12px',
                     padding: '12px 14px',
                     borderRadius: '10px',
-                    fontWeight: '700',
+                    fontWeight: isActive ? '700' : '600',
                     fontSize: '0.875rem',
-                    transition: 'all 0.2s',
+                    transition: 'all 0.15s ease',
                     textAlign: 'left',
-                    backgroundColor: isActive ? 'rgba(15, 98, 254, 0.2)' : 'transparent',
-                    color: isActive ? '#38bdf8' : '#94a3b8',
-                    borderLeft: isActive ? '4px solid #0f62fe' : '4px solid transparent'
+                    backgroundColor: isActive ? 'rgba(232, 162, 92, 0.18)' : 'transparent',
+                    color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.75)',
+                    borderLeft: isActive ? '4px solid var(--warm-accent)' : '4px solid transparent',
+                    cursor: 'pointer',
+                    borderTop: 'none',
+                    borderRight: 'none',
+                    borderBottom: 'none'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
-                  <Icon size={18} />
+                  <Icon size={18} color={isActive ? 'var(--warm-accent)' : 'rgba(255, 255, 255, 0.8)'} />
                   <span>{item.label}</span>
                 </button>
               );
@@ -151,12 +174,19 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
             gap: '10px',
             padding: '12px 14px',
             borderRadius: '10px',
-            color: '#ef4444',
+            color: '#FECACA',
             fontWeight: '700',
             fontSize: '0.875rem',
-            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.2)',
-            transition: 'all 0.2s'
+            backgroundColor: 'rgba(239, 68, 68, 0.14)',
+            border: '1px solid rgba(239, 68, 68, 0.28)',
+            cursor: 'pointer',
+            transition: 'all 0.15s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.14)';
           }}
         >
           <LogOut size={18} /> Log Out Portal
@@ -171,7 +201,7 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
           style={{
             height: '72px',
             backgroundColor: '#ffffff',
-            borderBottom: '1px solid #e2e8f0',
+            borderBottom: '1px solid var(--border-color)',
             padding: '0 32px',
             display: 'flex',
             alignItems: 'center',
@@ -184,17 +214,38 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
         >
           {/* Left: Doctor Info */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <img
-              src={currentDoctor.avatar}
-              alt={currentDoctor.name}
-              style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #0f62fe' }}
-            />
+            {currentDoctor.avatar && !avatarError ? (
+              <img
+                src={currentDoctor.avatar}
+                alt={currentDoctor.name}
+                onError={() => setAvatarError(true)}
+                style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-teal)' }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--mint)',
+                  color: 'var(--deep-teal)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: '800',
+                  fontSize: '0.9rem',
+                  border: '2px solid var(--primary-teal)'
+                }}
+              >
+                {getInitials(currentDoctor.name)}
+              </div>
+            )}
             <div>
-              <div style={{ fontWeight: '800', color: '#0a2540', fontSize: '0.95rem' }}>
+              <div style={{ fontWeight: '800', color: 'var(--text-main)', fontSize: '0.96rem', fontFamily: 'Fraunces, serif' }}>
                 {currentDoctor.name}
               </div>
-              <div style={{ fontSize: '0.75rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <MapPin size={12} color="#0f62fe" /> {currentDoctor.room} • {currentDoctor.specialization}
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <MapPin size={12} color="var(--primary-teal)" /> {currentDoctor.room} • {currentDoctor.specialization}
               </div>
             </div>
           </div>
@@ -210,14 +261,14 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
                 gap: '8px',
                 padding: '6px 14px',
                 borderRadius: '9999px',
-                backgroundColor: sessionSeconds < 120 ? '#fef3c7' : '#f1f5f9',
-                border: sessionSeconds < 120 ? '1px solid #fcd34d' : '1px solid #e2e8f0',
-                color: sessionSeconds < 120 ? '#92400e' : '#475569',
+                backgroundColor: sessionSeconds < 120 ? '#FEF3C7' : 'var(--mint)',
+                border: sessionSeconds < 120 ? '1px solid #FCD34D' : '1px solid rgba(14, 98, 83, 0.2)',
+                color: sessionSeconds < 120 ? '#92400E' : 'var(--primary-teal)',
                 fontSize: '0.8rem',
                 fontWeight: '700'
               }}
             >
-              <Clock size={14} color={sessionSeconds < 120 ? '#d97706' : '#0f62fe'} />
+              <Clock size={14} color={sessionSeconds < 120 ? '#D97706' : 'var(--primary-teal)'} />
               <span>Session: {formatTime(sessionSeconds)}</span>
             </div>
 
@@ -229,13 +280,14 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  backgroundColor: '#f8fafc',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: 'var(--warm-cream)',
+                  border: '1px solid var(--border-color)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'relative',
-                  color: '#475569'
+                  color: 'var(--text-main)',
+                  cursor: 'pointer'
                 }}
               >
                 <Bell size={18} />
@@ -247,7 +299,7 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
                       right: '2px',
                       width: '10px',
                       height: '10px',
-                      backgroundColor: '#ef4444',
+                      backgroundColor: 'var(--warm-accent)',
                       borderRadius: '50%',
                       border: '2px solid #ffffff'
                     }}
@@ -266,20 +318,20 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
                     backgroundColor: '#ffffff',
                     borderRadius: '12px',
                     boxShadow: 'var(--shadow-lg)',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--border-color)',
                     padding: '16px',
                     zIndex: 200
                   }}
                 >
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: '800', color: '#0a2540', marginBottom: '10px' }}>
+                  <h4 style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', marginBottom: '10px' }}>
                     Notifications
                   </h4>
                   {pendingCount > 0 ? (
-                    <div style={{ fontSize: '0.8rem', color: '#475569' }}>
-                      You have <strong>{pendingCount}</strong> new appointment request(s) awaiting review under <button onClick={() => { setActiveTab('appointments'); setShowNotifications(false); }} style={{ color: '#0f62fe', fontWeight: '700', textDecoration: 'underline' }}>Appointments</button>.
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                      You have <strong>{pendingCount}</strong> new appointment request(s) awaiting review under <button onClick={() => { setActiveTab('appointments'); setShowNotifications(false); }} style={{ color: 'var(--primary-teal)', fontWeight: '700', textDecoration: 'underline', border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}>Appointments</button>.
                     </div>
                   ) : (
-                    <div style={{ fontSize: '0.8rem', color: '#64748b' }}>No pending notifications.</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>No pending notifications.</div>
                   )}
                 </div>
               )}
@@ -338,17 +390,18 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
         maxWidth="440px"
       >
         <div style={{ textAlign: 'center', padding: '10px 0' }}>
-          <AlertTriangle size={42} color="#f59e0b" style={{ margin: '0 auto 12px' }} />
-          <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#0a2540', marginBottom: '8px' }}>
-            Your doctor session is expiring soon
+          <AlertTriangle size={42} color="var(--warm-accent)" style={{ margin: '0 auto 12px' }} />
+          <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', marginBottom: '8px' }}>
+            Doctor Session Expiring Soon
           </h4>
-          <p style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '20px' }}>
-            Due to privacy regulations, your active session will auto-terminate in <strong style={{ color: '#d97706' }}>{formatTime(sessionSeconds)}</strong>.
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
+            Due to clinical privacy regulations, your active session will auto-terminate in <strong style={{ color: 'var(--warm-accent)' }}>{formatTime(sessionSeconds)}</strong>.
           </p>
 
           <button
             onClick={handleExtendSession}
             className="btn btn-primary btn-block"
+            style={{ minHeight: '42px', fontSize: '0.88rem' }}
           >
             <RefreshCw size={16} /> Extend Active Session (15 Mins)
           </button>
