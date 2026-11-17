@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, User, Stethoscope, Phone, Clock, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Menu, X, ArrowRight, User, Stethoscope, AlertCircle } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { clinic, isPlaceholder } from '../../config/clinic';
 
@@ -38,7 +38,6 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
 
   const branch = clinic.branches?.[0] || {};
   const emergencyPhone = !isPlaceholder(branch.emergency) ? branch.emergency : '1800-200-4567';
-  const generalPhone = !isPlaceholder(branch.phone) ? branch.phone : '+91 98765 43210';
 
   return (
     <header
@@ -50,85 +49,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
         transition: 'all 0.3s ease'
       }}
     >
-      {/* 1. TOP INSTITUTIONAL UTILITY BAR */}
-      <div
-        className="institutional-top-bar"
-        style={{
-          backgroundColor: 'var(--deep-teal)',
-          color: '#ffffff',
-          fontSize: '0.80rem',
-          padding: '6px 24px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-            flexWrap: 'wrap'
-          }}
-        >
-          {/* LEFT: EMERGENCY & HOURS */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#fca5a5', fontWeight: '700' }}>
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: '#ef4444',
-                  boxShadow: '0 0 8px #ef4444'
-                }}
-              />
-              <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>24/7 Emergency Triage:</span>
-              <a
-                href={`tel:${emergencyPhone}`}
-                style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '700' }}
-              >
-                {emergencyPhone}
-              </a>
-            </div>
-
-            <div className="top-bar-hours" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#bcd0cb' }}>
-              <Clock size={13} color="var(--mint)" />
-              <span>OPD Hours: Mon – Sat: 8:00 AM – 8:00 PM</span>
-            </div>
-          </div>
-
-          {/* RIGHT: ACCREDITATION & DESK */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                color: 'var(--mint)',
-                fontWeight: '600',
-                fontSize: '0.78rem'
-              }}
-            >
-              <ShieldCheck size={14} />
-              <span>NABH Accredited Healthcare Center</span>
-            </div>
-
-            <div className="top-bar-helpdesk" style={{ color: '#bcd0cb' }}>
-              <span>Desk: </span>
-              <a
-                href={`tel:${generalPhone}`}
-                style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '600' }}
-              >
-                {generalPhone}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. MAIN NAVIGATION BAR */}
+      {/* MAIN NAVIGATION BAR */}
       <div
         className={`landing-navbar ${isScrolled ? 'frosted-navbar' : ''}`}
         style={{

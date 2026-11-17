@@ -453,11 +453,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     display: none !important;
   }
 
-  .top-bar-hours,
-  .top-bar-helpdesk {
-    display: none !important;
-  }
-
   .mobile-hamburger-btn {
     display: flex !important;
   }

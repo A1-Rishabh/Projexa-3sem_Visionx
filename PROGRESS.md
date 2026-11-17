@@ -681,6 +681,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` succeeded in 7.00s with 0 errors (1559 modules transformed).
 - Notes: Git commit made for version continuity.
 
+### Task 2.16: Remove top institutional utility bar from header
+- Status: DONE
+- Completed: 2026-11-17 22:50 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/index.css
+- Summary: Completely removed the top emergency/hours utility bar from the landing page header per user request. Header now renders clean, uncluttered frosted navigation bar with logo, section links, Doctor Portal, and Sign In button.
+- Bugs fixed: Removed visual clutter from page top; eliminated orphan CSS selectors.
+- Verified by: `npm run build` succeeded in 35.19s with 0 errors (1559 modules transformed).
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
