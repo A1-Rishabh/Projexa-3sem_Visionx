@@ -14,12 +14,16 @@ import {
   ChevronRight,
   Download,
   CalendarPlus,
-  QrCode
+  QrCode,
+  Bell,
+  FileText
 } from 'lucide-react';
 import { getAppointments, updateAppointmentStatus, getDoctors } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
 import { StatusBadge } from '../common/StatusBadge';
 import { ReceiptModal } from './ReceiptModal';
+import { PreVisitFormModal } from './PreVisitFormModal';
+import { WaitlistModal } from './WaitlistModal';
 import { formatINR, clinic, getDirectionsUrl, isPlaceholder } from '../../config/clinic';
 
 export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
@@ -28,6 +32,19 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
   const [cancelModalApt, setCancelModalApt] = useState(null);
   const [cancelReason, setCancelReason] = useState('');
   const [selectedReceiptApt, setSelectedReceiptApt] = useState(null);
+  const [preVisitApt, setPreVisitApt] = useState(null);
+  const [waitlistApt, setWaitlistApt] = useState(null);
+  const [reminderApts, setReminderApts] = useState({ 'APT-801': true });
+
+  const toggleReminder = (aptId) => {
+    setReminderApts(prev => {
+      const nextState = !prev[aptId];
+      if (showToast) {
+        showToast(nextState ? 'Appointment reminder active (Email & SMS)' : 'Appointment reminder muted', 'info');
+      }
+      return { ...prev, [aptId]: nextState };
+    });
+  };
 
   useEffect(() => {
     loadAppointments();
@@ -308,6 +325,32 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                         {isPaid ? `Paid • ${formatINR(fee)}` : `Pay at Clinic • ${formatINR(fee)}`}
                       </span>
 
+                      {/* Reminder Set / Toggle Badge */}
+                      {activeTab === 'upcoming' && (
+                        <button
+                          type="button"
+                          onClick={() => toggleReminder(apt.id)}
+                          style={{
+                            fontSize: '0.72rem',
+                            fontWeight: '700',
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            backgroundColor: reminderApts[apt.id] ? '#DCEFE6' : '#F1F5F9',
+                            color: reminderApts[apt.id] ? 'var(--deep-teal)' : 'var(--text-secondary)',
+                            border: '1px solid ' + (reminderApts[apt.id] ? 'var(--primary-teal)' : 'var(--border-color)'),
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title={reminderApts[apt.id] ? "Reminder active (SMS & Email). Click to mute" : "Click to activate SMS & Email reminders"}
+                        >
+                          <Bell size={11} color={reminderApts[apt.id] ? "var(--primary-teal)" : "var(--text-secondary)"} />
+                          <span>{reminderApts[apt.id] ? '🔔 Reminder Set' : 'Set Reminder'}</span>
+                        </button>
+                      )}
+
                       {/* Countdown badge for upcoming visits */}
                       {activeTab === 'upcoming' && (
                         <span style={{ fontSize: '0.72rem', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#EFF6FF', color: '#1D4ED8', fontWeight: '700' }}>
@@ -356,6 +399,34 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                     >
                       <CalendarPlus size={14} color="var(--primary-teal)" />
                       <span>Calendar</span>
+                    </button>
+                  )}
+
+                  {/* Pre-visit Questionnaire for upcoming visits */}
+                  {activeTab === 'upcoming' && (
+                    <button
+                      type="button"
+                      onClick={() => setPreVisitApt(apt)}
+                      className="btn btn-secondary btn-sm"
+                      style={{ gap: '6px' }}
+                      title="Fill out your symptoms and history before your appointment"
+                    >
+                      <FileText size={14} color="var(--primary-teal)" />
+                      <span>Pre-visit Form</span>
+                    </button>
+                  )}
+
+                  {/* Waitlist for earlier openings */}
+                  {activeTab === 'upcoming' && (
+                    <button
+                      type="button"
+                      onClick={() => setWaitlistApt(apt)}
+                      className="btn btn-secondary btn-sm"
+                      style={{ gap: '6px' }}
+                      title="Notify me if an earlier cancellation slot becomes available"
+                    >
+                      <Clock size={14} color="var(--warm-accent)" />
+                      <span>Waitlist</span>
                     </button>
                   )}
 
@@ -474,6 +545,27 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
           onClose={() => setSelectedReceiptApt(null)}
           appointment={selectedReceiptApt}
           patient={patient}
+          showToast={showToast}
+        />
+      )}
+
+      {/* PRE-VISIT CLINICAL FORM MODAL */}
+      {preVisitApt && (
+        <PreVisitFormModal
+          isOpen={!!preVisitApt}
+          onClose={() => setPreVisitApt(null)}
+          appointment={preVisitApt}
+          patient={patient}
+          showToast={showToast}
+        />
+      )}
+
+      {/* PRIORITY WAITLIST MODAL */}
+      {waitlistApt && (
+        <WaitlistModal
+          isOpen={!!waitlistApt}
+          onClose={() => setWaitlistApt(null)}
+          appointment={waitlistApt}
           showToast={showToast}
         />
       )}

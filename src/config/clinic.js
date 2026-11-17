@@ -85,3 +85,4 @@ export const buildUpiDeepLink = ({ upiId, payeeName, amount, note = 'Clinic Cons
 };
 
 export default clinic;
+

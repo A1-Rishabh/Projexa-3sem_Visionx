@@ -72,3 +72,4 @@ export const LandingPage = ({ onNavigateToAuth, onQuickBookDoctor, showToast }) 
 };
 
 export default LandingPage;
+

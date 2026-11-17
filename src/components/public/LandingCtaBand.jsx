@@ -127,3 +127,4 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
 };
 
 export default LandingCtaBand;
+

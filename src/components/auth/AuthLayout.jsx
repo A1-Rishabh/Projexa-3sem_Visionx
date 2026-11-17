@@ -191,3 +191,4 @@ export const AuthLayout = ({ children, title, subtitle, onBackToHome }) => {
 };
 
 export default AuthLayout;
+

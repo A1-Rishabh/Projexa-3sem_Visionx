@@ -63,3 +63,4 @@ export const StatusBadge = ({ status = 'pending', showIcon = true, size = 'mediu
 };
 
 export default StatusBadge;
+

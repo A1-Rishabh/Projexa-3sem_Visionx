@@ -7,3 +7,4 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 
 ## Project progress
 Track the full redesign and development progress in [PROGRESS.md](file:///c:/Users/risha/OneDrive/Desktop/Comunity%20Service/Prototype2/PROGRESS.md) and see the project specification in [PROMPT.md](file:///c:/Users/risha/OneDrive/Desktop/Comunity%20Service/Prototype2/PROMPT.md).
+

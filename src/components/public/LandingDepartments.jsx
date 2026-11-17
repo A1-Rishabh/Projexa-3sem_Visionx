@@ -243,3 +243,4 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
 };
 
 export default LandingDepartments;
+

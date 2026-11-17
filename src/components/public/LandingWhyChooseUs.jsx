@@ -126,3 +126,4 @@ export const LandingWhyChooseUs = () => {
 };
 
 export default LandingWhyChooseUs;
+

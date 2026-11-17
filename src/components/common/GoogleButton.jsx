@@ -62,3 +62,4 @@ export const GoogleButton = ({ onClick, isLoading = false, label = 'Continue wit
 };
 
 export default GoogleButton;
+

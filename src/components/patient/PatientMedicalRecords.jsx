@@ -23,11 +23,15 @@ import {
   TrendingDown,
   Minus,
   Sparkles,
-  FileCheck2
+  FileCheck2,
+  Upload,
+  Plus
 } from 'lucide-react';
 import { getMedicalRecords, getAppointments } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
 import { ReceiptModal } from './ReceiptModal';
+import { DocumentUploadModal } from './DocumentUploadModal';
+import { PrescriptionRefillModal } from './PrescriptionRefillModal';
 import { formatINR, clinic } from '../../config/clinic';
 
 export const PatientMedicalRecords = ({ patient, showToast }) => {
@@ -37,9 +41,21 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
   const [printPrescription, setPrintPrescription] = useState(null);
   const [selectedReceiptApt, setSelectedReceiptApt] = useState(null);
   const [patientAppointments, setPatientAppointments] = useState([]);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isRefillOpen, setIsRefillOpen] = useState(false);
   
   // Collapsible year state for visit history
   const [expandedYears, setExpandedYears] = useState({ '2026': true });
+
+  const handleDocumentUploaded = (newDoc) => {
+    setRecord(prev => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        labReports: [newDoc, ...(prev.labReports || [])]
+      };
+    });
+  };
 
   useEffect(() => {
     const recs = getMedicalRecords();
@@ -284,13 +300,25 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
         {/* VISIT TIMELINE & PRESCRIPTIONS (GROUPED BY YEAR, COLLAPSIBLE) */}
         {(activeTab === 'all' || activeTab === 'visits' || activeTab === 'prescriptions') && (
           <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Fraunces, serif' }}>
-                <Calendar size={18} color="var(--primary-teal)" /> Clinical Visit Timeline
-              </h2>
-              <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                Grouped by Year
-              </span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+              <div>
+                <h2 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Fraunces, serif' }}>
+                  <Calendar size={18} color="var(--primary-teal)" /> Clinical Visit Timeline
+                </h2>
+                <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
+                  Grouped by Year
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsRefillOpen(true)}
+                className="btn btn-secondary btn-sm"
+                style={{ gap: '6px', fontSize: '0.78rem' }}
+                title="Request prescription refill from physician"
+              >
+                <Pill size={13} color="var(--primary-teal)" />
+                <span>Request Refill</span>
+              </button>
             </div>
 
             {Object.keys(visitsByYear).length === 0 ? (
@@ -401,13 +429,25 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
             
             {/* LAB REPORTS */}
             <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                <h2 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Fraunces, serif' }}>
-                  <FileText size={18} color="var(--primary-teal)" /> Pathology & Diagnostics
-                </h2>
-                <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                  Verified lab PDFs
-                </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                <div>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Fraunces, serif' }}>
+                    <FileText size={18} color="var(--primary-teal)" /> Pathology & Diagnostics
+                  </h2>
+                  <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
+                    Verified lab PDFs & patient uploads
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsUploadOpen(true)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ gap: '6px', fontSize: '0.78rem' }}
+                  title="Upload past reports or insurance documents"
+                >
+                  <Upload size={13} color="var(--primary-teal)" />
+                  <span>Upload Document</span>
+                </button>
               </div>
 
               {record.labReports.length === 0 ? (
@@ -682,6 +722,22 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
           </div>
         )}
       </Modal>
+
+      {/* DOCUMENT UPLOAD MODAL */}
+      <DocumentUploadModal
+        isOpen={isUploadOpen}
+        onClose={() => setIsUploadOpen(false)}
+        onUploadComplete={handleDocumentUploaded}
+        showToast={showToast}
+      />
+
+      {/* PRESCRIPTION REFILL MODAL */}
+      <PrescriptionRefillModal
+        isOpen={isRefillOpen}
+        onClose={() => setIsRefillOpen(false)}
+        patient={patient}
+        showToast={showToast}
+      />
 
     </div>
   );

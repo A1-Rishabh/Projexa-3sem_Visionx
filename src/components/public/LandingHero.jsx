@@ -344,3 +344,4 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
 };
 
 export default LandingHero;
+

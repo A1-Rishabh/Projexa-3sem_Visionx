@@ -223,3 +223,4 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
 };
 
 export default LandingFooter;
+

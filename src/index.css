@@ -561,3 +561,29 @@ button:focus-visible, a:focus-visible {
   }
 }
 
+/* Accessibility: Dark Mode & Larger Text Support */
+[data-theme="dark"] {
+  --warm-cream: #121E1C;
+  --warm-cream-alt: #172624;
+  --card-bg: #1B2B28;
+  --text-main: #ECF5F3;
+  --text-secondary: #94A8A4;
+  --text-muted: #6C817D;
+  --border-color: #263C38;
+  --border-hover: #35524D;
+}
+
+[data-theme="dark"] body {
+  background-color: #121E1C !important;
+  color: #ECF5F3 !important;
+}
+
+[data-theme="dark"] .frosted-navbar-dark {
+  background: rgba(12, 30, 28, 0.96) !important;
+}
+
+[data-text-size="large"] {
+  font-size: 112% !important;
+}
+
+

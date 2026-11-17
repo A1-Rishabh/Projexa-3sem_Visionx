@@ -482,3 +482,4 @@ FIRST ACTION
 Now follow STEP 0: check for /PROGRESS.md. If it exists, resume from
 the first task that is not DONE. If not, save this prompt to
 /PROMPT.md, create /PROGRESS.md, and begin with task 0.1.
+

@@ -392,3 +392,4 @@ export const LandingLocations = ({ showToast }) => {
 };
 
 export default LandingLocations;
+

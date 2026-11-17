@@ -222,3 +222,4 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
 };
 
 export default LandingNavbar;
+
