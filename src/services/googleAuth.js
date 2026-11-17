@@ -62,7 +62,7 @@ const createGoogleSession = (isSignUp = false) => {
     googlePatient = {
       id: `P-${1000 + patients.length + 1}`,
       email: 'patient.google@example.com',
-      name: 'Dr. John Doe (Google User)',
+      name: 'John Doe',
       phone: '+91 98765 12345',
       gender: 'Male',
       age: 34,
@@ -81,6 +81,9 @@ const createGoogleSession = (isSignUp = false) => {
       }
     };
     patients.push(googlePatient);
+    localStorage.setItem('aegis_patients', JSON.stringify(patients));
+  } else if (googlePatient.name && (googlePatient.name.includes('Dr.') || googlePatient.name.includes('Google User'))) {
+    googlePatient.name = 'John Doe';
     localStorage.setItem('aegis_patients', JSON.stringify(patients));
   }
 

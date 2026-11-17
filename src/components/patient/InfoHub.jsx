@@ -4,7 +4,6 @@ import {
   Phone, 
   Mail, 
   MapPin, 
-  Megaphone, 
   Calendar,
   FileText,
   User,
@@ -31,7 +30,6 @@ export const InfoHub = ({
   onNavigateToProfile,
   showToast 
 }) => {
-  const [isAnnouncementDismissed, setIsAnnouncementDismissed] = useState(false);
   const [copiedAddress, setCopiedAddress] = useState(false);
   const [cancelModalApt, setCancelModalApt] = useState(null);
 
@@ -49,7 +47,15 @@ export const InfoHub = ({
     return 'Good evening';
   }, []);
 
-  const patientFirstName = patient?.name ? patient.name.split(' ')[0] : 'Patient';
+  const cleanName = useMemo(() => {
+    return (patient?.name || 'John Doe')
+      .replace(/^Dr\.\s*/i, '')
+      .replace(/\s*\(Google User\)/i, '')
+      .replace(/\s*\(Demo\)/i, '')
+      .trim() || 'John Doe';
+  }, [patient?.name]);
+
+  const patientFirstName = cleanName.split(' ')[0] || 'Patient';
 
   // Format today's human-readable date
   const todayFormatted = useMemo(() => {
@@ -196,63 +202,6 @@ export const InfoHub = ({
           <Calendar size={16} /> Book Appointment
         </button>
       </div>
-
-      {/* WARM ACCENT ANNOUNCEMENT BANNER */}
-      {!isAnnouncementDismissed && (
-        <div
-          role="region"
-          aria-label="Clinic Announcement"
-          style={{
-            backgroundColor: '#FFF7ED',
-            border: '1px solid #FED7AA',
-            borderRadius: '14px',
-            padding: '12px 18px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-            boxShadow: '0 2px 6px rgba(232, 162, 92, 0.12)'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-            <div 
-              style={{ 
-                width: '32px', 
-                height: '32px', 
-                borderRadius: '8px', 
-                backgroundColor: 'var(--warm-accent)', 
-                color: '#ffffff', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                flexShrink: 0
-              }}
-            >
-              <Megaphone size={16} />
-            </div>
-            <div style={{ fontSize: '0.88rem', color: '#9A3412', fontWeight: '600' }}>
-              Flu Vaccination & Annual Preventive Health Packages are now available. Walk-ins welcomed before 12:00 PM.
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsAnnouncementDismissed(true)}
-            aria-label="Dismiss announcement"
-            style={{
-              padding: '6px',
-              borderRadius: '6px',
-              color: '#9A3412',
-              backgroundColor: 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer'
-            }}
-          >
-            <X size={16} />
-          </button>
-        </div>
-      )}
 
       {/* ABOVE-THE-FOLD PRIMARY DASHBOARD GRID (4 CARDS: Clean, Compact, Equal rhythm) */}
       <div 

@@ -654,6 +654,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 
 ---
 
+### Task 2.13: Header notification center, patient name fix & profile dropdown modernization
+- Status: DONE
+- Completed: 2026-11-17 21:50 IST
+- Files changed or added: src/components/patient/InfoHub.jsx, src/components/patient/PatientPortal.jsx, src/services/googleAuth.js, src/services/mockDataStore.js
+- Summary: Removed standalone announcement banner from dashboard and consolidated all clinic announcements into an interactive header Notification Center with unread counter badge. Fixed patient mock name from "Dr. John Doe (Google User)" to clean "John Doe", ID: P-1004 with automatic normalization of legacy sessions. Replaced unstyled text switches ("OFF/ON") in the profile dropdown with modern iOS-style toggle switches for Dark Theme and Large Text modes, added relation pills and active badges for family dependents, and refined header alignment.
+- Bugs fixed: Removed erroneous "Dr." prefix and "(Google User)" tag from patient display name; removed standalone dismissable banner from InfoHub and relocated announcements to the header; replaced plain text accessibility toggles with sleek animated switch controls.
+- Verified by: Executed `npm run build` which succeeded with 0 errors. Verified interactive notifications panel and toggle states.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

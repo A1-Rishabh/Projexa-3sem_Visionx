@@ -361,7 +361,24 @@ export const updateDoctorProfile = (doctorId, updatedData) => {
 
 export const getPatients = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.PATIENTS));
+  const raw = localStorage.getItem(STORAGE_KEYS.PATIENTS);
+  if (!raw) return [];
+  try {
+    const patients = JSON.parse(raw);
+    let changed = false;
+    patients.forEach(p => {
+      if (p.name && (p.name.includes('Dr.') || p.name.includes('Google User'))) {
+        p.name = p.name.replace(/^Dr\.\s*/i, '').replace(/\s*\(Google User\)/i, '').trim() || 'John Doe';
+        changed = true;
+      }
+    });
+    if (changed) {
+      localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+    }
+    return patients;
+  } catch (e) {
+    return [];
+  }
 };
 
 export const getAppointments = () => {
@@ -456,7 +473,17 @@ export const getClinicInfo = () => {
 
 export const getSavedSession = () => {
   const s = localStorage.getItem(STORAGE_KEYS.SESSION);
-  return s ? JSON.parse(s) : null;
+  if (!s) return null;
+  try {
+    const session = JSON.parse(s);
+    if (session?.user?.name && (session.user.name.includes('Dr.') || session.user.name.includes('Google User'))) {
+      session.user.name = session.user.name.replace(/^Dr\.\s*/i, '').replace(/\s*\(Google User\)/i, '').trim() || 'John Doe';
+      localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(session));
+    }
+    return session;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const saveSession = (sessionData) => {
