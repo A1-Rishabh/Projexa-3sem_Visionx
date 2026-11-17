@@ -16,6 +16,7 @@ import { AuthLayout } from './AuthLayout';
 import { GoogleButton } from '../common/GoogleButton';
 import { Modal } from '../common/Modal';
 import { getPatients, saveSession } from '../../services/mockDataStore';
+import { handleGoogleAuth } from '../../services/googleAuth';
 
 export const SignUpPage = ({
   onLoginSuccess,
@@ -177,21 +178,19 @@ export const SignUpPage = ({
   };
 
   // Google sign-up handler
-  const handleGoogleSignUp = () => {
+  const handleGoogleSignUp = async () => {
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      const result = await handleGoogleAuth({ isSignUp: true });
       setIsLoading(false);
-      const patients = getPatients();
-      const googleUser = patients[0];
-      const session = {
-        role: 'patient',
-        user: { ...googleUser, isGoogleAuth: true },
-        patientId: googleUser.id
-      };
-      saveSession(session);
-      showToast('Account created via Google. Welcome!', 'success');
-      onLoginSuccess(session);
-    }, 800);
+      if (result.success) {
+        showToast(result.message || 'Account created via Google. Welcome!', 'success');
+        onLoginSuccess(result.session);
+      }
+    } catch (err) {
+      setIsLoading(false);
+      showToast('Google sign-up failed. Please try again.', 'error');
+    }
   };
 
   return (

@@ -22,6 +22,7 @@ import {
   getLastRoleTab, 
   saveLastRoleTab 
 } from '../../services/mockDataStore';
+import { handleGoogleAuth } from '../../services/googleAuth';
 
 export const LoginPage = ({
   onLoginSuccess,
@@ -159,32 +160,19 @@ export const LoginPage = ({
   };
 
   // Google Sign-in Handler
-  const handleGoogleSignIn = () => {
-    const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const handleGoogleSignIn = async () => {
     setIsLoading(true);
-
-    setTimeout(() => {
+    try {
+      const result = await handleGoogleAuth({ isSignUp: false });
       setIsLoading(false);
-      const patients = getPatients();
-      const googleUser = patients[0]; // John Doe as authenticated user
-      const session = {
-        role: 'patient',
-        user: {
-          ...googleUser,
-          isGoogleAuth: true
-        },
-        patientId: googleUser.id
-      };
-      saveSession(session);
-
-      if (!googleClientId) {
-        showToast('Signed in with Google (Demo account). Set VITE_GOOGLE_CLIENT_ID in .env for production OAuth.', 'info');
-      } else {
-        showToast(`Google Sign-In successful. Welcome ${googleUser.name}!`, 'success');
+      if (result.success) {
+        showToast(result.message || 'Google sign-in successful', 'success');
+        onLoginSuccess(result.session);
       }
-
-      onLoginSuccess(session);
-    }, 800);
+    } catch (err) {
+      setIsLoading(false);
+      showToast('Google authentication encountered an error. Please try again.', 'error');
+    }
   };
 
   // Forgot password submit
