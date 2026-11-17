@@ -15,6 +15,7 @@ import {
 import { saveAppointment } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
 import { formatINR } from '../../config/clinic';
+import { PaymentOptions } from './PaymentOptions';
 
 export const BookingWizardModal = ({ 
   isOpen, 
@@ -31,6 +32,10 @@ export const BookingWizardModal = ({
   const [errors, setErrors] = useState({});
   const [avatarError, setAvatarError] = useState(false);
 
+  // Payment states for Step 3
+  const [paymentMethod, setPaymentMethod] = useState('clinic'); // 'clinic' | 'qr' | 'upi' | 'card'
+  const [paymentStatus, setPaymentStatus] = useState('idle'); // 'idle' | 'awaiting' | 'paid' | 'failed'
+
   // Reset state when doctor changes or modal opens
   useEffect(() => {
     if (isOpen) {
@@ -40,6 +45,8 @@ export const BookingWizardModal = ({
       setSelectedTime('');
       setErrors({});
       setAvatarError(false);
+      setPaymentMethod('clinic');
+      setPaymentStatus('idle');
     }
   }, [isOpen, selectedDoctor]);
 
@@ -133,7 +140,6 @@ export const BookingWizardModal = ({
       setErrors({ visitReason: 'Please provide a little more detail (at least 5 characters).' });
       return;
     }
-    // Check if it has readable word characters, not just punctuation
     if (!/[a-zA-Z]{3,}/.test(trimmed)) {
       setErrors({ visitReason: 'Please enter a valid description of your symptom or visit reason.' });
       return;
@@ -152,8 +158,8 @@ export const BookingWizardModal = ({
     setStep(3);
   };
 
-  // Step 3 Confirmation
-  const handleConfirmBooking = () => {
+  // Step 3 Confirmation (Pay at Clinic)
+  const handleConfirmPayAtClinic = () => {
     const newApt = saveAppointment({
       doctorId: selectedDoctor.id,
       doctorName: selectedDoctor.name,
@@ -166,11 +172,37 @@ export const BookingWizardModal = ({
       fee: selectedDoctor.fee,
       paymentMethod: 'Pay at clinic',
       paymentStatus: 'Pay at clinic',
+      transactionId: null,
       visitReason
     });
 
     if (showToast) {
       showToast(`Appointment confirmed with ${selectedDoctor.name} at ${selectedDoctor.room}!`, 'success');
+    }
+    onBookingConfirmed(newApt);
+    onClose();
+  };
+
+  // Step 3 Confirmation (Online Payment Success)
+  const handleOnlinePaymentSuccess = (methodLabel, txnId) => {
+    const newApt = saveAppointment({
+      doctorId: selectedDoctor.id,
+      doctorName: selectedDoctor.name,
+      patientId: patient.id,
+      patientName: patient.name,
+      patientPhone: patient.phone,
+      date: selectedDate,
+      time: selectedTime,
+      room: selectedDoctor.room,
+      fee: selectedDoctor.fee,
+      paymentMethod: methodLabel,
+      paymentStatus: 'Paid',
+      transactionId: txnId,
+      visitReason
+    });
+
+    if (showToast) {
+      showToast(`Payment of ${formatINR(selectedDoctor.fee)} received! Appointment confirmed.`, 'success');
     }
     onBookingConfirmed(newApt);
     onClose();
@@ -212,7 +244,7 @@ export const BookingWizardModal = ({
           {[
             { num: 1, label: 'Reason' },
             { num: 2, label: 'Date & Slot' },
-            { num: 3, label: 'Review & Confirm' }
+            { num: 3, label: 'Review & Pay' }
           ].map((s) => {
             const isCompleted = step > s.num;
             const isCurrent = step === s.num;
@@ -568,13 +600,13 @@ export const BookingWizardModal = ({
                 onClick={handleNextStep2} 
                 className="btn btn-primary"
               >
-                Review Summary <ArrowRight size={16} />
+                Proceed to Payment & Review <ArrowRight size={16} />
               </button>
             </div>
           </div>
         )}
 
-        {/* STEP 3: SUMMARY CARD & CONFIRMATION */}
+        {/* STEP 3: SUMMARY CARD & CHOOSE HOW TO PAY */}
         {step === 3 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
@@ -584,88 +616,110 @@ export const BookingWizardModal = ({
                 backgroundColor: '#ffffff', 
                 border: '1.5px solid var(--primary-teal)', 
                 borderRadius: '14px', 
-                padding: '18px', 
+                padding: '16px', 
                 boxShadow: 'var(--shadow-sm)' 
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-teal)', fontSize: '0.82rem', fontWeight: '800', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-teal)', fontSize: '0.82rem', fontWeight: '800', marginBottom: '10px' }}>
                 <Sparkles size={16} /> APPOINTMENT SUMMARY
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.86rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.85rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>Physician:</span>
                   <strong style={{ color: 'var(--text-main)' }}>{selectedDoctor.name}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Department:</span>
-                  <strong>{selectedDoctor.specialization}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Assigned Room:</span>
-                  <strong style={{ color: 'var(--primary-teal)' }}>{selectedDoctor.room}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>Date & Slot:</span>
                   <strong>{selectedDate} at {selectedTime}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>Consultation Chamber:</span>
+                  <strong style={{ color: 'var(--primary-teal)' }}>{selectedDoctor.room}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>Consultation Fee:</span>
-                  <strong style={{ color: 'var(--primary-teal)', fontSize: '0.95rem' }}>
+                  <strong style={{ color: 'var(--primary-teal)', fontSize: '0.96rem' }}>
                     {formatINR(selectedDoctor.fee)}
                   </strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>Reason for Visit:</span>
-                  <strong style={{ maxWidth: '240px', textAlign: 'right' }}>{visitReason}</strong>
-                </div>
               </div>
             </div>
 
-            {/* Check-In Instructions */}
-            <div 
-              style={{ 
-                backgroundColor: '#FFF7ED', 
-                border: '1px solid #FED7AA', 
-                padding: '12px 14px', 
-                borderRadius: '10px', 
-                fontSize: '0.8rem', 
-                color: '#9A3412',
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '8px'
+            {/* PAYMENT OPTIONS COMPONENT */}
+            <PaymentOptions
+              amount={selectedDoctor.fee}
+              doctorName={selectedDoctor.name}
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              patient={patient}
+              selectedMethod={paymentMethod}
+              onChangeMethod={(m, s = 'idle') => {
+                setPaymentMethod(m);
+                setPaymentStatus(s);
               }}
-            >
-              <MapPin size={16} color="#EA580C" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <div>
-                <strong>Check-In Instructions:</strong> Please report to {selectedDoctor.room} 10 minutes prior to {selectedTime}. You can pay your consultation fee directly at the clinic check-in desk via cash or card.
-              </div>
-            </div>
+              paymentStatus={paymentStatus}
+              onPaymentSuccess={handleOnlinePaymentSuccess}
+              onPaymentFailed={(msg) => {
+                setPaymentStatus('failed');
+                if (showToast) showToast(msg || 'Payment failed.', 'error');
+              }}
+              onCancelPayment={() => {
+                setPaymentStatus('idle');
+                setPaymentMethod('clinic');
+              }}
+            />
 
-            {/* Stepper Buttons */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px' }}>
-              <button 
-                type="button" 
-                onClick={() => setStep(2)} 
-                className="btn btn-secondary"
-              >
-                <ArrowLeft size={16} /> Back
-              </button>
-              <button 
-                type="button" 
-                onClick={handleConfirmBooking} 
-                className="btn btn-primary"
+            {/* Check-In Instructions for Pay at Clinic */}
+            {paymentMethod === 'clinic' && paymentStatus === 'idle' && (
+              <div 
                 style={{ 
-                  backgroundColor: 'var(--deep-teal)', 
-                  boxShadow: '0 4px 14px rgba(15, 79, 74, 0.35)',
-                  minHeight: '44px',
-                  padding: '10px 24px',
-                  fontSize: '0.92rem'
+                  backgroundColor: '#FFF7ED', 
+                  border: '1px solid #FED7AA', 
+                  padding: '12px 14px', 
+                  borderRadius: '10px', 
+                  fontSize: '0.8rem', 
+                  color: '#9A3412',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '8px'
                 }}
               >
-                <Check size={18} /> Confirm Appointment
-              </button>
-            </div>
+                <MapPin size={16} color="#EA580C" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>
+                  <strong>Check-In Instructions:</strong> Please report to {selectedDoctor.room} 10 minutes prior to {selectedTime}. You can pay directly at the counter via cash or card.
+                </div>
+              </div>
+            )}
+
+            {/* Stepper Buttons for Step 3 (Shown when in idle mode) */}
+            {paymentStatus === 'idle' && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px' }}>
+                <button 
+                  type="button" 
+                  onClick={() => setStep(2)} 
+                  className="btn btn-secondary"
+                >
+                  <ArrowLeft size={16} /> Back
+                </button>
+                {paymentMethod === 'clinic' && (
+                  <button 
+                    type="button" 
+                    onClick={handleConfirmPayAtClinic} 
+                    className="btn btn-primary"
+                    style={{ 
+                      backgroundColor: 'var(--deep-teal)', 
+                      boxShadow: '0 4px 14px rgba(15, 79, 74, 0.35)',
+                      minHeight: '44px',
+                      padding: '10px 24px',
+                      fontSize: '0.92rem'
+                    }}
+                  >
+                    <Check size={18} /> Confirm Appointment
+                  </button>
+                )}
+              </div>
+            )}
 
           </div>
         )}

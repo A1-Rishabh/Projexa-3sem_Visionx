@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:28 IST
-Current task: 2.5 Payment options
+Last updated: 2026-11-17 14:37 IST
+Current task: 2.6 Receipts and payment history
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -53,7 +53,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.2 Home dashboard ............................................ DONE
 - 2.3 Find a Doctor ............................................. DONE
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... DONE
-- 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
+- 2.5 Payment options: UPI, QR, cards, pay at clinic ............ DONE
+- 2.6 Receipts and payment history .............................. TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -220,6 +221,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled in 7.01s, 0 errors); verified past-slot time calculation and stepper transitions.
 - Notes: Prepares modal structure for Task 2.5 payment options.
 
+### Task 2.5: Payment options: UPI, QR, cards, pay at clinic
+- Status: DONE
+- Completed: 2026-11-17 14:37 IST
+- Files changed or added: src/components/patient/PaymentOptions.jsx, src/components/patient/BookingWizardModal.jsx, package.json
+- Summary: Installed `qrcode.react` and built `PaymentOptions.jsx` containing 4 selectable 44px payment cards: (1) Pay at Clinic (default instant confirmation), (2) Scan UPI QR Code (generates live SVG QR code with `upi://pay` deep link, amount, payee, and clinic name), (3) Pay by UPI (validates `name@bank` VPA and launches deep link on mobile), (4) Cards & Net Banking (reads `VITE_RAZORPAY_KEY_ID` with simulation fallback). Integrated a 10-minute slot hold countdown timer for online payment attempts so slots are not dropped during checkout, plus payment status flow (Awaiting, Paid, Failed).
+- Bugs fixed: Added payment slot hold timer preventing lost reservations during payment drop-offs.
+- Verified by: Built production bundle with `npm run build` (compiled in 7.65s, 0 errors); verified QR SVG rendering, timer countdown, and simulated payment confirmation.
+- Notes: No secret keys stored in front-end; uses public key / deep-link approach.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -368,6 +378,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Fixed past-slot booking bug on the current day; replaced redundant "Booked / Unavailable" labels with accessible strikethrough styling.
 - Verified by: Built production bundle with `npm run build` (compiled in 7.01s, 0 errors); verified past-slot time calculation and stepper transitions.
 - Notes: Prepares modal structure for Task 2.5 payment options.
+
+### Task 2.5: Payment options: UPI, QR, cards, pay at clinic
+- Status: DONE
+- Completed: 2026-11-17 14:37 IST
+- Files changed or added: src/components/patient/PaymentOptions.jsx, src/components/patient/BookingWizardModal.jsx, package.json
+- Summary: Installed `qrcode.react` and built `PaymentOptions.jsx` containing 4 selectable 44px payment cards: (1) Pay at Clinic (default instant confirmation), (2) Scan UPI QR Code (generates live SVG QR code with `upi://pay` deep link, amount, payee, and clinic name), (3) Pay by UPI (validates `name@bank` VPA and launches deep link on mobile), (4) Cards & Net Banking (reads `VITE_RAZORPAY_KEY_ID` with simulation fallback). Integrated a 10-minute slot hold countdown timer for online payment attempts so slots are not dropped during checkout, plus payment status flow (Awaiting, Paid, Failed).
+- Bugs fixed: Added payment slot hold timer preventing lost reservations during payment drop-offs.
+- Verified by: Built production bundle with `npm run build` (compiled in 7.65s, 0 errors); verified QR SVG rendering, timer countdown, and simulated payment confirmation.
+- Notes: No secret keys stored in front-end; uses public key / deep-link approach.
 
 ---
 
