@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:24 IST
-Current task: 2.4 Booking modal
+Last updated: 2026-11-17 14:28 IST
+Current task: 2.5 Payment options
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -52,7 +52,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.1 Portal navbar, profile dropdown, mobile tab bar ........... DONE
 - 2.2 Home dashboard ............................................ DONE
 - 2.3 Find a Doctor ............................................. DONE
-- 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
+- 2.4 Booking modal: stepper, slots, past-slot bug fix .......... DONE
+- 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -210,6 +211,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled cleanly in 6.29s, 0 errors); tested search, specialization filter, and profile modal overlay.
 - Notes: Equal-height card grid styled with `card-lift` animation and tight alignment.
 
+### Task 2.4: Booking modal: stepper, slots, past-slot bug fix
+- Status: DONE
+- Completed: 2026-11-17 14:28 IST
+- Files changed or added: src/components/patient/BookingWizardModal.jsx
+- Summary: Upgraded the 3-step booking wizard with a proper stepper with numbered circles and completed step checkmarks; added quick-pick reason chips ("Routine Check-up", "Follow-up Consultation", "New Symptom Review", "Prescription Refill") and inline validation with length check; added 5-day date chips with dynamic free slot counters; implemented past-slot bug fix that compares slot hours/minutes against real time for today and disables past times; styled unavailable/booked slots as lighter with clean strikethrough rather than repeating text; updated Summary Card in Step 3 to INR currency format (`formatINR`) and made confirm button the prominent action.
+- Bugs fixed: Fixed past-slot booking bug on the current day; replaced redundant "Booked / Unavailable" labels with accessible strikethrough styling.
+- Verified by: Built production bundle with `npm run build` (compiled in 7.01s, 0 errors); verified past-slot time calculation and stepper transitions.
+- Notes: Prepares modal structure for Task 2.5 payment options.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -349,6 +359,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Fixed broken image handling with initials circle and replaced legacy USD currency with INR.
 - Verified by: Built production bundle with `npm run build` (compiled cleanly in 6.29s, 0 errors); tested search, specialization filter, and profile modal overlay.
 - Notes: Equal-height card grid styled with `card-lift` animation and tight alignment.
+
+### Task 2.4: Booking modal: stepper, slots, past-slot bug fix
+- Status: DONE
+- Completed: 2026-11-17 14:28 IST
+- Files changed or added: src/components/patient/BookingWizardModal.jsx
+- Summary: Upgraded the 3-step booking wizard with a proper stepper with numbered circles and completed step checkmarks; added quick-pick reason chips ("Routine Check-up", "Follow-up Consultation", "New Symptom Review", "Prescription Refill") and inline validation with length check; added 5-day date chips with dynamic free slot counters; implemented past-slot bug fix that compares slot hours/minutes against real time for today and disables past times; styled unavailable/booked slots as lighter with clean strikethrough rather than repeating text; updated Summary Card in Step 3 to INR currency format (`formatINR`) and made confirm button the prominent action.
+- Bugs fixed: Fixed past-slot booking bug on the current day; replaced redundant "Booked / Unavailable" labels with accessible strikethrough styling.
+- Verified by: Built production bundle with `npm run build` (compiled in 7.01s, 0 errors); verified past-slot time calculation and stepper transitions.
+- Notes: Prepares modal structure for Task 2.5 payment options.
 
 ---
 
