@@ -411,7 +411,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           <PatientAppointments 
             patient={currentPatient} 
             showToast={showToast} 
-            onBookNew={() => setActiveTab('doctors')}
+            onBookNew={(doc) => doc ? handleStartBooking(doc) : setActiveTab('doctors')}
           />
         )}
 

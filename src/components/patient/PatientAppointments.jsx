@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Calendar, 
   Clock, 
@@ -12,9 +12,11 @@ import {
   RotateCcw,
   ExternalLink,
   ChevronRight,
-  FileCheck2
+  Download,
+  CalendarPlus,
+  QrCode
 } from 'lucide-react';
-import { getAppointments, updateAppointmentStatus } from '../../services/mockDataStore';
+import { getAppointments, updateAppointmentStatus, getDoctors } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
 import { StatusBadge } from '../common/StatusBadge';
 import { ReceiptModal } from './ReceiptModal';
@@ -38,8 +40,95 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
 
   const todayStr = new Date().toISOString().split('T')[0];
 
-  const upcomingList = appointments.filter(a => a.date >= todayStr && a.status !== 'completed' && a.status !== 'cancelled');
-  const pastList = appointments.filter(a => a.date < todayStr || a.status === 'completed' || a.status === 'cancelled');
+  const upcomingList = appointments.filter(
+    a => a.date >= todayStr && a.status !== 'completed' && a.status !== 'cancelled'
+  );
+  const pastList = appointments.filter(
+    a => a.date < todayStr || a.status === 'completed' || a.status === 'cancelled'
+  );
+
+  const displayList = activeTab === 'upcoming' ? upcomingList : pastList;
+  const mainBranch = clinic.branches[0] || {};
+  const isMapConfigured = !isPlaceholder(mainBranch.mapQuery);
+
+  // Compute countdown label
+  const getCountdownLabel = (dateStr, timeStr) => {
+    if (dateStr === todayStr) {
+      return `Today, at ${timeStr}`;
+    }
+    const aptDate = new Date(dateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    aptDate.setHours(0, 0, 0, 0);
+    const diffDays = Math.ceil((aptDate - today) / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) return 'Tomorrow';
+    if (diffDays > 1) return `In ${diffDays} days`;
+    return 'Scheduled';
+  };
+
+  // Generate .ics calendar download
+  const handleAddToCalendar = (apt) => {
+    try {
+      // Parse date and time into YYYYMMDDTHHMMSSZ
+      const [year, month, day] = apt.date.split('-');
+      let hours = 9;
+      let minutes = 0;
+      if (apt.time) {
+        const [timePart, modifier] = apt.time.split(' ');
+        const [h, m] = timePart.split(':').map(Number);
+        hours = modifier === 'PM' && h < 12 ? h + 12 : modifier === 'AM' && h === 12 ? 0 : h;
+        minutes = m || 0;
+      }
+      
+      const pad = (n) => n.toString().padStart(2, '0');
+      const startStr = `${year}${pad(month)}${pad(day)}T${pad(hours)}${pad(minutes)}00`;
+      // 30 min duration
+      const endHours = minutes + 30 >= 60 ? hours + 1 : hours;
+      const endMinutes = (minutes + 30) % 60;
+      const endStr = `${year}${pad(month)}${pad(day)}T${pad(endHours)}${pad(endMinutes)}00`;
+
+      const icsContent = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Jivaka Clinic//Appointment Scheduler//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        `SUMMARY:Consultation with ${apt.doctorName}`,
+        `DESCRIPTION:In-clinic consultation at Jivaka Clinic. Assigned Chamber: ${apt.room}. Reason: ${apt.visitReason || 'Clinical consultation'}`,
+        `LOCATION:${mainBranch.address || 'Jivaka Clinic'}`,
+        `DTSTART:${startStr}`,
+        `DTEND:${endStr}`,
+        'STATUS:CONFIRMED',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `jivaka-appointment-${apt.id}.ics`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      if (showToast) {
+        showToast('Calendar event (.ics) downloaded!', 'success');
+      }
+    } catch {
+      if (showToast) {
+        showToast('Unable to export calendar event.', 'warning');
+      }
+    }
+  };
+
+  // Find doctor object for rescheduling / booking again
+  const getDoctorForApt = (apt) => {
+    const doctors = getDoctors();
+    return doctors.find(d => d.id === apt.doctorId || d.name === apt.doctorName) || null;
+  };
 
   const handleCancelSubmit = () => {
     if (!cancelModalApt) return;
@@ -51,9 +140,6 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
       showToast('Appointment cancelled successfully', 'info');
     }
   };
-
-  const displayList = activeTab === 'upcoming' ? upcomingList : pastList;
-  const mainBranch = clinic.branches[0] || {};
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -78,7 +164,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
             My Appointments
           </h1>
           <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
-            Track your consultation chambers, payment receipts, and appointment history
+            Track your upcoming visits, chamber check-in codes, and consultation receipts
           </p>
         </div>
 
@@ -145,7 +231,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
             {onBookNew && (
               <button
                 type="button"
-                onClick={onBookNew}
+                onClick={() => onBookNew()}
                 className="btn btn-primary btn-sm"
               >
                 Book an Appointment
@@ -156,6 +242,8 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
           displayList.map(apt => {
             const isPaid = apt.paymentStatus === 'Paid';
             const fee = apt.fee || 1200;
+            const checkInCode = `CHK-${apt.id.replace('APT-', '')}`;
+            const targetDoc = getDoctorForApt(apt);
 
             return (
               <div
@@ -174,12 +262,12 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                   transition: 'transform 0.15s ease'
                 }}
               >
-                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                   {/* Date badge */}
                   <div 
                     style={{ 
-                      width: '56px', 
-                      height: '56px', 
+                      width: '58px', 
+                      height: '58px', 
                       backgroundColor: 'var(--mint)', 
                       borderRadius: '12px', 
                       display: 'flex', 
@@ -191,18 +279,19 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                     }}
                   >
                     <Calendar size={18} />
-                    <span style={{ fontSize: '0.72rem', fontWeight: '800', marginTop: '2px' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: '800', marginTop: '2px' }}>
                       {apt.date.split('-')[2] || '16'}
                     </span>
                   </div>
 
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    {/* Top Row: Doctor name, Status badge, Payment badge */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
                       <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, fontFamily: 'Fraunces, serif' }}>
                         {apt.doctorName}
                       </h3>
                       
-                      {/* Clinical status badge */}
+                      {/* Unified StatusBadge (Pending, Confirmed, Completed, Cancelled) */}
                       <StatusBadge status={apt.status} />
 
                       {/* Payment Badge */}
@@ -218,17 +307,25 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                       >
                         {isPaid ? `Paid • ${formatINR(fee)}` : `Pay at Clinic • ${formatINR(fee)}`}
                       </span>
-                    </div>
 
-                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', gap: '14px', marginTop: '4px', flexWrap: 'wrap' }}>
-                      <span>Date: <strong>{apt.date}</strong> at <strong style={{ color: 'var(--primary-teal)' }}>{apt.time}</strong></span>
-                      <span>Chamber: <strong style={{ color: 'var(--deep-teal)' }}>{apt.room}</strong></span>
-                      {apt.transactionId && (
-                        <span>Txn: <code style={{ fontSize: '0.74rem' }}>{apt.transactionId}</code></span>
+                      {/* Countdown badge for upcoming visits */}
+                      {activeTab === 'upcoming' && (
+                        <span style={{ fontSize: '0.72rem', padding: '2px 8px', borderRadius: '6px', backgroundColor: '#EFF6FF', color: '#1D4ED8', fontWeight: '700' }}>
+                          ⏳ {getCountdownLabel(apt.date, apt.time)}
+                        </span>
                       )}
                     </div>
 
-                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                    {/* Metadata line: Date, Time, Room, Check-in Code */}
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                      <span>Date: <strong>{apt.date}</strong> at <strong style={{ color: 'var(--primary-teal)' }}>{apt.time}</strong></span>
+                      <span>Chamber: <strong style={{ color: 'var(--deep-teal)' }}>{apt.room}</strong></span>
+                      <span style={{ backgroundColor: 'var(--warm-cream)', padding: '1px 6px', borderRadius: '4px', border: '1px solid var(--border-color)', fontSize: '0.74rem', color: 'var(--text-main)' }}>
+                        Check-in Code: <strong>{checkInCode}</strong>
+                      </span>
+                    </div>
+
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
                       Reason: <em>"{apt.visitReason}"</em>
                     </div>
                   </div>
@@ -236,7 +333,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
 
                 {/* ACTION BUTTONS */}
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                  {/* View Receipt Button (Available for all bookings) */}
+                  {/* View Receipt Button */}
                   <button
                     type="button"
                     onClick={() => setSelectedReceiptApt(apt)}
@@ -248,11 +345,40 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                     <span>Receipt</span>
                   </button>
 
+                  {/* Add to Calendar (.ics) for upcoming visits */}
+                  {activeTab === 'upcoming' && (
+                    <button
+                      type="button"
+                      onClick={() => handleAddToCalendar(apt)}
+                      className="btn btn-secondary btn-sm"
+                      style={{ gap: '6px' }}
+                      title="Download iCalendar event (.ics)"
+                    >
+                      <CalendarPlus size={14} color="var(--primary-teal)" />
+                      <span>Calendar</span>
+                    </button>
+                  )}
+
+                  {/* Get Directions Link if map is configured */}
+                  {activeTab === 'upcoming' && isMapConfigured && (
+                    <a
+                      href={getDirectionsUrl(mainBranch.mapQuery)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary btn-sm"
+                      style={{ gap: '6px', textDecoration: 'none' }}
+                      title="Get Directions in Google Maps"
+                    >
+                      <ExternalLink size={14} />
+                      <span>Directions</span>
+                    </a>
+                  )}
+
                   {/* Reschedule Button */}
                   {activeTab === 'upcoming' && onBookNew && (
                     <button
                       type="button"
-                      onClick={onBookNew}
+                      onClick={() => onBookNew(targetDoc)}
                       className="btn btn-secondary btn-sm"
                     >
                       Reschedule
@@ -279,7 +405,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
                   {activeTab === 'past' && onBookNew && (
                     <button
                       type="button"
-                      onClick={onBookNew}
+                      onClick={() => onBookNew(targetDoc)}
                       className="btn btn-primary btn-sm"
                     >
                       <RotateCcw size={14} /> Book again
@@ -292,7 +418,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
         )}
       </div>
 
-      {/* CANCEL MODAL */}
+      {/* CANCEL APPOINTMENT CONFIRMATION DIALOG */}
       <Modal
         isOpen={!!cancelModalApt}
         onClose={() => setCancelModalApt(null)}
@@ -301,33 +427,38 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
       >
         {cancelModalApt && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Are you sure you want to cancel your appointment with <strong>{cancelModalApt.doctorName}</strong> scheduled for <strong>{cancelModalApt.date} at {cancelModalApt.time}</strong>?
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#DC2626' }}>
+              <AlertCircle size={20} />
+              <div style={{ fontWeight: '700', fontSize: '0.95rem' }}>Are you sure you want to cancel?</div>
+            </div>
+
+            <p style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+              Your appointment with <strong>{cancelModalApt.doctorName}</strong> on <strong>{cancelModalApt.date} at {cancelModalApt.time}</strong> will be released.
             </p>
 
-            <div className="form-group">
-              <label>Reason for Cancellation (Optional)</label>
+            <div className="form-group" style={{ marginBottom: 0 }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: '700' }}>Reason for Cancellation (Optional)</label>
               <textarea
                 rows={2}
                 placeholder="e.g. Schedule conflict, illness..."
                 value={cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
-                style={{ width: '100%', padding: '8px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+                style={{ width: '100%', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.84rem' }}
               />
             </div>
 
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '4px' }}>
               <button 
                 type="button"
                 onClick={() => setCancelModalApt(null)} 
-                className="btn btn-secondary"
+                className="btn btn-secondary btn-sm"
               >
                 Keep Appointment
               </button>
               <button 
                 type="button"
                 onClick={handleCancelSubmit} 
-                className="btn btn-danger"
+                className="btn btn-danger btn-sm"
               >
                 Confirm Cancellation
               </button>

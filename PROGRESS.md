@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:41 IST
-Current task: 2.7 My Appointments: status fix, reschedule, cancel dialog
+Last updated: 2026-11-17 14:44 IST
+Current task: 2.8 Medical Records
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -55,7 +55,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... DONE
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ DONE
 - 2.6 Receipts and payment history .............................. DONE
-- 2.7 My Appointments: status fix, reschedule, cancel dialog .... TODO
+- 2.7 My Appointments: status fix, reschedule, cancel dialog .... DONE
+- 2.8 Medical Records ........................................... TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -240,6 +241,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled in 6.76s, 0 errors); tested modal opening, print trigger, and payment history rendering.
 - Notes: Retains mock fallback while server verification webhook is configured.
 
+### Task 2.7: My Appointments: status fix, reschedule, cancel dialog
+- Status: DONE
+- Completed: 2026-11-17 14:44 IST
+- Files changed or added: src/components/patient/PatientAppointments.jsx, src/components/patient/PatientPortal.jsx
+- Summary: Fixed status consistency bug by integrating unified `StatusBadge.jsx` across all appointments (Pending, Confirmed, Completed, Cancelled); added live human countdown badge ("Today, at 10:00 AM", "Tomorrow", "In 3 days"); generated check-in verification codes (`CHK-801`); added in-browser iCalendar `.ics` export button ("Add to Calendar"); added external Google Maps "Directions" navigation link; added Reschedule action which opens the booking wizard directly for that physician; added cancellation confirmation modal with reason input; added "Book again" button on past history rows.
+- Bugs fixed: Fixed status discrepancy bug between toast notification and card badges; added cancellation modal safeguard.
+- Verified by: Built production bundle with `npm run build` (compiled in 4.96s, 0 errors); tested `.ics` calendar generation, cancel confirmation dialog, and reschedule navigation.
+- Notes: Tight spacing and compact cards maintain clean rhythm without excess whitespace.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -406,6 +416,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Added missing printable receipt view and payment audit trail.
 - Verified by: Built production bundle with `npm run build` (compiled in 6.76s, 0 errors); tested modal opening, print trigger, and payment history rendering.
 - Notes: Retains mock fallback while server verification webhook is configured.
+
+### Task 2.7: My Appointments: status fix, reschedule, cancel dialog
+- Status: DONE
+- Completed: 2026-11-17 14:44 IST
+- Files changed or added: src/components/patient/PatientAppointments.jsx, src/components/patient/PatientPortal.jsx
+- Summary: Fixed status consistency bug by integrating unified `StatusBadge.jsx` across all appointments (Pending, Confirmed, Completed, Cancelled); added live human countdown badge ("Today, at 10:00 AM", "Tomorrow", "In 3 days"); generated check-in verification codes (`CHK-801`); added in-browser iCalendar `.ics` export button ("Add to Calendar"); added external Google Maps "Directions" navigation link; added Reschedule action which opens the booking wizard directly for that physician; added cancellation confirmation modal with reason input; added "Book again" button on past history rows.
+- Bugs fixed: Fixed status discrepancy bug between toast notification and card badges; added cancellation modal safeguard.
+- Verified by: Built production bundle with `npm run build` (compiled in 4.96s, 0 errors); tested `.ics` calendar generation, cancel confirmation dialog, and reschedule navigation.
+- Notes: Tight spacing and compact cards maintain clean rhythm without excess whitespace.
 
 ---
 
