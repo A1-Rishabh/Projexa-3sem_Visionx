@@ -452,9 +452,33 @@ button:focus-visible, a:focus-visible {
 }
 
 /* Responsive adjustments */
+@media (max-width: 991px) {
+  .hero-grid-container {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+}
+
 @media (max-width: 768px) {
   .modal-card {
     margin: 8px;
     max-height: 92vh;
+  }
+
+  .desktop-nav-links,
+  .desktop-auth-actions {
+    display: none !important;
+  }
+
+  .mobile-hamburger-btn {
+    display: flex !important;
+  }
+
+  .mobile-sticky-cta-bar {
+    display: flex !important;
+  }
+
+  .landing-hero-section {
+    padding-bottom: 96px !important;
   }
 }

@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:31 IST
-Current task: 1.1 Landing page: navbar and hero
+Last updated: 2026-11-17 13:35 IST
+Current task: 1.2 Landing page: About, Departments, Doctors
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -39,8 +39,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
       components (skeleton, empty state, toast) ................. DONE
 
 ### Phase 1: Public site
-- 1.1 Landing page: navbar and hero ............................. IN PROGRESS
-- 1.2 Landing page: About, Departments, Doctors ................. TODO
+- 1.1 Landing page: navbar and hero ............................. DONE
+- 1.2 Landing page: About, Departments, Doctors ................. IN PROGRESS
 - 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ TODO
 - 1.4 Login page ................................................ TODO
 - 1.5 Sign up page ............................................... TODO
@@ -109,6 +109,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Bugs fixed: Form fields rendering with browser-default black or unreadable colors, toast timing, and missing reusable empty state / status badges.
 - Verified by: Ran `npm run build` which built with 0 errors in 4.85s.
 - Notes: Shared components ready for use in Phase 1 and Phase 2.
+
+### Task 1.1: Landing page: navbar and hero
+- Status: DONE
+- Completed: 2026-11-17 13:35 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/components/public/LandingHero.jsx, public/images/hero.webp, src/index.css
+- Summary: Created sticky frosted glass navbar with Jivaka Clinic logo, section anchor links, Staff Login (outline), Patient Portal (filled), and responsive mobile hamburger menu. Created hero section with Fraunces headline, supportive tagline, Book Appointment & Sign In CTAs, hero image container with fallback, quick-booking card with Department and branch selection, and mobile sticky booking bar.
+- Bugs fixed: None.
+- Verified by: Verified responsive breakpoints (360px, 768px, 1024px, 1440px) in CSS and ran `npm run build` which compiled in 5.70s with 0 errors.
+- Notes: Created valid WebP placeholder files in `/public/images/` without external hotlinking.
 
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
