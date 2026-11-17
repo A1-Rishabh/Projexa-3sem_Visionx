@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:12 IST
-Current task: 2.2 Home dashboard
+Last updated: 2026-11-17 14:19 IST
+Current task: 2.3 Find a Doctor
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -50,7 +50,7 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 
 ### Phase 2: Patient portal
 - 2.1 Portal navbar, profile dropdown, mobile tab bar ........... DONE
-- 2.2 Home dashboard ............................................ TODO
+- 2.2 Home dashboard ............................................ DONE
 - 2.3 Find a Doctor ............................................. TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
@@ -191,6 +191,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Ran `npm run build` which succeeded with 0 errors in 5.42s; verified dropdown toggling, click-outside handling, and responsive CSS breakpoints.
 - Notes: Layout padding tightened (24px 20px) to prevent excess whitespace gaps as requested.
 
+### Task 2.2: Home dashboard
+- Status: DONE
+- Completed: 2026-11-17 14:19 IST
+- Files changed or added: src/components/patient/InfoHub.jsx
+- Summary: Redesigned the Home tab into a focused dashboard: replaced oversized hero banner with a compact time-of-day greeting ("Good morning, John" + ID badge); built 4 equal-height above-the-fold cards (Next Appointment with countdown and reschedule/cancel actions, Latest Lab Report with summary, Quick Actions grid for 1-click navigation, Reminders & Care Tips); added Clinic Schedule & Contact card with live "Open Now/Closed" badge, today's row highlighted, and tappable phone/email; added Location card with mint placeholder fallback and Copy Address button; added warm accent announcement banner with dismiss button; removed vague "4 Senior Staff" and "In-Clinic Practice" cards.
+- Bugs fixed: Removed redundant static staff cards, unified appointment countdown and cancellation confirmation flow.
+- Verified by: Built production bundle with `npm run build` (built cleanly in 5.75s, 0 errors); verified reactive appointment cancellation modal and copy address clipboard interaction.
+- Notes: Aligned elements tightly with consistent 16px/20px grid spacing to eliminate excess empty gaps.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -312,6 +321,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Removed red aggressive styling from logout and cleaned up mobile viewport spacing.
 - Verified by: Ran `npm run build` which succeeded with 0 errors in 5.42s; verified dropdown toggling, click-outside handling, and responsive CSS breakpoints.
 - Notes: Layout padding tightened (24px 20px) to prevent excess whitespace gaps as requested.
+
+### Task 2.2: Home dashboard
+- Status: DONE
+- Completed: 2026-11-17 14:19 IST
+- Files changed or added: src/components/patient/InfoHub.jsx
+- Summary: Redesigned the Home tab into a focused dashboard: replaced oversized hero banner with a compact time-of-day greeting ("Good morning, John" + ID badge); built 4 equal-height above-the-fold cards (Next Appointment with countdown and reschedule/cancel actions, Latest Lab Report with summary, Quick Actions grid for 1-click navigation, Reminders & Care Tips); added Clinic Schedule & Contact card with live "Open Now/Closed" badge, today's row highlighted, and tappable phone/email; added Location card with mint placeholder fallback and Copy Address button; added warm accent announcement banner with dismiss button; removed vague "4 Senior Staff" and "In-Clinic Practice" cards.
+- Bugs fixed: Removed redundant static staff cards, unified appointment countdown and cancellation confirmation flow.
+- Verified by: Built production bundle with `npm run build` (built cleanly in 5.75s, 0 errors); verified reactive appointment cancellation modal and copy address clipboard interaction.
+- Notes: Aligned elements tightly with consistent 16px/20px grid spacing to eliminate excess empty gaps.
 
 ---
 
