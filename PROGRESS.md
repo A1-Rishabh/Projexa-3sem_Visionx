@@ -726,6 +726,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 6.70s.
 - Notes: Git commit made for version continuity.
 
+### Task 2.21: Redesign Doctor Consultation Operating Hours UX with structured day presets, time range pickers, and live directory preview
+- Status: DONE
+- Completed: 2026-11-18 03:00 IST
+- Files changed or added: src/components/doctor/DoctorProfileEditor.jsx
+- Summary: Solved the horizontally cramped and clipped "Clinic Operating Hours" input in `DoctorProfileEditor.jsx` (which squeezed into a 3-column row and truncated text): (1) Replaced the cramped 3-column layout with a 2-column layout for Room & Fee, allocating a dedicated full-width clinical operating hours card; (2) Replaced the raw single-line freeform text input with a structured clinical picker featuring quick OPD day preset chips (`Mon - Fri`, `Mon - Sat`, `Tue - Fri`, `Tue - Sat`, `Mon - Thu`, `All Days`) and synchronized start/end time dropdowns with 30-minute intervals; (3) Added a real-time live preview pill (`Live Directory Display: <days>: <start> - <end>`); (4) Added a graceful toggle to switch between the structured picker and custom freeform text for specialized split rotations without clipping.
+- Bugs fixed: Fixed horizontal text truncation where operating hours strings were cut off in narrow inputs.
+- Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 22.63s.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
