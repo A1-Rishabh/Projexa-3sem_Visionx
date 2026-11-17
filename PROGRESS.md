@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:38 IST
-Current task: 1.3 Landing page: Why choose us, Locations, CTA, Footer
+Last updated: 2026-11-17 13:40 IST
+Current task: 1.4 Login page
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -41,8 +41,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 ### Phase 1: Public site
 - 1.1 Landing page: navbar and hero ............................. DONE
 - 1.2 Landing page: About, Departments, Doctors ................. DONE
-- 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ IN PROGRESS
-- 1.4 Login page ................................................ TODO
+- 1.3 Landing page: Why choose us, Locations, CTA, Footer ........ DONE
+- 1.4 Login page ................................................ IN PROGRESS
 - 1.5 Sign up page ............................................... TODO
 - 1.6 Google sign-in integration ................................ TODO
 - 1.7 Forgot password and role-based redirect .................. TODO
@@ -127,6 +127,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Bugs fixed: None.
 - Verified by: Executed `npm run build` which compiled with 0 errors in 5.16s.
 - Notes: Used Fraunces headings, Inter body, and INR currency helper exclusively.
+
+### Task 1.3: Landing page: Why choose us, Locations, CTA, Footer
+- Status: DONE
+- Completed: 2026-11-17 13:40 IST
+- Files changed or added: src/components/public/LandingWhyChooseUs.jsx, src/components/public/LandingLocations.jsx, src/components/public/LandingCtaBand.jsx, src/components/public/LandingFooter.jsx, src/components/public/LandingPage.jsx, src/index.css
+- Summary: Built Why Choose Us with 4 trust cards. Built Locations section complying fully with rules: mint panel fallback when mapQuery is bracketed ("Clinic location coming soon"), auto-hiding action buttons when bracketed, branch selector for multiple branches, and graceful "Use my location" button. Built final CTA band with warm accent glow and Deep Teal background. Built semantic Footer with clinic details from clinic.js, consultation hours, emergency triage line, and back-to-top button. Assembled complete `LandingPage.jsx`.
+- Bugs fixed: Fixed broken map handling when coordinates are unconfigured.
+- Verified by: Executed `npm run build` which succeeded with 0 errors in 5.11s.
+- Notes: Complete Landing Page is fully responsive across 360px, 768px, 1024px, and 1440px.
 
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.

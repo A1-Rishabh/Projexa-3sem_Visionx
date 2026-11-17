@@ -505,4 +505,23 @@ button:focus-visible, a:focus-visible {
     scroll-snap-align: start !important;
     flex-shrink: 0 !important;
   }
+
+  .location-grid-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer-grid-container {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-grid-container {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
