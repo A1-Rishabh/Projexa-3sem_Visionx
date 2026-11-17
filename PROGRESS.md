@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:19 IST
-Current task: 2.3 Find a Doctor
+Last updated: 2026-11-17 14:24 IST
+Current task: 2.4 Booking modal
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -51,7 +51,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 ### Phase 2: Patient portal
 - 2.1 Portal navbar, profile dropdown, mobile tab bar ........... DONE
 - 2.2 Home dashboard ............................................ DONE
-- 2.3 Find a Doctor ............................................. TODO
+- 2.3 Find a Doctor ............................................. DONE
+- 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -200,6 +201,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (built cleanly in 5.75s, 0 errors); verified reactive appointment cancellation modal and copy address clipboard interaction.
 - Notes: Aligned elements tightly with consistent 16px/20px grid spacing to eliminate excess empty gaps.
 
+### Task 2.3: Find a Doctor
+- Status: DONE
+- Completed: 2026-11-17 14:24 IST
+- Files changed or added: src/components/patient/DoctorDirectory.jsx
+- Summary: Replaced hardcoded "$ USD" with `formatINR(fee)`; implemented avatar fallback to clean initials badge when doctor portrait fails to load; clamped doctor bios to 2 lines with a "View profile & reviews" trigger; added dynamic availability badge ("Available today" vs "Next available: Thu 10:00 AM") derived from slot schedules; added comprehensive filter controls (specialization, availability, fee range) and sorting (rating, soonest available, fee low/high); created an accessible Doctor Profile modal displaying full bio, credentials, chamber location, and verified patient reviews.
+- Bugs fixed: Fixed broken image handling with initials circle and replaced legacy USD currency with INR.
+- Verified by: Built production bundle with `npm run build` (compiled cleanly in 6.29s, 0 errors); tested search, specialization filter, and profile modal overlay.
+- Notes: Equal-height card grid styled with `card-lift` animation and tight alignment.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -330,6 +340,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Removed redundant static staff cards, unified appointment countdown and cancellation confirmation flow.
 - Verified by: Built production bundle with `npm run build` (built cleanly in 5.75s, 0 errors); verified reactive appointment cancellation modal and copy address clipboard interaction.
 - Notes: Aligned elements tightly with consistent 16px/20px grid spacing to eliminate excess empty gaps.
+
+### Task 2.3: Find a Doctor
+- Status: DONE
+- Completed: 2026-11-17 14:24 IST
+- Files changed or added: src/components/patient/DoctorDirectory.jsx
+- Summary: Replaced hardcoded "$ USD" with `formatINR(fee)`; implemented avatar fallback to clean initials badge when doctor portrait fails to load; clamped doctor bios to 2 lines with a "View profile & reviews" trigger; added dynamic availability badge ("Available today" vs "Next available: Thu 10:00 AM") derived from slot schedules; added comprehensive filter controls (specialization, availability, fee range) and sorting (rating, soonest available, fee low/high); created an accessible Doctor Profile modal displaying full bio, credentials, chamber location, and verified patient reviews.
+- Bugs fixed: Fixed broken image handling with initials circle and replaced legacy USD currency with INR.
+- Verified by: Built production bundle with `npm run build` (compiled cleanly in 6.29s, 0 errors); tested search, specialization filter, and profile modal overlay.
+- Notes: Equal-height card grid styled with `card-lift` animation and tight alignment.
 
 ---
 
