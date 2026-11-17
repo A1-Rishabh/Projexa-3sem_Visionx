@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:46 IST
-Current task: 2.9 Profile Settings and emergency card
+Last updated: 2026-11-17 14:51 IST
+Current task: 2.10 New patient features
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -57,7 +57,10 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.6 Receipts and payment history .............................. DONE
 - 2.7 My Appointments: status fix, reschedule, cancel dialog .... DONE
 - 2.8 Medical Records ........................................... DONE
-- 2.9 Profile Settings and emergency card ....................... TODO
+- 2.9 Profile Settings and emergency card ....................... DONE
+- 2.10 New patient features (reminders, waitlist, refill,
+       messaging, uploads, doctor profiles, pre-visit form,
+       dependents, dark mode, health tips) ....................... TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -260,6 +263,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled in 5.97s, 0 errors); tested year collapsing/expanding and filter tab transitions.
 - Notes: Aligned grids and removed unnecessary white gaps for a tight clinical dashboard feel.
 
+### Task 2.9: Profile Settings and emergency card
+- Status: DONE
+- Completed: 2026-11-17 14:51 IST
+- Files changed or added: src/components/patient/PatientProfile.jsx
+- Summary: Redesigned Profile Settings with a 2-column wide layout: saved values render in high-contrast filled dark text (no faded placeholder appearance); added profile photo upload with initials badge fallback; integrated inline validation for email and phone; added unsaved changes detection with `isDirty` tracking and browser exit warning; organized form into 4 clear sections (Personal Details, Emergency Contact & Clinical Alerts, Security & Credentials with password modal and Google auth linkage, Notification Preferences); created an official printable / downloadable wallet Patient Emergency Card modal with blood type, allergies, emergency contact, and 24/7 clinic hotline.
+- Bugs fixed: Replaced faded placeholder styling with crisp filled text; added dirty form unsaved warning.
+- Verified by: Built production bundle with `npm run build` (compiled in 6.39s, 0 errors); tested password modal, emergency card print view, and image upload reader.
+- Notes: Aligned form inputs and removed excess whitespace.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -444,6 +456,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Fixed repeating unorganized visit entries by year grouping and collapsible views; added prominent top-level allergy alert.
 - Verified by: Built production bundle with `npm run build` (compiled in 5.97s, 0 errors); tested year collapsing/expanding and filter tab transitions.
 - Notes: Aligned grids and removed unnecessary white gaps for a tight clinical dashboard feel.
+
+### Task 2.9: Profile Settings and emergency card
+- Status: DONE
+- Completed: 2026-11-17 14:51 IST
+- Files changed or added: src/components/patient/PatientProfile.jsx
+- Summary: Redesigned Profile Settings with a 2-column wide layout: saved values render in high-contrast filled dark text (no faded placeholder appearance); added profile photo upload with initials badge fallback; integrated inline validation for email and phone; added unsaved changes detection with `isDirty` tracking and browser exit warning; organized form into 4 clear sections (Personal Details, Emergency Contact & Clinical Alerts, Security & Credentials with password modal and Google auth linkage, Notification Preferences); created an official printable / downloadable wallet Patient Emergency Card modal with blood type, allergies, emergency contact, and 24/7 clinic hotline.
+- Bugs fixed: Replaced faded placeholder styling with crisp filled text; added dirty form unsaved warning.
+- Verified by: Built production bundle with `npm run build` (compiled in 6.39s, 0 errors); tested password modal, emergency card print view, and image upload reader.
+- Notes: Aligned form inputs and removed excess whitespace.
 
 ---
 
