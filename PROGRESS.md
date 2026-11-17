@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:37 IST
-Current task: 2.6 Receipts and payment history
+Last updated: 2026-11-17 14:41 IST
+Current task: 2.7 My Appointments: status fix, reschedule, cancel dialog
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -54,7 +54,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.3 Find a Doctor ............................................. DONE
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... DONE
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ DONE
-- 2.6 Receipts and payment history .............................. TODO
+- 2.6 Receipts and payment history .............................. DONE
+- 2.7 My Appointments: status fix, reschedule, cancel dialog .... TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
 - 2.5 Payment options: UPI, QR, cards, pay at clinic ............ TODO
 - 2.6 Receipts and payment history .............................. TODO
@@ -230,6 +231,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Built production bundle with `npm run build` (compiled in 7.65s, 0 errors); verified QR SVG rendering, timer countdown, and simulated payment confirmation.
 - Notes: No secret keys stored in front-end; uses public key / deep-link approach.
 
+### Task 2.6: Receipts and payment history
+- Status: DONE
+- Completed: 2026-11-17 14:41 IST
+- Files changed or added: src/components/patient/ReceiptModal.jsx, src/components/patient/PatientAppointments.jsx, src/components/patient/PatientMedicalRecords.jsx
+- Summary: Created `ReceiptModal.jsx` displaying an official tax invoice / receipt with clinic logo, branch contacts from `clinic.js`, patient & doctor IDs, consultation fee in INR (`formatINR`), itemized breakdown, transaction reference ID, and electronic signature seal with "Print" and "Download PDF" actions. Added color-coded payment badges (`Paid`, `Pay at clinic`, `Pending`) and "Receipt" action buttons across both `PatientAppointments.jsx` and a new Payment History table in `PatientMedicalRecords.jsx`.
+- Bugs fixed: Added missing printable receipt view and payment audit trail.
+- Verified by: Built production bundle with `npm run build` (compiled in 6.76s, 0 errors); tested modal opening, print trigger, and payment history rendering.
+- Notes: Retains mock fallback while server verification webhook is configured.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -387,6 +397,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: Added payment slot hold timer preventing lost reservations during payment drop-offs.
 - Verified by: Built production bundle with `npm run build` (compiled in 7.65s, 0 errors); verified QR SVG rendering, timer countdown, and simulated payment confirmation.
 - Notes: No secret keys stored in front-end; uses public key / deep-link approach.
+
+### Task 2.6: Receipts and payment history
+- Status: DONE
+- Completed: 2026-11-17 14:41 IST
+- Files changed or added: src/components/patient/ReceiptModal.jsx, src/components/patient/PatientAppointments.jsx, src/components/patient/PatientMedicalRecords.jsx
+- Summary: Created `ReceiptModal.jsx` displaying an official tax invoice / receipt with clinic logo, branch contacts from `clinic.js`, patient & doctor IDs, consultation fee in INR (`formatINR`), itemized breakdown, transaction reference ID, and electronic signature seal with "Print" and "Download PDF" actions. Added color-coded payment badges (`Paid`, `Pay at clinic`, `Pending`) and "Receipt" action buttons across both `PatientAppointments.jsx` and a new Payment History table in `PatientMedicalRecords.jsx`.
+- Bugs fixed: Added missing printable receipt view and payment audit trail.
+- Verified by: Built production bundle with `npm run build` (compiled in 6.76s, 0 errors); tested modal opening, print trigger, and payment history rendering.
+- Notes: Retains mock fallback while server verification webhook is configured.
 
 ---
 

@@ -11,19 +11,27 @@ import {
   Calendar, 
   Pill, 
   CheckCircle2,
-  Printer
+  Printer,
+  Receipt,
+  CreditCard
 } from 'lucide-react';
-import { getMedicalRecords } from '../../services/mockDataStore';
+import { getMedicalRecords, getAppointments } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
+import { ReceiptModal } from './ReceiptModal';
+import { formatINR } from '../../config/clinic';
 
 export const PatientMedicalRecords = ({ patient, showToast }) => {
   const [record, setRecord] = useState(null);
   const [previewPdf, setPreviewPdf] = useState(null);
   const [printPrescription, setPrintPrescription] = useState(null);
+  const [selectedReceiptApt, setSelectedReceiptApt] = useState(null);
+  const [patientAppointments, setPatientAppointments] = useState([]);
 
   useEffect(() => {
     const recs = getMedicalRecords();
     setRecord(recs[patient.id] || { visitTimeline: [], labReports: [], notesPublic: '' });
+    const apts = getAppointments();
+    setPatientAppointments(apts.filter(a => a.patientId === patient.id));
   }, [patient.id]);
 
   if (!record) return null;
@@ -232,6 +240,98 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
         </div>
 
       </div>
+
+      {/* PAYMENT HISTORY & RECEIPTS SECTION */}
+      <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--text-main)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Fraunces, serif' }}>
+            <CreditCard size={18} color="var(--primary-teal)" /> Consultation Billing & Payment History
+          </h3>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+            Official electronic GST-compliant invoices
+          </span>
+        </div>
+
+        {patientAppointments.length === 0 ? (
+          <div style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '24px', fontSize: '0.85rem' }}>
+            No consultation billing records found.
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.84rem' }}>
+              <thead>
+                <tr style={{ borderBottom: '1.5px solid var(--border-color)', textAlign: 'left', color: 'var(--text-secondary)' }}>
+                  <th style={{ padding: '10px 8px' }}>Date</th>
+                  <th style={{ padding: '10px 8px' }}>Physician / Department</th>
+                  <th style={{ padding: '10px 8px' }}>Fee Amount</th>
+                  <th style={{ padding: '10px 8px' }}>Payment Method</th>
+                  <th style={{ padding: '10px 8px' }}>Status</th>
+                  <th style={{ padding: '10px 8px', textAlign: 'right' }}>Invoice / Receipt</th>
+                </tr>
+              </thead>
+              <tbody>
+                {patientAppointments.map((apt) => {
+                  const isPaid = apt.paymentStatus === 'Paid';
+                  const fee = apt.fee || 1200;
+                  return (
+                    <tr key={apt.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                      <td style={{ padding: '12px 8px', fontWeight: '600', color: 'var(--text-main)' }}>
+                        {apt.date}
+                      </td>
+                      <td style={{ padding: '12px 8px' }}>
+                        <div style={{ fontWeight: '700', color: 'var(--text-main)' }}>{apt.doctorName}</div>
+                        <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>{apt.room}</div>
+                      </td>
+                      <td style={{ padding: '12px 8px', fontWeight: '700', color: 'var(--primary-teal)' }}>
+                        {formatINR(fee)}
+                      </td>
+                      <td style={{ padding: '12px 8px', color: 'var(--text-secondary)' }}>
+                        {apt.paymentMethod || 'Pay at clinic'}
+                      </td>
+                      <td style={{ padding: '12px 8px' }}>
+                        <span
+                          style={{
+                            fontSize: '0.72rem',
+                            fontWeight: '700',
+                            padding: '3px 8px',
+                            borderRadius: '6px',
+                            backgroundColor: isPaid ? '#DCFCE7' : '#FEF3C7',
+                            color: isPaid ? '#15803D' : '#92400E'
+                          }}
+                        >
+                          {isPaid ? 'PAID' : 'PAY AT CLINIC'}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px 8px', textAlign: 'right' }}>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedReceiptApt(apt)}
+                          className="btn btn-secondary btn-sm"
+                          style={{ padding: '4px 10px', fontSize: '0.76rem', minHeight: '32px' }}
+                        >
+                          <Receipt size={13} color="var(--primary-teal)" />
+                          <span>View Receipt</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* RECEIPT MODAL */}
+      {selectedReceiptApt && (
+        <ReceiptModal
+          isOpen={!!selectedReceiptApt}
+          onClose={() => setSelectedReceiptApt(null)}
+          appointment={selectedReceiptApt}
+          patient={patient}
+          showToast={showToast}
+        />
+      )}
 
       {/* LAB REPORT PDF PREVIEW MODAL */}
       <Modal
