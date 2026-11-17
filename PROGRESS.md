@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:24 IST
-Current task: 0.4 Rename MediConnect and AegisCare everywhere, add logo
+Last updated: 2026-11-17 13:29 IST
+Current task: 0.5 Fix the black form fields, the toast, and the shared components (skeleton, empty state, toast)
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -34,9 +34,9 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 0.1 Scan the project and list the existing features ........ DONE
 - 0.2 Create the design system (colors, fonts, theme config) .... DONE
 - 0.3 Create /src/config/clinic.js and the formatINR helper ..... DONE
-- 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... IN PROGRESS
+- 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... DONE
 - 0.5 Fix the black form fields, the toast, and the shared
-      components (skeleton, empty state, toast) ................. TODO
+      components (skeleton, empty state, toast) ................. IN PROGRESS
 
 ### Phase 1: Public site
 - 1.1 Landing page: navbar and hero ............................. TODO
@@ -92,14 +92,24 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Ran `npm run build` which succeeded in 4.95s with 0 errors.
 - Notes: Exported clinic object, `formatINR`, `isPlaceholder`, `getMapEmbedUrl`, `getDirectionsUrl`, and `buildUpiDeepLink`.
 
+### Task 0.4: Rename MediConnect and AegisCare everywhere, add logo
+- Status: DONE
+- Completed: 2026-11-17 13:29 IST
+- Files changed or added: public/images/logo.jpg, index.html, package.json, src/App.jsx, src/components/common/Logo.jsx, src/components/auth/LoginPage.jsx, src/components/doctor/DoctorDashboard.jsx, src/components/doctor/PatientRecordsManager.jsx, src/components/patient/InfoHub.jsx, src/components/patient/PatientMedicalRecords.jsx, src/services/mockDataStore.js
+- Summary: Copied user-uploaded logo to `/public/images/logo.jpg`. Replaced all occurrences of MediConnect and AegisCare with Jivaka Clinic in page titles, meta tags, headers, alerts, emails, comments, and package configuration. Updated `Logo.jsx` to render the user-supplied emblem without distortion.
+- Bugs fixed: Removed legacy and misspelled product name strings across entire codebase.
+- Verified by: Executed project-wide regex search verifying 0 remaining occurrences in source files and ran `npm run build` successfully.
+- Notes: User-provided logo file placed in `/public/images/logo.jpg` and linked as favicon in `index.html`.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
 - 2026-11-17: Fraunces & Inter fonts imported via Google Fonts; design system tokens and resets centralized in `src/index.css`.
 - 2026-11-17: `/src/config/clinic.js` established as the sole configuration module for clinic details and `formatINR` helper.
+- 2026-11-17: User-supplied logo placed at `/public/images/logo.jpg`, referenced in `index.html` as favicon and rendered by `Logo.jsx` with undistorted `object-fit: contain`.
 
 ## Waiting on me
-- [ ] Logo file
+- [x] Logo file (Provided by user and integrated)
 - [ ] Clinic photos
 - [ ] Clinic address, phone, hours (clinic.js)
 - [ ] UPI ID and payee name

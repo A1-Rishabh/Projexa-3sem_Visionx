@@ -1,4 +1,4 @@
-// AegisCare Central Mock Data Store & Persistence Service
+// Jivaka Clinic Central Mock Data Store & Persistence Service
 
 const STORAGE_KEYS = {
   DOCTORS: 'aegis_doctors',
@@ -256,7 +256,7 @@ const INITIAL_MEDICAL_RECORDS = {
         id: 'LAB-388',
         title: '12-Lead Electrocardiogram (ECG)',
         date: '2026-09-16',
-        issuedBy: 'AegisCare Diagnostic Unit',
+        issuedBy: 'Jivaka Diagnostic Unit',
         summary: 'Normal sinus rhythm at 72 bpm. No ST-segment elevation or ischmic shifts.',
         fileType: 'PDF',
         fileSize: '2.8 MB'
@@ -286,7 +286,7 @@ const INITIAL_MEDICAL_RECORDS = {
         id: 'LAB-290',
         title: 'Complete Blood Count (CBC) with Differential',
         date: '2026-04-12',
-        issuedBy: 'AegisCare Diagnostic Unit',
+        issuedBy: 'Jivaka Diagnostic Unit',
         summary: 'WBC, RBC, Hemoglobin and Platelets within standard reference parameters.',
         fileType: 'PDF',
         fileSize: '950 KB'
@@ -305,17 +305,17 @@ const INITIAL_MEDICAL_RECORDS = {
 };
 
 const INITIAL_CLINIC_INFO = {
-  name: 'MediConnect Medical Center',
+  name: 'Jivaka Clinic',
   tagline: 'Connected Clinical Excellence, Trusted Specialists, Elevated Care',
   phone: '+1 (555) 924-4370',
-  email: 'care@mediconnect.org',
+  email: 'care@jivakaclinic.org',
   address: '450 Health Sciences Parkway, Suite 200, Metro Health District',
   operatingHours: {
     weekdays: '8:00 AM - 8:00 PM',
     saturday: '9:00 AM - 4:00 PM',
     sunday: 'Closed for Emergency Services Only'
   },
-  activeAnnouncement: '📢 Annual Flu & Booster Vaccination Drive open this Saturday! Walk-ins welcome for registered MediConnect patients.',
+  activeAnnouncement: '📢 Annual Flu & Booster Vaccination Drive open this Saturday! Walk-ins welcome for registered Jivaka Clinic patients.',
   checkInNotice: '📌 Please present a valid photo ID at Room 101 reception counter 10 minutes prior to your appointment time.'
 };
 
