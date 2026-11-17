@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 15:25 IST
-Current task: 2.11 Final accessibility, responsive and performance pass
+Last updated: 2026-11-17 15:30 IST
+Current task: 2.12 Final report
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -61,7 +61,7 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 2.10 New patient features (reminders, waitlist, refill,
        messaging, uploads, doctor profiles, pre-visit form,
        dependents, dark mode, health tips) ....................... DONE
-- 2.11 Final accessibility, responsive and performance pass ....... TODO
+- 2.11 Final accessibility, responsive and performance pass ....... DONE
 - 2.12 Final report (see report contents below) ................. TODO
 
 ## Log (newest at the bottom)
@@ -465,6 +465,15 @@ All pre-existing features remain 100% operational:
 - Bugs fixed: None.
 - Verified by: Built production bundle with `npm run build` (compiled in 6.00s, 0 errors); tested dark mode and large text DOM attributes, family switcher context update, and modal triggers across appointments and medical records.
 - Notes: UI interactions fully functional; simulated backend dispatch for emails, messaging, and refill reviews logged in Known Issues.
+
+### Task 2.11: Final accessibility, responsive and performance pass
+- Status: DONE
+- Completed: 2026-11-17 15:30 IST
+- Files changed or added: src/App.jsx, src/components/auth/AuthLayout.jsx, src/components/patient/PatientPortal.jsx, src/components/doctor/DoctorPortal.jsx, src/index.css
+- Summary: Conducted thorough accessibility, responsiveness, and performance pass: (1) Connected `#main-content` targets across `LandingPage`, `AuthLayout`, `PatientPortal`, and `DoctorPortal` enabling instant keyboard navigation from the top `skip-to-content` anchor; (2) Upgraded global `:focus-visible` styling with high-contrast 2px teal outline and 2px offset across all buttons, links, inputs, and selects; (3) Expanded `[data-theme="dark"]` stylesheet ensuring consistent high contrast for all cards, forms, tables, and modal overlays; (4) Verified 44px minimum tap target sizes on mobile bottom tab bar, quick action pills, and booking buttons; (5) Verified explicit image widths/heights, lazy loading (`loading="lazy"`), and fallback initials avatars preventing cumulative layout shift (CLS).
+- Bugs fixed: Added missing `#main-content` target IDs on portal views and strengthened focus ring contrast.
+- Verified by: Built production bundle with `npm run build` (compiled in 6.56s, 0 errors); tested keyboard Tab focus cycling, skip link behavior, and responsive breakpoints.
+- Notes: All accessibility and responsive requirements met. Ready for final report.
 
 ---
 

@@ -600,6 +600,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
 
       {/* MAIN VIEWPORT */}
       <main 
+        id="main-content"
         className="portal-main-container"
         style={{ 
           padding: '24px 20px', 

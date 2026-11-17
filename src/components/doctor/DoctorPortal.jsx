@@ -289,7 +289,7 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
         </header>
 
         {/* TAB CONTENT VIEWPORT */}
-        <main style={{ padding: '32px', flex: 1 }}>
+        <main id="main-content" style={{ padding: '32px', flex: 1 }}>
           {activeTab === 'dashboard' && (
             <DoctorDashboard
               doctor={currentDoctor}

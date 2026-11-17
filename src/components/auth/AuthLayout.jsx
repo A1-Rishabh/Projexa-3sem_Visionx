@@ -114,7 +114,8 @@ export const AuthLayout = ({ children, title, subtitle, onBackToHome }) => {
       </div>
 
       {/* RIGHT/FORM PANEL (55% DESKTOP, 100% MOBILE) */}
-      <div
+      <main
+        id="main-content"
         style={{
           width: '55%',
           padding: '40px 32px',
@@ -185,7 +186,7 @@ export const AuthLayout = ({ children, title, subtitle, onBackToHome }) => {
             {children}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
