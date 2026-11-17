@@ -1,0 +1,460 @@
+/* =====================================================================
+   JIVAKA CLINIC DESIGN SYSTEM
+   Colors: Primary Teal #0F6B63 | Deep Teal #0F4F4A | Mint #DCEFE6 
+           Warm Cream #FAF6EC | Warm Accent #E8A25C | Text #1C2B29
+   Typography: Headings Fraunces | Body Inter
+===================================================================== */
+
+:root {
+  /* Brand Palette */
+  --primary-teal: #0F6B63;
+  --primary-teal-hover: #0c5851;
+  --primary-teal-light: #e6f3f0;
+  --primary-teal-focus: rgba(15, 107, 99, 0.25);
+
+  --deep-teal: #0F4F4A;
+  --deep-teal-hover: #0a3a36;
+  --deep-teal-light: #16605a;
+
+  --mint: #DCEFE6;
+  --mint-light: #edf7f2;
+  --mint-dark: #b8ded0;
+
+  --warm-cream: #FAF6EC;
+  --warm-cream-alt: #f4eedc;
+  --card-bg: #ffffff;
+
+  --warm-accent: #E8A25C;
+  --warm-accent-hover: #d8924b;
+  --warm-accent-light: #fdf5ec;
+  --warm-accent-glow: 0 0 20px rgba(232, 162, 92, 0.35);
+
+  --text-main: #1C2B29;
+  --text-secondary: #51625F;
+  --text-muted: #748885;
+  --border-color: #e3ebe7;
+  --border-hover: #c4d7d1;
+
+  /* Backward-compatibility theme mapping (replaces ocean/navy with teal) */
+  --navy-deep: var(--deep-teal);
+  --navy-surface: #145953;
+  --navy-hover: #19665f;
+  --ocean-blue: var(--primary-teal);
+  --ocean-hover: var(--primary-teal-hover);
+  --ocean-light: var(--primary-teal-light);
+  --slate-bg: var(--warm-cream);
+
+  /* Status Tokens */
+  --status-pending-bg: #fef3c7;
+  --status-pending-text: #92400e;
+  --status-pending-border: #fcd34d;
+
+  --status-confirmed-bg: #dcfce7;
+  --status-confirmed-text: #0F6B63;
+  --status-confirmed-border: #86efac;
+
+  --status-completed-bg: #f1f5f9;
+  --status-completed-text: #334155;
+  --status-completed-border: #cbd5e1;
+
+  --status-cancelled-bg: #fee2e2;
+  --status-cancelled-text: #991b1b;
+  --status-cancelled-border: #fca5a5;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 3px rgba(15, 79, 74, 0.05);
+  --shadow-md: 0 4px 14px rgba(15, 79, 74, 0.08);
+  --shadow-lg: 0 10px 28px rgba(15, 79, 74, 0.12);
+  --shadow-lift: 0 14px 34px rgba(15, 79, 74, 0.14);
+  --shadow-glass: 0 8px 32px rgba(15, 79, 74, 0.12);
+
+  /* Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-card: 18px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--warm-cream);
+  color: var(--text-main);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Headings in Fraunces with normal letter spacing */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: normal;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* Accessibility: Skip to Content */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 16px;
+  background: var(--primary-teal);
+  color: #ffffff;
+  padding: 8px 16px;
+  z-index: 10000;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus {
+  top: 16px;
+}
+
+/* Global Form Controls Fix (Never Black!) */
+input, select, textarea {
+  font-family: var(--font-body);
+  background-color: #ffffff !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  min-height: 44px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 1;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-teal) !important;
+  box-shadow: 0 0 0 3px var(--primary-teal-focus) !important;
+}
+
+select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible, a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-teal-focus);
+}
+
+/* Interactive Cards with 4-6px Lift */
+.card-interactive {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--border-hover);
+}
+
+/* Frosted Glass Navbar */
+.frosted-navbar {
+  background: rgba(250, 246, 236, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15, 79, 74, 0.08);
+}
+
+.frosted-navbar-dark {
+  background: rgba(15, 79, 74, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Button Variants with 44px min tap targets */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.btn-primary {
+  background-color: var(--primary-teal);
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(15, 107, 99, 0.28);
+}
+.btn-primary:hover {
+  background-color: var(--primary-teal-hover);
+  box-shadow: 0 4px 14px rgba(15, 107, 99, 0.38);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--warm-cream);
+  border-color: var(--border-hover);
+}
+
+.btn-outline-teal {
+  background-color: transparent;
+  color: var(--primary-teal) !important;
+  border: 1.5px solid var(--primary-teal);
+}
+.btn-outline-teal:hover {
+  background-color: var(--primary-teal-light);
+}
+
+.btn-accent {
+  background-color: var(--warm-accent);
+  color: #ffffff !important;
+  box-shadow: var(--warm-accent-glow);
+}
+.btn-accent:hover {
+  background-color: var(--warm-accent-hover);
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: #ffffff !important;
+}
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-sm {
+  min-height: 36px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+.input-with-icon {
+  position: relative;
+}
+.input-with-icon input,
+.input-with-icon select {
+  width: 100%;
+  padding-left: 40px !important;
+}
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.input-error {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+}
+.error-msg {
+  color: #dc2626;
+  font-size: 0.78rem;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Status Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+.badge-pending {
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+  border-color: var(--status-pending-border);
+}
+.badge-confirmed {
+  background-color: var(--status-confirmed-bg);
+  color: var(--status-confirmed-text);
+  border-color: var(--status-confirmed-border);
+}
+.badge-completed {
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed-text);
+  border-color: var(--status-completed-border);
+}
+.badge-cancelled {
+  background-color: var(--status-cancelled-bg);
+  color: var(--status-cancelled-text);
+  border-color: var(--status-cancelled-border);
+}
+
+/* Mint Soft Panels & Icon Containers */
+.mint-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--mint);
+  color: var(--primary-teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Minimal Animations (under 500ms) */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 79, 74, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+.modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-card);
+  max-width: 540px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: slideUp 0.25s ease-out;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--warm-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd8d3;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ab4ac;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-interactive:hover {
+    transform: none !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-card {
+    margin: 8px;
+    max-height: 92vh;
+  }
+}

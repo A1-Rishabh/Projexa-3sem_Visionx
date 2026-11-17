@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:20 IST
-Current task: 0.2 Create the design system (colors, fonts, theme config)
+Last updated: 2026-11-17 13:22 IST
+Current task: 0.3 Create /src/config/clinic.js and the formatINR helper
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -32,8 +32,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 ## Task list
 ### Phase 0: Setup
 - 0.1 Scan the project and list the existing features ........ DONE
-- 0.2 Create the design system (colors, fonts, theme config) .... IN PROGRESS
-- 0.3 Create /src/config/clinic.js and the formatINR helper ..... TODO
+- 0.2 Create the design system (colors, fonts, theme config) .... DONE
+- 0.3 Create /src/config/clinic.js and the formatINR helper ..... IN PROGRESS
 - 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... TODO
 - 0.5 Fix the black form fields, the toast, and the shared
       components (skeleton, empty state, toast) ................. TODO
@@ -74,9 +74,19 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Inspected source files and executed `npm run build` which succeeded with 0 errors.
 - Notes: Git initialized in project root with clean .gitignore.
 
+### Task 0.2: Create the design system (colors, fonts, theme config)
+- Status: DONE
+- Completed: 2026-11-17 13:22 IST
+- Files changed or added: index.html, src/index.css
+- Summary: Created the complete Jivaka Clinic design system: Primary Teal (#0F6B63), Deep Teal (#0F4F4A), Mint (#DCEFE6), Warm Cream (#FAF6EC), Warm Accent (#E8A25C), Text (#1C2B29), Fraunces heading font and Inter body font, card hover lift, frosted navbar, non-black inputs with teal focus rings, 44px min tap targets, and accessibility rules with prefers-reduced-motion support.
+- Bugs fixed: Fixed black form controls and replaced hardcoded navy/electric blue variables.
+- Verified by: Verified font imports in `index.html`, inspected `src/index.css`, and executed `npm run build` which built in 4.58s with 0 errors.
+- Notes: Backwards-compatible variable aliases provided so existing UI smoothly transitions to new palette without breakage.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
+- 2026-11-17: Fraunces & Inter fonts imported via Google Fonts; design system tokens and resets centralized in `src/index.css`.
 
 ## Waiting on me
 - [ ] Logo file
