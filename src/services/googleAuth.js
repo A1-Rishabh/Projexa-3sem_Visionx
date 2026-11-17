@@ -71,14 +71,7 @@ const createGoogleSession = (isSignUp = false) => {
       emergencyContact: 'Priya Sharma (+91 98765 43210)',
       isGoogleAuth: true,
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200',
-      vitals: {
-        bloodPressure: '118/78 mmHg',
-        heartRate: '70 bpm',
-        bmi: '22.8 (Normal)',
-        spO2: '99%',
-        temperature: '98.6 °F',
-        weight: '72 kg'
-      }
+      vitals: null // Vitals must be recorded by clinical doctor during in-person OPD consultation
     };
     patients.push(googlePatient);
     localStorage.setItem('aegis_patients', JSON.stringify(patients));

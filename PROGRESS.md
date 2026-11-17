@@ -699,6 +699,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 11.78s.
 - Notes: Git commit made for version continuity.
 
+### Task 2.18: Enable doctor record/vitals updates, remove fake vitals, and add self-managed family dependents in settings
+- Status: DONE
+- Completed: 2026-11-18 02:00 IST
+- Files changed or added: src/services/mockDataStore.js, src/services/googleAuth.js, src/components/auth/SignUpPage.jsx, src/components/patient/PatientMedicalRecords.jsx, src/components/doctor/PatientRecordsManager.jsx, src/components/patient/PatientProfile.jsx, src/components/patient/PatientPortal.jsx
+- Summary: (1) Eliminated all fake/made-up vitals from new patient registrations and Google login; (2) In `PatientMedicalRecords.jsx`, replaced hardcoded dummy vitals with clean awaiting-exam states (`-- / -- mmHg`, `-- bpm`, `--`, `--%`) with "Awaiting Exam" status and contextual notice when no doctor examination is recorded, while rendering real doctor recordings and dates when present; (3) In `PatientRecordsManager.jsx` (Doctor portal), enabled doctors to record/update patient examination vitals (BP, Heart Rate, SpO2, Temperature, Weight, Height with dynamic BMI calculation) and document new clinical consultation visits with diagnoses and prescribed medications, updating the EHR and logging audit timestamps; (4) In `PatientProfile.jsx` (Settings), redesigned the settings experience with a tabbed interface (Personal Details, Family & Dependents, Emergency & Allergies, Security & Notifications), providing a complete user-driven Family Dependents manager (zero hardcoded presets) where users can add, edit, and delete their own family members; (5) In `PatientPortal.jsx`, replaced hardcoded `familyMembers` with self-registered dependents from `getDependents(primaryPatientId)`, and updated the profile header dropdown with a quick "+ Add Family Member" action linking directly to Settings.
+- Bugs fixed: Removed fake hardcoded vitals showing up on empty patient records; eliminated hardcoded family dependents; enabled doctors to update patient clinical vitals and consultation visits in real-time.
+- Verified by: `npm run build` compiled 1558 modules successfully with 0 errors in 46.88s; tested data persistence in localStorage, doctor vitals/visit modals, and family dependents add/edit/delete flows.
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

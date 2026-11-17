@@ -120,27 +120,47 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
             
             {/* Blood Group */}
             <span style={{ backgroundColor: 'var(--mint)', color: 'var(--deep-teal)', padding: '2px 8px', borderRadius: '6px', fontWeight: '700', fontSize: '0.76rem' }}>
-              Blood Group: {patient.bloodGroup || 'A+'}
+              Blood Group: {patient.bloodGroup || 'Not specified'}
             </span>
 
-            {/* VISIBLE ALLERGIES ALERT CHIP (NEAR TOP) */}
-            <span 
-              style={{ 
-                backgroundColor: '#FEE2E2', 
-                border: '1px solid #FECACA', 
-                color: '#DC2626', 
-                padding: '2px 10px', 
-                borderRadius: '6px', 
-                fontWeight: '700', 
-                fontSize: '0.76rem',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px'
-              }}
-            >
-              <AlertTriangle size={13} color="#DC2626" />
-              Allergies: {patient.allergies || 'Penicillin'}
-            </span>
+            {/* ALLERGIES ALERT CHIP (Dynamic based on real patient record) */}
+            {patient.allergies && patient.allergies !== 'None' && patient.allergies !== 'None recorded' ? (
+              <span 
+                style={{ 
+                  backgroundColor: '#FEE2E2', 
+                  border: '1px solid #FECACA', 
+                  color: '#DC2626', 
+                  padding: '2px 10px', 
+                  borderRadius: '6px', 
+                  fontWeight: '700', 
+                  fontSize: '0.76rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px'
+                }}
+              >
+                <AlertTriangle size={13} color="#DC2626" />
+                Allergies: {patient.allergies}
+              </span>
+            ) : (
+              <span 
+                style={{ 
+                  backgroundColor: '#F1F5F9', 
+                  border: '1px solid #E2E8F0', 
+                  color: '#475569', 
+                  padding: '2px 10px', 
+                  borderRadius: '6px', 
+                  fontWeight: '600', 
+                  fontSize: '0.76rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px'
+                }}
+              >
+                <CheckCircle2 size={13} color="#16A34A" />
+                Allergies: No known drug allergies documented
+              </span>
+            )}
           </div>
         </div>
 
@@ -209,84 +229,152 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
         })}
       </div>
 
-      {/* VITALS SUMMARY CARDS WITH MEASUREMENT DATE & TREND ARROWS */}
-      {(activeTab === 'all' || activeTab === 'visits') && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
-          
-          {/* Blood Pressure */}
-          <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Activity size={16} color="#DC2626" /> Blood Pressure
+      {/* VITALS SUMMARY CARDS (DYNAMIC: ONLY REAL RECORDINGS, ZERO MADE-UP DATA) */}
+      {(activeTab === 'all' || activeTab === 'visits') && (() => {
+        const patientVitals = record?.vitals || patient?.vitals;
+        const hasVitals = !!(patientVitals && (patientVitals.bloodPressure || patientVitals.heartRate || patientVitals.spO2 || patientVitals.bmi));
+
+        return (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {!hasVitals && (
+              <div 
+                style={{ 
+                  backgroundColor: '#F8FAFC', 
+                  border: '1px dashed #CBD5E1', 
+                  borderRadius: '12px', 
+                  padding: '10px 14px', 
+                  fontSize: '0.78rem', 
+                  color: '#64748B',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <Activity size={15} color="var(--primary-teal)" />
+                <span>
+                  <strong>Clinical Vitals Pending:</strong> No in-clinic examination vitals have been recorded yet for this patient. Your attending doctor will document your vitals during your OPD consultation.
+                </span>
               </div>
-              <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
-                Stable →
-              </span>
-            </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
-              {patient.vitals?.bloodPressure || '120/80 mmHg'}
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Updated: 16 Sep 2026 • Routine OPD
+            )}
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' }}>
+              
+              {/* Blood Pressure */}
+              <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Activity size={16} color="#DC2626" /> Blood Pressure
+                  </div>
+                  {hasVitals && patientVitals.bloodPressure ? (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
+                      Recorded ✓
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#64748B', backgroundColor: '#F1F5F9', padding: '1px 6px', borderRadius: '4px' }}>
+                      Awaiting Exam
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: hasVitals && patientVitals.bloodPressure ? 'var(--text-main)' : '#94A3B8', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
+                  {hasVitals && patientVitals.bloodPressure ? patientVitals.bloodPressure : '-- / -- mmHg'}
+                </div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                  {hasVitals && patientVitals.bloodPressure 
+                    ? `Recorded: ${patientVitals.recordedDate || 'Recent'} • ${patientVitals.recordedBy || 'OPD Doctor'}`
+                    : 'Pending clinical examination'}
+                </div>
+              </div>
+
+              {/* Heart Rate */}
+              <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Heart size={16} color="var(--primary-teal)" /> Heart Rate
+                  </div>
+                  {hasVitals && patientVitals.heartRate ? (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
+                      Optimal ✓
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#64748B', backgroundColor: '#F1F5F9', padding: '1px 6px', borderRadius: '4px' }}>
+                      Awaiting Exam
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: hasVitals && patientVitals.heartRate ? 'var(--text-main)' : '#94A3B8', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
+                  {hasVitals && patientVitals.heartRate 
+                    ? (String(patientVitals.heartRate).includes('bpm') ? patientVitals.heartRate : `${patientVitals.heartRate} bpm`) 
+                    : '-- bpm'}
+                </div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                  {hasVitals && patientVitals.heartRate 
+                    ? `Recorded: ${patientVitals.recordedDate || 'Recent'} • Resting`
+                    : 'Pending clinical examination'}
+                </div>
+              </div>
+
+              {/* BMI */}
+              <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Weight size={16} color="#059669" /> BMI Index
+                  </div>
+                  {hasVitals && (patientVitals.bmi || patientVitals.weight) ? (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
+                      Recorded ✓
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#64748B', backgroundColor: '#F1F5F9', padding: '1px 6px', borderRadius: '4px' }}>
+                      Awaiting Exam
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: hasVitals && (patientVitals.bmi || patientVitals.weight) ? 'var(--text-main)' : '#94A3B8', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
+                  {hasVitals && patientVitals.bmi 
+                    ? patientVitals.bmi 
+                    : (hasVitals && patientVitals.weight && patientVitals.height 
+                        ? `${(Number(patientVitals.weight) / ((Number(patientVitals.height)/100)**2)).toFixed(1)}` 
+                        : '--')}
+                </div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                  {hasVitals && (patientVitals.weight || patientVitals.height) 
+                    ? `Weight: ${patientVitals.weight || '--'} • Height: ${patientVitals.height || '--'}`
+                    : 'Weight: -- • Height: --'}
+                </div>
+              </div>
+
+              {/* SpO2 */}
+              <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Thermometer size={16} color="#D97706" /> Oxygen Saturation
+                  </div>
+                  {hasVitals && patientVitals.spO2 ? (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
+                      Room air ✓
+                    </span>
+                  ) : (
+                    <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#64748B', backgroundColor: '#F1F5F9', padding: '1px 6px', borderRadius: '4px' }}>
+                      Awaiting Exam
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: '1.25rem', fontWeight: '800', color: hasVitals && patientVitals.spO2 ? 'var(--text-main)' : '#94A3B8', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
+                  {hasVitals && patientVitals.spO2 
+                    ? (String(patientVitals.spO2).includes('%') ? patientVitals.spO2 : `${patientVitals.spO2}%`) 
+                    : '--%'}
+                </div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                  {hasVitals && patientVitals.spO2 
+                    ? `Recorded: ${patientVitals.recordedDate || 'Recent'} • Pulse Oximetry`
+                    : 'Pending pulse oximetry recording'}
+                </div>
+              </div>
+
             </div>
           </div>
-
-          {/* Heart Rate */}
-          <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Heart size={16} color="var(--primary-teal)" /> Heart Rate
-              </div>
-              <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
-                Optimal →
-              </span>
-            </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
-              {patient.vitals?.heartRate || '72 bpm'}
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Updated: 16 Sep 2026 • Resting ECG
-            </div>
-          </div>
-
-          {/* BMI */}
-          <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Weight size={16} color="#059669" /> BMI Index
-              </div>
-              <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
-                Normal →
-              </span>
-            </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
-              {patient.vitals?.bmi || '23.4 (Normal)'}
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Weight: 68 kg • Height: 172 cm
-            </div>
-          </div>
-
-          {/* SpO2 */}
-          <div style={{ backgroundColor: '#ffffff', padding: '16px', borderRadius: '14px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Thermometer size={16} color="#D97706" /> Oxygen Saturation
-              </div>
-              <span style={{ fontSize: '0.7rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '1px 6px', borderRadius: '4px' }}>
-                Room air →
-              </span>
-            </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-main)', marginTop: '8px', fontFamily: 'Fraunces, serif' }}>
-              {patient.vitals?.spO2 || '99%'}
-            </div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-              Updated: 16 Sep 2026 • Pulse Oximetry
-            </div>
-          </div>
-
-        </div>
-      )}
+        );
+      })()}
 
       {/* TWO COLUMN GRID: VISITS (GROUPED BY YEAR) & LABS/RECOMMENDATIONS */}
       <div 

@@ -156,15 +156,8 @@ export const SignUpPage = ({
         age: 30,
         bloodGroup: 'B+',
         allergies: 'None recorded',
-        emergencyContact: 'Emergency Contact (+91 98765 43210)',
-        vitals: {
-          bloodPressure: '120/80 mmHg',
-          heartRate: '72 bpm',
-          bmi: '22.4 (Normal)',
-          spO2: '99%',
-          temperature: '98.6 °F',
-          weight: '70 kg'
-        }
+        emergencyContact: '',
+        vitals: null // Only recorded by attending doctors during in-person clinical exam
       };
 
       patients.push(newPatient);

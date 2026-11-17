@@ -443,7 +443,7 @@ export const getMedicalRecords = () => {
   return JSON.parse(localStorage.getItem(STORAGE_KEYS.MEDICAL_RECORDS));
 };
 
-export const updatePatientRecord = (patientId, recordData, doctorId) => {
+export const updatePatientRecord = (patientId, recordData, doctorId, doctorName = 'Attending Doctor') => {
   const records = getMedicalRecords();
   const timestamp = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
   
@@ -460,7 +460,7 @@ export const updatePatientRecord = (patientId, recordData, doctorId) => {
   records[patientId] = {
     ...records[patientId],
     ...recordData,
-    lastViewedBy: `Doctor ${doctorId}`,
+    lastViewedBy: doctorName ? `Dr. ${doctorName.replace(/^Dr\.\s*/, '')} (${doctorId})` : `Doctor ${doctorId}`,
     lastViewedTime: timestamp
   };
 
@@ -470,6 +470,141 @@ export const updatePatientRecord = (patientId, recordData, doctorId) => {
   logAuditEntry(doctorId, `Updated medical record & clinical notes for Patient ${patientId}`);
   
   return records[patientId];
+};
+
+export const updatePatientVitals = (patientId, vitalsData, doctorId, doctorName = 'Doctor') => {
+  initializeStore();
+  const timestamp = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  
+  const formattedVitals = {
+    ...vitalsData,
+    recordedDate: vitalsData.recordedDate || timestamp,
+    recordedBy: doctorName ? `Dr. ${doctorName.replace(/^Dr\.\s*/, '')}` : `Doctor ${doctorId}`,
+    lastExamType: vitalsData.lastExamType || 'In-Clinic OPD Examination'
+  };
+
+  // 1. Update in patients list
+  const patients = getPatients();
+  const pIndex = patients.findIndex(p => p.id === patientId);
+  if (pIndex !== -1) {
+    patients[pIndex].vitals = formattedVitals;
+    localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+  }
+
+  // 2. Update in medical records
+  const records = getMedicalRecords();
+  if (!records[patientId]) {
+    records[patientId] = {
+      patientId,
+      visitTimeline: [],
+      labReports: [],
+      notesPublic: '',
+      notesPrivate: ''
+    };
+  }
+  records[patientId].vitals = formattedVitals;
+  records[patientId].lastViewedBy = `Dr. ${doctorName.replace(/^Dr\.\s*/, '')} (${doctorId})`;
+  records[patientId].lastViewedTime = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+  localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
+
+  // 3. Update session if currently logged in patient
+  const session = getSavedSession();
+  if (session?.user && session.user.id === patientId) {
+    session.user.vitals = formattedVitals;
+    saveSession(session);
+  }
+
+  // Audit log
+  logAuditEntry(doctorId, `Recorded clinical examination vitals for Patient ${patientId}: BP ${formattedVitals.bloodPressure || '--'}, HR ${formattedVitals.heartRate || '--'}`);
+
+  return formattedVitals;
+};
+
+export const addPatientVisit = (patientId, visitData, doctorId, doctorName = 'Doctor') => {
+  initializeStore();
+  const records = getMedicalRecords();
+  if (!records[patientId]) {
+    records[patientId] = {
+      patientId,
+      visitTimeline: [],
+      labReports: [],
+      notesPublic: '',
+      notesPrivate: ''
+    };
+  }
+
+  const newVisit = {
+    id: `VT-${Math.floor(100 + Math.random() * 900)}`,
+    date: visitData.date || new Date().toISOString().split('T')[0],
+    doctorName: doctorName ? `Dr. ${doctorName.replace(/^Dr\.\s*/, '')}` : `Doctor ${doctorId}`,
+    doctorId,
+    diagnosis: visitData.diagnosis || 'Clinical OPD Consultation',
+    summary: visitData.summary || 'Routine physical assessment and consultation.',
+    prescription: visitData.prescription || []
+  };
+
+  records[patientId].visitTimeline = [newVisit, ...(records[patientId].visitTimeline || [])];
+  records[patientId].lastViewedBy = `Dr. ${doctorName.replace(/^Dr\.\s*/, '')} (${doctorId})`;
+  records[patientId].lastViewedTime = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+
+  localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
+
+  // Log Audit Entry
+  logAuditEntry(doctorId, `Documented new clinical consultation & prescription for Patient ${patientId}: ${newVisit.diagnosis}`);
+
+  return newVisit;
+};
+
+// Family / Dependents Storage Service (User-managed, zero hardcoded dependents)
+const getDependentsKey = (patientId) => `aegis_dependents_${patientId || 'default'}`;
+
+export const getDependents = (patientId) => {
+  if (!patientId) return [];
+  const raw = localStorage.getItem(getDependentsKey(patientId));
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return [];
+  }
+};
+
+export const saveDependents = (patientId, dependents) => {
+  if (!patientId) return;
+  localStorage.setItem(getDependentsKey(patientId), JSON.stringify(dependents));
+};
+
+export const addDependent = (patientId, dependentData) => {
+  const list = getDependents(patientId);
+  const newDependent = {
+    id: `DEP-${Date.now().toString(36).toUpperCase()}`,
+    name: dependentData.name,
+    relation: dependentData.relation || 'Family Member',
+    bloodGroup: dependentData.bloodGroup || 'Not Specified',
+    allergies: dependentData.allergies || 'None recorded',
+    dob: dependentData.dob || '',
+    age: dependentData.age || '',
+    gender: dependentData.gender || 'Not specified',
+    phone: dependentData.phone || '',
+    createdAt: new Date().toISOString()
+  };
+  const updated = [...list, newDependent];
+  saveDependents(patientId, updated);
+  return newDependent;
+};
+
+export const updateDependent = (patientId, depId, updatedData) => {
+  const list = getDependents(patientId);
+  const updated = list.map(item => item.id === depId ? { ...item, ...updatedData } : item);
+  saveDependents(patientId, updated);
+  return updated;
+};
+
+export const deleteDependent = (patientId, depId) => {
+  const list = getDependents(patientId);
+  const updated = list.filter(item => item.id !== depId);
+  saveDependents(patientId, updated);
+  return updated;
 };
 
 export const logAuditEntry = (doctorId, action) => {

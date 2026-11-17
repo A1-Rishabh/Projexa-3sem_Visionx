@@ -20,12 +20,13 @@ import {
   X,
   AlertCircle,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  Plus
 } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { BottomTabBar } from '../common/BottomTabBar';
 import { LandingFooter } from '../public/LandingFooter';
-import { getDoctors } from '../../services/mockDataStore';
+import { getDoctors, getDependents } from '../../services/mockDataStore';
 
 import { InfoHub } from './InfoHub';
 import { DoctorDirectory } from './DoctorDirectory';
@@ -38,6 +39,8 @@ import { CareTeamMessagingModal } from './CareTeamMessagingModal';
 export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref }) => {
   const [currentPatient, setCurrentPatient] = useState(session?.user || {});
   const [activeTab, setActiveTab] = useState('home');
+  const [profileSection, setProfileSection] = useState('details');
+  const [dependents, setDependents] = useState([]);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isMessagingOpen, setIsMessagingOpen] = useState(false);
@@ -161,22 +164,41 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
     if (showToast) showToast(next ? 'Large text enabled' : 'Standard text size restored', 'info');
   };
 
-  // Family Dependents
-  const familyMembers = [
-    { id: 'P-1001', name: 'Rahul Sharma', relation: 'Self', bloodGroup: 'A+', allergies: 'Penicillin' },
-    { id: 'P-1002', name: 'Priya Sharma', relation: 'Spouse', bloodGroup: 'B+', allergies: 'Sulfa Drugs' },
-    { id: 'P-1003', name: 'Aarav Sharma', relation: 'Child', bloodGroup: 'O+', allergies: 'None' }
-  ];
+  // Family & Dependents (User-managed, zero hardcoded presets)
+  const primaryPatientId = session?.user?.id || 'P-1001';
+  
+  useEffect(() => {
+    setDependents(getDependents(primaryPatientId));
+  }, [primaryPatientId, activeTab]);
+
+  const primaryProfile = {
+    id: primaryPatientId,
+    name: displayName,
+    relation: 'Self',
+    bloodGroup: session?.user?.bloodGroup || currentPatient.bloodGroup || 'A+',
+    allergies: session?.user?.allergies || currentPatient.allergies || 'None recorded',
+    phone: session?.user?.phone || currentPatient.phone || '',
+    isPrimary: true
+  };
 
   const switchDependent = (member) => {
-    setCurrentPatient(prev => ({
-      ...prev,
-      ...member,
-      email: prev.email || 'patient@jivakaclinic.in'
-    }));
-    setIsProfileDropdownOpen(false);
-    if (showToast) {
-      showToast(`Switched active profile to ${member.name} (${member.relation})`, 'success');
+    if (!member || member.isPrimary || member.id === primaryPatientId) {
+      setCurrentPatient(session?.user || primaryProfile);
+      setIsProfileDropdownOpen(false);
+      if (showToast) {
+        showToast(`Switched active profile to ${displayName} (Primary Account)`, 'success');
+      }
+    } else {
+      setCurrentPatient({
+        ...primaryProfile,
+        ...member,
+        isDependent: true,
+        email: session?.user?.email || 'patient@jivakaclinic.in'
+      });
+      setIsProfileDropdownOpen(false);
+      if (showToast) {
+        showToast(`Switched active profile to ${member.name} (${member.relation})`, 'success');
+      }
     }
   };
 
@@ -747,6 +769,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                     type="button"
                     role="menuitem"
                     onClick={() => {
+                      setProfileSection('details');
                       setActiveTab('profile');
                       setIsProfileDropdownOpen(false);
                     }}
@@ -758,9 +781,45 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                       padding: '10px 12px',
                       borderRadius: '10px',
                       fontSize: '0.86rem',
-                      fontWeight: '600',
+                      fontWeight: activeTab === 'profile' && profileSection === 'details' ? '700' : '600',
                       color: 'var(--text-main)',
-                      backgroundColor: 'transparent',
+                      backgroundColor: activeTab === 'profile' && profileSection === 'details' ? 'var(--mint)' : 'transparent',
+                      textAlign: 'left',
+                      transition: 'all 0.15s ease',
+                      minHeight: '42px',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeTab !== 'profile') e.currentTarget.style.backgroundColor = 'var(--warm-cream)';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeTab !== 'profile') e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
+                  >
+                    <User size={16} color="var(--primary-teal)" />
+                    <span>Profile Settings</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setProfileSection('emergency');
+                      setActiveTab('profile');
+                      setIsProfileDropdownOpen(false);
+                    }}
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '10px 12px',
+                      borderRadius: '10px',
+                      fontSize: '0.86rem',
+                      fontWeight: activeTab === 'profile' && profileSection === 'emergency' ? '700' : '600',
+                      color: 'var(--text-main)',
+                      backgroundColor: activeTab === 'profile' && profileSection === 'emergency' ? 'var(--mint)' : 'transparent',
                       textAlign: 'left',
                       transition: 'all 0.15s ease',
                       minHeight: '42px',
@@ -779,14 +838,102 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                   </button>
                 </div>
 
-                {/* FAMILY / DEPENDENTS SECTION */}
+                {/* FAMILY / DEPENDENTS SECTION (DYNAMIC & USER-MANAGED) */}
                 <div style={{ borderTop: '1px solid var(--border-color)', padding: '10px 8px' }}>
-                  <div style={{ fontSize: '0.70rem', fontWeight: '800', color: 'var(--text-secondary)', padding: '2px 8px 6px 8px', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
-                    Family / Dependents
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2px 8px 6px 8px' }}>
+                    <span style={{ fontSize: '0.70rem', fontWeight: '800', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.6px' }}>
+                      Family / Dependents
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsProfileDropdownOpen(false);
+                        setProfileSection('dependents');
+                        setActiveTab('profile');
+                      }}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        color: 'var(--primary-teal)',
+                        fontSize: '0.72rem',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px',
+                        padding: 0
+                      }}
+                    >
+                      <Plus size={12} /> Add
+                    </button>
                   </div>
+
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                    {familyMembers.map((member) => {
-                      const isSelected = (currentPatient.id === member.id) || (!currentPatient.id && member.id === 'P-1001');
+                    {/* Primary Self User Button */}
+                    {(() => {
+                      const isSelfSelected = !currentPatient.isDependent;
+                      return (
+                        <button
+                          type="button"
+                          role="menuitem"
+                          onClick={() => switchDependent(primaryProfile)}
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            padding: '8px 10px',
+                            borderRadius: '10px',
+                            fontSize: '0.82rem',
+                            fontWeight: isSelfSelected ? '700' : '500',
+                            color: isSelfSelected ? 'var(--deep-teal)' : 'var(--text-main)',
+                            backgroundColor: isSelfSelected ? 'var(--mint)' : 'transparent',
+                            border: isSelfSelected ? '1px solid rgba(15, 107, 99, 0.22)' : '1px solid transparent',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            minHeight: '38px',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div
+                              style={{
+                                width: '24px',
+                                height: '24px',
+                                borderRadius: '50%',
+                                backgroundColor: isSelfSelected ? 'var(--primary-teal)' : '#F1F5F9',
+                                color: isSelfSelected ? '#ffffff' : 'var(--text-secondary)',
+                                fontSize: '0.68rem',
+                                fontWeight: '700',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              {getInitials(displayName)}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ fontSize: '0.82rem', fontWeight: isSelfSelected ? '700' : '600' }}>
+                                {displayName} (Self)
+                              </span>
+                              <span style={{ fontSize: '0.68rem', color: isSelfSelected ? 'var(--primary-teal)' : 'var(--text-secondary)' }}>
+                                Primary Account • {primaryProfile.bloodGroup}
+                              </span>
+                            </div>
+                          </div>
+                          {isSelfSelected && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '3px', color: 'var(--primary-teal)', fontSize: '0.70rem', fontWeight: '700' }}>
+                              <Check size={13} />
+                              <span>Active</span>
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })()}
+
+                    {/* Self-Registered Dependents */}
+                    {dependents.map((member) => {
+                      const isSelected = currentPatient.isDependent && currentPatient.id === member.id;
                       return (
                         <button
                           key={member.id}
@@ -839,7 +986,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                                 {member.name}
                               </span>
                               <span style={{ fontSize: '0.68rem', color: isSelected ? 'var(--primary-teal)' : 'var(--text-secondary)' }}>
-                                {member.relation} • {member.bloodGroup}
+                                {member.relation} • {member.bloodGroup || 'Not specified'}
                               </span>
                             </div>
                           </div>
@@ -852,6 +999,42 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                         </button>
                       );
                     })}
+
+                    {dependents.length === 0 && (
+                      <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', padding: '6px 8px', fontStyle: 'italic' }}>
+                        No family dependents added yet
+                      </div>
+                    )}
+
+                    {/* Add Family Member CTA */}
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() => {
+                        setIsProfileDropdownOpen(false);
+                        setProfileSection('dependents');
+                        setActiveTab('profile');
+                      }}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        padding: '7px 10px',
+                        borderRadius: '8px',
+                        fontSize: '0.78rem',
+                        fontWeight: '700',
+                        color: 'var(--primary-teal)',
+                        backgroundColor: 'var(--warm-cream)',
+                        border: '1px dashed var(--border-color)',
+                        cursor: 'pointer',
+                        marginTop: '4px',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <Plus size={13} /> Add Family Member
+                    </button>
                   </div>
                 </div>
 
@@ -1119,6 +1302,8 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
             </div>
             <PatientProfile
               patient={{ ...currentPatient, name: displayName }}
+              initialSection={profileSection}
+              showToast={showToast}
               onUpdateProfile={(updated) => {
                 setCurrentPatient(prev => ({ ...prev, ...updated }));
                 if (showToast) showToast('Profile settings saved successfully', 'success');
