@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:00 IST
-Current task: 1.7 Forgot password and role-based redirect
+Last updated: 2026-11-17 14:01 IST
+Current task: 1.8 Phase 1 report (see report contents below)
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -45,8 +45,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 1.4 Login page ................................................ DONE
 - 1.5 Sign up page ............................................... DONE
 - 1.6 Google sign-in integration ................................ DONE
-- 1.7 Forgot password and role-based redirect .................. IN PROGRESS
-- 1.8 Phase 1 report (see report contents below) ................. TODO
+- 1.7 Forgot password and role-based redirect .................. DONE
+- 1.8 Phase 1 report (see report contents below) ................. IN PROGRESS
 
 ### Phase 2: Patient portal
 - 2.1 Portal navbar, profile dropdown, mobile tab bar ........... TODO
@@ -163,6 +163,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Bugs fixed: None.
 - Verified by: Ran `npm run build` which compiled in 6.15s with 0 errors.
 - Notes: Documented `VITE_GOOGLE_CLIENT_ID` in `.env.example` and in Decisions.
+
+### Task 1.7: Forgot password and role-based redirect
+- Status: DONE
+- Completed: 2026-11-17 14:01 IST
+- Files changed or added: src/components/patient/PatientPortal.jsx, src/components/auth/LoginPage.jsx, src/App.jsx
+- Summary: Integrated modal-based password reset with email format validation and simulation toast. Connected role-based redirect in `App.jsx` ensuring patients route to `PatientPortal` and doctors route to `DoctorPortal`. Added deep-link support in `PatientPortal` for `initialBookingPref` when navigating from the public landing page quick booking or doctor cards.
+- Bugs fixed: Ensured smooth routing transition and preference persistence across public site and patient portal.
+- Verified by: Ran `npm run build` which compiled with 0 errors in 5.54s.
+- Notes: Session persistence and restoration on reload confirmed working.
 
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
