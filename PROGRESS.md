@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 13:22 IST
-Current task: 0.3 Create /src/config/clinic.js and the formatINR helper
+Last updated: 2026-11-17 13:24 IST
+Current task: 0.4 Rename MediConnect and AegisCare everywhere, add logo
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -33,8 +33,8 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 ### Phase 0: Setup
 - 0.1 Scan the project and list the existing features ........ DONE
 - 0.2 Create the design system (colors, fonts, theme config) .... DONE
-- 0.3 Create /src/config/clinic.js and the formatINR helper ..... IN PROGRESS
-- 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... TODO
+- 0.3 Create /src/config/clinic.js and the formatINR helper ..... DONE
+- 0.4 Rename MediConnect and AegisCare everywhere, add logo ...... IN PROGRESS
 - 0.5 Fix the black form fields, the toast, and the shared
       components (skeleton, empty state, toast) ................. TODO
 
@@ -83,10 +83,20 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Verified font imports in `index.html`, inspected `src/index.css`, and executed `npm run build` which built in 4.58s with 0 errors.
 - Notes: Backwards-compatible variable aliases provided so existing UI smoothly transitions to new palette without breakage.
 
+### Task 0.3: Create /src/config/clinic.js and the formatINR helper
+- Status: DONE
+- Completed: 2026-11-17 13:24 IST
+- Files changed or added: src/config/clinic.js, src/services/mockDataStore.js
+- Summary: Created `/src/config/clinic.js` as single source of truth for clinic branding, address, contacts, operating hours, mapQuery, UPI ID, and payee name. Created `formatINR(amount)` using `Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })`. Created URL helpers for map embeds, directions, and UPI deep-links. Updated mock doctor fees to realistic sample INR amounts (₹800 - ₹1400).
+- Bugs fixed: Converted doctor fees from USD to INR sample values.
+- Verified by: Ran `npm run build` which succeeded in 4.95s with 0 errors.
+- Notes: Exported clinic object, `formatINR`, `isPlaceholder`, `getMapEmbedUrl`, `getDirectionsUrl`, and `buildUpiDeepLink`.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".
 - 2026-11-17: Fraunces & Inter fonts imported via Google Fonts; design system tokens and resets centralized in `src/index.css`.
+- 2026-11-17: `/src/config/clinic.js` established as the sole configuration module for clinic details and `formatINR` helper.
 
 ## Waiting on me
 - [ ] Logo file
