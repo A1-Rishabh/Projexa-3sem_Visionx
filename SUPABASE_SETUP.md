@@ -69,3 +69,4 @@ Follow these quick steps to connect your real Supabase database and enable real 
 - You will be redirected to the official Google consent screen.
 - On your first login, a **Clinical Intake Modal** will prompt you to verify contact phone, date of birth, blood group, and emergency contact.
 - Your clinical records are now live, encrypted, and backed by PostgreSQL!
+

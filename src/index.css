@@ -108,24 +108,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-main);
 }
 
-/* Accessibility: Skip to Content */
-.skip-to-content {
-  position: absolute;
-  top: -40px;
-  left: 16px;
-  background: var(--primary-teal);
-  color: #ffffff;
-  padding: 8px 16px;
-  z-index: 10000;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  text-decoration: none;
-  transition: top 0.2s ease;
-}
-.skip-to-content:focus {
-  top: 16px;
-}
-
 /* Global Form Controls Fix (Never Black!) */
 input, select, textarea {
   font-family: var(--font-body);

@@ -213,3 +213,4 @@ export const ClinicalIntakeModal = ({ isOpen, onClose, patient, onComplete, show
 };
 
 export default ClinicalIntakeModal;
+

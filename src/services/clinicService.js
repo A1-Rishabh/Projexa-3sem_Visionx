@@ -169,3 +169,4 @@ export const cancelAppointment = async (aptId, reason = '') => {
   updateMockAppointmentStatus(aptId, 'cancelled', { cancelReason: reason });
   return { success: true };
 };
+

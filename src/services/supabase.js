@@ -127,3 +127,4 @@ export const updateProfile = async (userId, updates) => {
   if (error) throw error;
   return data;
 };
+

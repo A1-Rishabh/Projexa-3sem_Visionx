@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Building2, 
-  Smartphone, 
-  QrCode, 
-  CreditCard, 
-  Clock, 
-  AlertCircle, 
-  CheckCircle2, 
+import {
+  Building2,
+  Smartphone,
+  QrCode,
+  CreditCard,
+  Clock,
+  AlertCircle,
+  CheckCircle2,
   XCircle,
   ExternalLink,
   ShieldCheck,
@@ -39,7 +39,7 @@ export const PaymentOptions = ({
   // Build the live or demo UPI link
   const activeUpiId = isUpiConfigured ? clinic.upiId : 'jivakaclinic@icici';
   const activePayee = !isPlaceholder(clinic.payeeName) ? clinic.payeeName : clinic.name;
-  
+
   const upiDeepLink = `upi://pay?pa=${encodeURIComponent(activeUpiId)}&pn=${encodeURIComponent(activePayee)}&am=${amount}&cu=INR&tn=${encodeURIComponent(`Consultation - ${doctorName}`)}`;
 
   // 10-minute hold timer effect while awaiting payment
@@ -133,28 +133,28 @@ export const PaymentOptions = ({
   // RENDER AWAITING / PROCESSING MODAL STATE
   if (paymentStatus === 'awaiting') {
     return (
-      <div 
-        style={{ 
-          backgroundColor: '#ffffff', 
-          borderRadius: '16px', 
-          border: '1.5px solid var(--primary-teal)', 
-          padding: '24px', 
+      <div
+        style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          border: '1.5px solid var(--primary-teal)',
+          padding: '24px',
           textAlign: 'center',
           boxShadow: 'var(--shadow-md)',
           animation: 'fadeUp 0.2s ease-out'
         }}
       >
         {/* Slot Hold Timer Banner */}
-        <div 
-          style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            gap: '8px', 
-            padding: '6px 14px', 
-            borderRadius: '9999px', 
-            backgroundColor: '#FEF3C7', 
-            color: '#92400E', 
-            fontSize: '0.8rem', 
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px 14px',
+            borderRadius: '9999px',
+            backgroundColor: '#FEF3C7',
+            color: '#92400E',
+            fontSize: '0.8rem',
             fontWeight: '700',
             marginBottom: '16px'
           }}
@@ -215,12 +215,12 @@ export const PaymentOptions = ({
   // RENDER FAILED STATE
   if (paymentStatus === 'failed') {
     return (
-      <div 
-        style={{ 
-          backgroundColor: '#ffffff', 
-          borderRadius: '16px', 
-          border: '1.5px solid #EF4444', 
-          padding: '24px', 
+      <div
+        style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          border: '1.5px solid #EF4444',
+          padding: '24px',
           textAlign: 'center',
           boxShadow: 'var(--shadow-sm)'
         }}
@@ -263,7 +263,7 @@ export const PaymentOptions = ({
 
       {/* 4 SELECTABLE OPTION CARDS */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        
+
         {/* OPTION 1: PAY AT CLINIC (DEFAULT) */}
         <div
           onClick={() => onChangeMethod('clinic', 'idle')}
@@ -343,12 +343,12 @@ export const PaymentOptions = ({
 
         {/* Expanded QR preview if QR option is active */}
         {selectedMethod === 'qr' && (
-          <div 
-            style={{ 
-              padding: '16px', 
-              backgroundColor: 'var(--warm-cream)', 
-              borderRadius: '12px', 
-              border: '1px solid var(--border-color)', 
+          <div
+            style={{
+              padding: '16px',
+              backgroundColor: 'var(--warm-cream)',
+              borderRadius: '12px',
+              border: '1px solid var(--border-color)',
               textAlign: 'center',
               animation: 'fadeUp 0.15s ease-out'
             }}
@@ -411,11 +411,11 @@ export const PaymentOptions = ({
 
         {/* Expanded UPI ID Input if active */}
         {selectedMethod === 'upi' && (
-          <div 
-            style={{ 
-              padding: '14px', 
-              backgroundColor: 'var(--warm-cream)', 
-              borderRadius: '12px', 
+          <div
+            style={{
+              padding: '14px',
+              backgroundColor: 'var(--warm-cream)',
+              borderRadius: '12px',
               border: '1px solid var(--border-color)',
               display: 'flex',
               flexDirection: 'column',
@@ -499,11 +499,11 @@ export const PaymentOptions = ({
 
         {/* Expanded Cards Action if active */}
         {selectedMethod === 'card' && (
-          <div 
-            style={{ 
-              padding: '14px', 
-              backgroundColor: 'var(--warm-cream)', 
-              borderRadius: '12px', 
+          <div
+            style={{
+              padding: '14px',
+              backgroundColor: 'var(--warm-cream)',
+              borderRadius: '12px',
               border: '1px solid var(--border-color)',
               display: 'flex',
               flexDirection: 'column',
