@@ -539,3 +539,25 @@ button:focus-visible, a:focus-visible {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Portal Mobile & Responsive Navigation */
+.mobile-bottom-tab-bar {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-tab-bar {
+    display: flex !important;
+  }
+  .portal-desktop-nav {
+    display: none !important;
+  }
+  .portal-header-content {
+    padding: 0 16px !important;
+    height: 64px !important;
+  }
+  .portal-main-container {
+    padding: 16px 12px 84px 12px !important;
+  }
+}
+

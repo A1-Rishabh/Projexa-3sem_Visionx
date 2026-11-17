@@ -1,6 +1,6 @@
 # Jivaka Clinic: Progress Log
-Last updated: 2026-11-17 14:03 IST
-Current task: Phase 1 Complete (Waiting for user "continue" command)
+Last updated: 2026-11-17 14:12 IST
+Current task: 2.2 Home dashboard
 Status key: TODO | IN PROGRESS | DONE | BLOCKED
 
 ## How to resume
@@ -49,7 +49,7 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - 1.8 Phase 1 report (see report contents below) ................. DONE
 
 ### Phase 2: Patient portal
-- 2.1 Portal navbar, profile dropdown, mobile tab bar ........... TODO
+- 2.1 Portal navbar, profile dropdown, mobile tab bar ........... DONE
 - 2.2 Home dashboard ............................................ TODO
 - 2.3 Find a Doctor ............................................. TODO
 - 2.4 Booking modal: stepper, slots, past-slot bug fix .......... TODO
@@ -182,6 +182,15 @@ Read /PROMPT.md and /PROGRESS.md. Follow Step 0, report where you are resuming f
 - Verified by: Ran `npm run build` which completed with 0 errors in 5.40s.
 - Notes: Work paused after Task 1.8 as instructed. Awaiting user "continue" command to begin Phase 2.
 
+### Task 2.1: Portal navbar, profile dropdown, mobile tab bar
+- Status: DONE
+- Completed: 2026-11-17 14:12 IST
+- Files changed or added: src/components/patient/PatientPortal.jsx, src/components/common/BottomTabBar.jsx, src/index.css
+- Summary: Reduced desktop navbar to 4 items (Home, Find a Doctor, Appointments, Records). Moved Profile Settings, Emergency Card shortcut, Family dependents switcher, and neutral "Log out" button (not red) into a profile dropdown under the patient chip with initials avatar. Integrated mobile bottom tab bar (`BottomTabBar.jsx`) with 44px minimum tap targets.
+- Bugs fixed: Removed red aggressive styling from logout and cleaned up mobile viewport spacing.
+- Verified by: Ran `npm run build` which succeeded with 0 errors in 5.42s; verified dropdown toggling, click-outside handling, and responsive CSS breakpoints.
+- Notes: Layout padding tightened (24px 20px) to prevent excess whitespace gaps as requested.
+
 ---
 
 ### PHASE 1 COMPREHENSIVE REPORT
@@ -294,6 +303,15 @@ All pre-existing features remain 100% operational:
   - `branches[0].email`: Replace `[Email]`.
   - `branches[0].emergency`: Replace `[Emergency number]`.
   - `branches[0].mapQuery`: Replace `[Address or clinic name for Google Maps]`.
+
+### Task 2.1: Portal navbar, profile dropdown, mobile tab bar
+- Status: DONE
+- Completed: 2026-11-17 14:12 IST
+- Files changed or added: src/components/patient/PatientPortal.jsx, src/components/common/BottomTabBar.jsx, src/index.css
+- Summary: Reduced desktop navbar to 4 items (Home, Find a Doctor, Appointments, Records). Moved Profile Settings, Emergency Card shortcut, Family dependents switcher, and neutral "Log out" button (not red) into a profile dropdown under the patient chip with initials avatar. Integrated mobile bottom tab bar (`BottomTabBar.jsx`) with 44px minimum tap targets.
+- Bugs fixed: Removed red aggressive styling from logout and cleaned up mobile viewport spacing.
+- Verified by: Ran `npm run build` which succeeded with 0 errors in 5.42s; verified dropdown toggling, click-outside handling, and responsive CSS breakpoints.
+- Notes: Layout padding tightened (24px 20px) to prevent excess whitespace gaps as requested.
 
 ---
 
