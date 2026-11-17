@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Star, MapPin, Clock, ArrowRight, ShieldCheck, CheckCircle2, GraduationCap } from 'lucide-react';
 import { getDoctors } from '../../services/mockDataStore';
-import { formatINR } from '../../config/clinic';
 
 export const LandingDoctors = ({ onBookDoctor }) => {
   const [doctors] = useState(() => getDoctors());
@@ -26,7 +25,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
     <section
       id="doctors"
       style={{
-        padding: '80px 24px',
+        padding: '88px 24px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
@@ -37,12 +36,12 @@ export const LandingDoctors = ({ onBookDoctor }) => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'flex-end',
-          marginBottom: '40px',
+          marginBottom: '44px',
           flexWrap: 'wrap',
           gap: '20px'
         }}
       >
-        <div style={{ maxWidth: '600px' }}>
+        <div style={{ maxWidth: '640px' }}>
           <div
             style={{
               fontSize: '0.85rem',
@@ -53,27 +52,40 @@ export const LandingDoctors = ({ onBookDoctor }) => {
               marginBottom: '8px'
             }}
           >
-            Medical Faculty
+            Senior Medical Faculty
           </div>
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 3.5vw, 2.6rem)',
-              lineHeight: 1.25,
+              fontSize: 'clamp(2.1rem, 3.6vw, 2.7rem)',
+              lineHeight: 1.22,
               color: 'var(--deep-teal)',
-              marginBottom: '10px'
+              marginBottom: '12px'
             }}
           >
             Meet our board-certified clinical specialists.
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            Each physician brings extensive tertiary hospital experience, evidence-based practices, and compassionate bedside care.
+          <p style={{ fontSize: '1.02rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+            Each physician brings extensive tertiary hospital experience, evidence-based practices, and an unhurried, attentive approach to outpatient consultations.
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-teal)', fontWeight: '700', fontSize: '0.9rem' }}>
-          <ShieldCheck size={18} />
-          <span>All physicians actively practicing on-site</span>
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: 'var(--mint)',
+            color: 'var(--deep-teal)',
+            padding: '8px 16px',
+            borderRadius: '9999px',
+            fontWeight: '700',
+            fontSize: '0.86rem',
+            border: '1px solid rgba(15, 107, 99, 0.18)'
+          }}
+        >
+          <ShieldCheck size={18} color="var(--primary-teal)" />
+          <span>Active Senior Physicians On-Site</span>
         </div>
       </div>
 
@@ -96,12 +108,13 @@ export const LandingDoctors = ({ onBookDoctor }) => {
               className="card-interactive doctor-card-snap"
               style={{
                 backgroundColor: '#ffffff',
-                borderRadius: '18px',
-                padding: '24px',
+                borderRadius: '20px',
+                padding: '26px',
                 border: '1px solid var(--border-color)',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                boxShadow: '0 4px 16px rgba(15, 79, 74, 0.05)'
               }}
             >
               <div>
@@ -109,8 +122,8 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
                   <div
                     style={{
-                      width: '68px',
-                      height: '68px',
+                      width: '70px',
+                      height: '70px',
                       borderRadius: '16px',
                       overflow: 'hidden',
                       backgroundColor: 'var(--mint)',
@@ -118,7 +131,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0,
-                      boxShadow: '0 2px 8px rgba(15, 79, 74, 0.1)'
+                      boxShadow: '0 2px 10px rgba(15, 79, 74, 0.12)'
                     }}
                   >
                     {!isBroken && doc.avatar ? (
@@ -126,15 +139,15 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                         src={doc.avatar}
                         alt={`Portrait of ${doc.name}`}
                         loading="lazy"
-                        width="68"
-                        height="68"
+                        width="70"
+                        height="70"
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         onError={() => handleImageError(doc.id)}
                       />
                     ) : (
                       <div
                         style={{
-                          fontSize: '1.25rem',
+                          fontSize: '1.30rem',
                           fontWeight: '800',
                           fontFamily: 'var(--font-heading)',
                           color: 'var(--primary-teal)'
@@ -151,7 +164,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px',
-                        padding: '2px 8px',
+                        padding: '3px 9px',
                         borderRadius: '9999px',
                         backgroundColor: '#dcfce7',
                         color: 'var(--primary-teal)',
@@ -167,26 +180,31 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                     <h3
                       style={{
                         fontFamily: 'var(--font-heading)',
-                        fontSize: '1.18rem',
+                        fontSize: '1.20rem',
                         fontWeight: '700',
                         color: 'var(--text-main)',
                         margin: 0,
-                        lineHeight: 1.3
+                        lineHeight: 1.25
                       }}
                     >
                       {doc.name}
                     </h3>
 
-                    <div style={{ fontSize: '0.82rem', fontWeight: '600', color: 'var(--primary-teal)' }}>
+                    <div style={{ fontSize: '0.84rem', fontWeight: '700', color: 'var(--primary-teal)' }}>
                       {doc.specialization}
                     </div>
                   </div>
                 </div>
 
                 {/* QUALIFICATIONS & EXPERIENCE */}
-                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '12px', lineHeight: 1.4 }}>
-                  <div>{doc.title}</div>
-                  <div style={{ color: 'var(--text-muted)' }}>{doc.experience} Clinical Experience</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '14px', lineHeight: 1.45 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontWeight: '600', color: 'var(--deep-teal)' }}>
+                    <GraduationCap size={15} color="var(--primary-teal)" />
+                    <span>{doc.title}</span>
+                  </div>
+                  <div style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
+                    {doc.experience} of Tertiary Clinical Experience
+                  </div>
                 </div>
 
                 {/* ROOM & RATING */}
@@ -203,22 +221,22 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                     marginBottom: '16px'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '600' }}>
                     <MapPin size={13} color="var(--primary-teal)" />
                     <span>{doc.room}</span>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', fontWeight: '700' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '700' }}>
                     <Star size={13} fill="#E8A25C" color="#E8A25C" />
                     <span>{doc.rating}</span>
-                    <span style={{ color: 'var(--text-muted)', fontWeight: '400' }}>({doc.reviewsCount})</span>
+                    <span style={{ color: 'var(--text-muted)', fontWeight: '400' }}>({doc.reviewsCount} reviews)</span>
                   </div>
                 </div>
 
-                {/* BIO CLAMPED TO 2 LINES */}
+                {/* BIO */}
                 <p
                   style={{
-                    fontSize: '0.85rem',
+                    fontSize: '0.86rem',
                     color: 'var(--text-secondary)',
                     lineHeight: 1.5,
                     marginBottom: '18px',
@@ -232,13 +250,13 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                 </p>
               </div>
 
-              {/* FOOTER: CLINICAL OPD & BOOK BUTTON */}
+              {/* FOOTER: CLINICAL OPD & BOOK BUTTON (NO FEES DISPLAYED) */}
               <div
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  paddingTop: '14px',
+                  paddingTop: '16px',
                   borderTop: '1px solid var(--border-color)',
                   gap: '8px'
                 }}
@@ -256,7 +274,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                   type="button"
                   onClick={() => onBookDoctor(doc)}
                   className="btn btn-primary btn-sm"
-                  style={{ borderRadius: '9999px', padding: '8px 18px', fontWeight: '700' }}
+                  style={{ borderRadius: '9999px', padding: '8px 20px', fontWeight: '700', fontSize: '0.84rem' }}
                 >
                   <span>Book visit</span>
                   <ArrowRight size={14} />

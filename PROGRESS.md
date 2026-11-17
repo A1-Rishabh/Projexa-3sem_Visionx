@@ -672,6 +672,15 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - Verified by: `npm run build` succeeded in 6.24s with 0 errors.
 - Notes: Git commit made for version continuity.
 
+### Task 2.15: Public landing page institutional modernization
+- Status: DONE
+- Completed: 2026-11-17 22:42 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/components/public/LandingHero.jsx, src/components/public/LandingAbout.jsx, src/components/public/LandingDepartments.jsx, src/components/public/LandingDoctors.jsx, src/components/public/LandingWhyChooseUs.jsx, src/components/public/LandingLocations.jsx, src/components/public/LandingCtaBand.jsx, src/index.css
+- Summary: Modernized the entire public landing page to premier institutional hospital standard (Mayo Clinic / Apollo Hospitals caliber). Added institutional utility top bar with 24/7 Emergency Triage line, OPD consultation hours, NABH accreditation badge, and direct patient desk. Upgraded hero section with authoritative medical typography, AIIMS/PGIMER faculty pedigree, 4 clinical guarantee chips (Confirmed In-Clinic Slots, 25+ Min Dedicated Doctor Time, AIIMS Pedigree, Instant Digital Reports), right-side clinical showcase with live on-site doctor presence indicator, and eliminated fee snippets from mobile sticky bar. Upgraded About section with clinical heritage story and 4 clinical pillars. Elevated Departments into Centers of Excellence with supervising consultant leads and interactive Clinical Scope modals. Polished Doctor cards with Indian institute credentials and zero fees. Enriched Locations with patient amenities badges (Valet Parking, Stretcher Lift, 24/7 Pharmacy) and direct Google Maps navigation. Refined CTA band with warm accent glow and universal "Sign In" button.
+- Bugs fixed: Removed residual consultation fee mention from mobile sticky bar; modernized prototype-style elements into distinguished hospital-grade presentation; fixed section anchor link targeting for smooth scroll navigation.
+- Verified by: `npm run build` succeeded in 7.00s with 0 errors (1559 modules transformed).
+- Notes: Git commit made for version continuity.
+
 ## Decisions
 - 2026-11-17: Initialized git repository locally in Prototype2 directory with standard .gitignore.
 - 2026-11-17: All existing features documented in PROGRESS.md under "Original features".

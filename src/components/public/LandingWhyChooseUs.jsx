@@ -1,34 +1,39 @@
 import React from 'react';
-import { Clock, ShieldCheck, FileCheck, HeartHandshake } from 'lucide-react';
+import { Clock, ShieldCheck, FileCheck, HeartHandshake, CheckCircle2 } from 'lucide-react';
 
 export const LandingWhyChooseUs = () => {
   const trustPoints = [
     {
       icon: Clock,
-      title: 'Dedicated Consultation Time',
-      description: 'We strictly cap daily patient appointments so physicians have ample time to listen, perform thorough examinations, and explain treatment plans clearly.'
+      title: 'Dedicated 25+ Minute Doctor Time',
+      badge: 'No Rushed Visits',
+      description: 'We strictly cap daily appointments per physician so doctors have ample time to listen, perform careful physical examinations, and clearly discuss your care plan.'
     },
     {
       icon: ShieldCheck,
-      title: 'Accredited Safety & Standards',
-      description: 'Our in-clinic pharmacy, consultation chambers, and pathology diagnostics follow stringent clinical protocols and hospital-grade sterilization.'
+      title: 'NABH Hospital-Grade Sterilization',
+      badge: 'Sterile Clinical Suites',
+      description: 'Our in-clinic consultation chambers, procedure rooms, and diagnostic collection desks adhere to strict laminar air quality and autoclaved instrument protocols.'
     },
     {
       icon: FileCheck,
-      title: 'Encrypted Digital Records',
-      description: 'Instant, secure access to your clinical notes, diagnostic lab PDFs, and verified prescription slips from any device through the Patient Portal.'
+      title: 'Encrypted Digital Health Locker',
+      badge: 'ABDM & ABHA Aligned',
+      description: 'Instant, lifetime access to your clinical notes, diagnostic lab PDFs, and verified prescription slips from any phone or computer through the secure portal.'
     },
     {
       icon: HeartHandshake,
       title: 'Compassionate Care Partnership',
-      description: 'From routine health screenings to ongoing chronic disease stabilization, our doctors work with you collaboratively to build sustainable wellness.'
+      badge: 'Family-Centered',
+      description: 'From routine health screenings to ongoing chronic disease stabilization, our doctors work with you collaboratively to build sustainable lifelong wellness.'
     }
   ];
 
   return (
     <section
+      id="why-us"
       style={{
-        padding: '80px 24px',
+        padding: '88px 24px',
         backgroundColor: 'var(--warm-cream)',
         borderTop: '1px solid var(--border-color)'
       }}
@@ -36,7 +41,7 @@ export const LandingWhyChooseUs = () => {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* HEADER */}
-        <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 56px' }}>
+        <div style={{ textAlign: 'center', maxWidth: '680px', margin: '0 auto 56px' }}>
           <div
             style={{
               fontSize: '0.85rem',
@@ -47,21 +52,21 @@ export const LandingWhyChooseUs = () => {
               marginBottom: '8px'
             }}
           >
-            Why Choose Us
+            Clinical Standards
           </div>
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 3.5vw, 2.6rem)',
-              lineHeight: 1.25,
+              fontSize: 'clamp(2.1rem, 3.6vw, 2.7rem)',
+              lineHeight: 1.22,
               color: 'var(--deep-teal)',
-              marginBottom: '12px'
+              marginBottom: '14px'
             }}
           >
-            Clinical standards designed around the patient experience.
+            Why Patients & Families Trust Jivaka Clinic.
           </h2>
-          <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            Every touchpoint at Jivaka Clinic is engineered to minimize stress, eliminate guesswork, and prioritize medical diligence.
+          <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
+            Every clinical protocol and workflow is designed to eliminate uncertainty, ensure diagnostic precision, and treat patients with the dignity they deserve.
           </p>
         </div>
 
@@ -69,7 +74,7 @@ export const LandingWhyChooseUs = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '24px'
           }}
         >
@@ -81,24 +86,40 @@ export const LandingWhyChooseUs = () => {
                 className="card-interactive"
                 style={{
                   backgroundColor: '#ffffff',
-                  padding: '32px 24px',
-                  borderRadius: '18px',
+                  padding: '34px 26px',
+                  borderRadius: '20px',
                   border: '1px solid var(--border-color)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '16px'
+                  gap: '16px',
+                  boxShadow: '0 4px 16px rgba(15, 79, 74, 0.05)'
                 }}
               >
-                <div className="mint-icon-box" style={{ width: '48px', height: '48px' }}>
-                  <Icon size={22} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div className="mint-icon-box" style={{ width: '48px', height: '48px', borderRadius: '14px' }}>
+                    <Icon size={22} />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: '0.74rem',
+                      fontWeight: '700',
+                      color: 'var(--primary-teal)',
+                      backgroundColor: 'var(--mint-light)',
+                      padding: '4px 10px',
+                      borderRadius: '9999px',
+                      border: '1px solid rgba(15, 107, 99, 0.15)'
+                    }}
+                  >
+                    {point.badge}
+                  </span>
                 </div>
 
                 <h3
                   style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '1.25rem',
+                    fontSize: '1.24rem',
                     fontWeight: '700',
-                    color: 'var(--text-main)',
+                    color: 'var(--deep-teal)',
                     margin: 0
                   }}
                 >
