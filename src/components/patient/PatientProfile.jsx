@@ -915,7 +915,7 @@ export const PatientProfile = ({
                 <div>
                   <div style={{ fontSize: '0.84rem', fontWeight: '700', color: 'var(--text-main)' }}>Google OAuth Verification</div>
                   <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                    Linked: {email || 'patient@jivakaclinic.in'}
+                    Linked: {email || 'patient@jeevakclinic.in'}
                   </div>
                 </div>
                 <span style={{ fontSize: '0.72rem', fontWeight: '700', color: '#16A34A', backgroundColor: '#DCFCE7', padding: '2px 8px', borderRadius: '4px' }}>
@@ -1216,7 +1216,7 @@ export const PatientProfile = ({
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1.5px solid rgba(255, 255, 255, 0.2)', paddingBottom: '12px' }}>
               <div>
                 <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', fontFamily: 'Fraunces, serif', margin: '0 0 2px 0' }}>
-                  JIVAKA CLINIC
+                  JEEVAK CLINIC
                 </h3>
                 <div style={{ fontSize: '0.72rem', color: 'var(--mint)' }}>
                   EMERGENCY MEDICAL IDENTIFICATION CARD

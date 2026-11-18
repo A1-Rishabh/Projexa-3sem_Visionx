@@ -62,8 +62,8 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
     {
       id: 'notif-2',
       category: 'Upcoming Visit',
-      title: 'Cardiology Consultation Tomorrow',
-      description: 'Confirmed visit with Dr. Ananya Sharma tomorrow at 10:00 AM (Room 204B). Please arrive 10 minutes prior.',
+      title: 'OPD Consultation Tomorrow',
+      description: 'Confirmed visit with Dr. Shuchi Shivangi tomorrow at 11:30 AM (Suite 1). Please arrive 10 minutes prior.',
       time: '2h ago',
       unread: true,
       actionTab: 'appointments',
@@ -124,6 +124,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return typeof document !== 'undefined' && (
       document.documentElement.getAttribute('data-theme') === 'dark' ||
+      localStorage.getItem('jeevak_theme') === 'dark' ||
       localStorage.getItem('jivaka_theme') === 'dark'
     );
   });
@@ -131,6 +132,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   const [isLargeText, setIsLargeText] = useState(() => {
     return typeof document !== 'undefined' && (
       document.documentElement.getAttribute('data-text-size') === 'large' ||
+      localStorage.getItem('jeevak_text_size') === 'large' ||
       localStorage.getItem('jivaka_text_size') === 'large'
     );
   });
@@ -154,14 +156,14 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   const toggleDarkMode = () => {
     const next = !isDarkMode;
     setIsDarkMode(next);
-    localStorage.setItem('jivaka_theme', next ? 'dark' : 'light');
+    localStorage.setItem('jeevak_theme', next ? 'dark' : 'light');
     if (showToast) showToast(next ? 'Dark mode enabled' : 'Light mode restored', 'info');
   };
 
   const toggleLargeText = () => {
     const next = !isLargeText;
     setIsLargeText(next);
-    localStorage.setItem('jivaka_text_size', next ? 'large' : 'default');
+    localStorage.setItem('jeevak_text_size', next ? 'large' : 'default');
     if (showToast) showToast(next ? 'Large text enabled' : 'Standard text size restored', 'info');
   };
 
@@ -194,7 +196,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
         ...primaryProfile,
         ...member,
         isDependent: true,
-        email: session?.user?.email || 'patient@jivakaclinic.in'
+        email: session?.user?.email || 'patient@jeevakclinic.in'
       });
       setIsProfileDropdownOpen(false);
       if (showToast) {
@@ -290,7 +292,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
           role="button"
           tabIndex={0}
-          aria-label="Jivaka Clinic Dashboard Home"
+          aria-label="Jeevak Clinic Dashboard Home"
           onKeyDown={(e) => { if (e.key === 'Enter') setActiveTab('home'); }}
         >
           <Logo size="medium" theme="light" />

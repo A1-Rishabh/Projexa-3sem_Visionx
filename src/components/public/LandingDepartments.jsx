@@ -8,58 +8,58 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
   const departments = [
     {
       id: 'gen-med',
-      name: 'General Medicine',
+      name: 'General Medicine & Family Practice',
       badge: 'Primary Care',
       icon: Activity,
-      description: 'Adult health assessments, acute illness treatment, and management of chronic conditions.',
+      description: 'Adult health assessments, fever management, diabetes, blood pressure stabilization, and acute illness treatment.',
       services: ['Routine health checkups', 'Diabetes & blood pressure care', 'Fever & infection care', 'Preventive health advice'],
       details: [
-        'Routine adult checkups and preventative health reviews',
-        'Ongoing care for high blood pressure and diabetes',
-        'Treatment for acute viral, respiratory, and bacterial infections',
-        'Referral coordination when specialist care is needed'
+        'Comprehensive outpatient consultations led by Dr. Shuchi Shivangi (MBBS Hons, DMC Reg. 125003)',
+        'Ongoing clinical monitoring for high blood pressure, diabetes, and lifestyle conditions',
+        'Diagnosis and compassionate care for acute fevers, respiratory conditions, and infections',
+        'Long-term family medical guidance and wellness follow-ups'
       ]
     },
     {
-      id: 'cardiology',
-      name: 'Cardiology',
-      badge: 'Heart Health',
-      icon: HeartPulse,
-      description: 'Outpatient heart evaluations, digital 12-lead ECG monitoring, and cardiovascular risk assessments.',
-      services: ['Digital 12-lead ECG', 'Blood pressure monitoring', 'Cholesterol management', 'Heart health checkups'],
-      details: [
-        'Digital 12-lead electrocardiogram (ECG) on site',
-        'Blood pressure monitoring and stabilization',
-        'Cholesterol and lipid profile assessments',
-        'Dietary and lifestyle counseling for heart health'
-      ]
-    },
-    {
-      id: 'pediatrics',
-      name: 'Pediatrics',
-      badge: 'Child Care',
+      id: 'ob-gyn',
+      name: 'Obstetrics & Gynecology (स्त्री रोग)',
+      badge: "Women's Health",
       icon: Sparkles,
-      description: 'Gentle, friendly care for infants, children, and adolescents.',
-      services: ['Childhood wellness exams', 'Vaccination schedules', 'Cough & cold care', 'Growth & milestone tracking'],
+      description: 'Comprehensive women’s health, antenatal care, maternal wellness, and specialist gynecological consultations.',
+      services: ['Antenatal checkups', "Women's health screenings", 'Maternal wellness counseling', 'Gynecological care'],
       details: [
-        'Newborn checkups and routine childhood developmental assessments',
-        'National childhood immunization schedules',
-        'Treatment for childhood coughs, colds, and fevers',
-        'Pediatric nutritional guidance'
+        'Dedicated women’s health clinic led by Dr. (Mrs.) Indu Kumari (MBBS L.N.M.U, DAR)',
+        'Antenatal monitoring, prenatal guidance, and maternal health reviews',
+        'Evaluation and treatment of menstrual irregularities, pelvic health, and infections',
+        'Confidential, compassionate care in a supportive clinical environment'
+      ]
+    },
+    {
+      id: 'lap-surgery',
+      name: 'General & Laparoscopic Surgery (लेप्रोस्कोपिक सर्जन)',
+      badge: 'Surgical Consultations',
+      icon: HeartPulse,
+      description: 'Expert outpatient surgical evaluations, laparoscopic assessments, minor procedural care, and pre/post-operative reviews.',
+      services: ['Surgical OPD evaluations', 'Laparoscopic guidance', 'Pre/post-op counseling', 'Wound & healing checkups'],
+      details: [
+        'Expert consultations led by Dr. Surendra Kumar (MBBS Hons B.U., M.S. General Surgery Patna)',
+        'Comprehensive assessment for laparoscopic and general surgical indications',
+        'Pre-operative patient evaluation, diagnostic review, and clear procedural guidance',
+        'Post-operative follow-up, dressing reviews, and recovery monitoring'
       ]
     },
     {
       id: 'diagnostics',
-      name: 'Diagnostics & Lab',
+      name: 'Diagnostics & Health Sampling',
       badge: 'On-Site Testing',
       icon: Microscope,
-      description: 'Routine blood tests, diagnostic sampling, and secure digital lab reports.',
-      services: ['Blood cell counts (CBC)', 'Sugar & diabetes tests', 'Kidney & liver panels', 'Digital PDF reports'],
+      description: 'Routine clinical laboratory sampling, blood tests, urine analysis, and secure digital reports.',
+      services: ['Blood cell counts (CBC)', 'Blood glucose & HbA1c', 'Routine urine analysis', 'Digital reports'],
       details: [
-        'Complete blood counts and basic hematology',
-        'Fasting glucose and HbA1c tests',
-        'Liver and kidney function panels',
-        'Digital PDF reports sent directly to your patient portal'
+        'Routine laboratory sampling and rapid diagnostic tests on site',
+        'Blood glucose, hemogram, and lipid profile screening',
+        'Urine routine and microscopic examinations',
+        'Secure digital PDF test records directly accessible via the patient portal'
       ]
     }
   ];

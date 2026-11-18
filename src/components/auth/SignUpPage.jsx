@@ -165,7 +165,7 @@ export const SignUpPage = ({
 
       const session = { role: 'patient', user: newPatient, patientId: newPatient.id };
       saveSession(session);
-      showToast(`Welcome to Jivaka Clinic, ${newPatient.name}!`, 'success');
+      showToast(`Welcome to Jeevak Clinic, ${newPatient.name}!`, 'success');
       onLoginSuccess(session);
     }, 800);
   };

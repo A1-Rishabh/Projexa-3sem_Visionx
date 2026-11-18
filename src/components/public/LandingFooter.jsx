@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, AlertCircle, ArrowUp, Navigation } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ShieldCheck, ArrowUp, Navigation } from 'lucide-react';
 import { Logo } from '../common/Logo';
 import { clinic, isPlaceholder, getDirectionsUrl } from '../../config/clinic';
 
@@ -7,7 +7,7 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
   const branch = clinic.branches?.[0] || {};
   const isAddressPlaceholder = isPlaceholder(branch.address);
   const isPhonePlaceholder = isPlaceholder(branch.phone);
-  const isEmergencyPlaceholder = isPlaceholder(branch.emergency);
+  const isEmailPlaceholder = isPlaceholder(branch.email);
   const isQueryPlaceholder = isPlaceholder(branch.mapQuery);
 
   const scrollToTop = () => {
@@ -36,15 +36,15 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
           }}
           className="footer-grid-container"
         >
-          {/* COL 1: LOGO, TAGLINE, EMERGENCY */}
+          {/* COL 1: LOGO, TAGLINE, PANEL BADGE */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             <Logo size="medium" theme="light" variant="full" />
             
-            <p style={{ color: '#bcd0cb', fontSize: '0.92rem', lineHeight: 1.6, maxWidth: '340px' }}>
-              {clinic.tagline || 'Compassionate clinical consultations, verified specialists, and modern on-site diagnostics.'}
+            <p style={{ color: '#bcd0cb', fontSize: '0.92rem', lineHeight: 1.6, maxWidth: '340px', margin: 0 }}>
+              {clinic.tagline || 'Quality in-clinic healthcare and experienced specialists serving families since 2003.'}
             </p>
 
-            {/* EMERGENCY NUMBER CALLOUT */}
+            {/* OFFICIAL PANEL CALLOUT */}
             <div
               style={{
                 display: 'inline-flex',
@@ -52,23 +52,19 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
                 gap: '10px',
                 padding: '10px 16px',
                 borderRadius: '12px',
-                backgroundColor: 'rgba(239, 68, 68, 0.15)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                color: '#fca5a5',
+                backgroundColor: 'rgba(220, 239, 230, 0.12)',
+                border: '1px solid rgba(220, 239, 230, 0.25)',
+                color: 'var(--mint)',
                 width: 'fit-content'
               }}
             >
-              <AlertCircle size={18} color="#ef4444" />
+              <ShieldCheck size={18} color="var(--mint)" />
               <div>
-                <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', fontWeight: '700' }}>
-                  24/7 Emergency Triage
+                <div style={{ fontSize: '0.72rem', textTransform: 'uppercase', fontWeight: '700', letterSpacing: '0.05em' }}>
+                  Official Empanelment
                 </div>
-                <div style={{ fontSize: '0.92rem', fontWeight: '700', color: '#ffffff' }}>
-                  {isEmergencyPlaceholder ? branch.emergency : (
-                    <a href={`tel:${branch.emergency}`} style={{ color: '#ffffff', textDecoration: 'none' }}>
-                      {branch.emergency}
-                    </a>
-                  )}
+                <div style={{ fontSize: '0.88rem', fontWeight: '700', color: '#ffffff' }}>
+                  LIC & Cabinet Secretariat
                 </div>
               </div>
             </div>
@@ -124,7 +120,7 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem', color: '#bcd0cb' }}>
               {branch.hours?.map((h, i) => (
                 <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontWeight: '500', color: '#ffffff' }}>{h.days}</span>
+                  <span style={{ fontWeight: '600', color: '#ffffff' }}>{h.days}</span>
                   <span>{h.time}</span>
                 </div>
               ))}
@@ -144,23 +140,32 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
               Clinic Address
             </h4>
 
-            <div style={{ display: 'flex', gap: '10px', fontSize: '0.9rem', color: '#bcd0cb', lineHeight: 1.5 }}>
+            <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', color: '#bcd0cb', lineHeight: 1.5 }}>
               <MapPin size={18} color="var(--mint)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span>{branch.address}</span>
             </div>
 
-            <div style={{ display: 'flex', gap: '10px', fontSize: '0.9rem', color: '#bcd0cb' }}>
+            <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', color: '#bcd0cb' }}>
               <Phone size={18} color="var(--mint)" style={{ flexShrink: 0 }} />
-              {isPhonePlaceholder ? (
-                <span>{branch.phone}</span>
-              ) : (
-                <a href={`tel:${branch.phone}`} style={{ color: '#ffffff', textDecoration: 'none' }}>
+              {!isPhonePlaceholder ? (
+                <a href={`tel:${branch.phone}`} style={{ color: '#ffffff', textDecoration: 'none', fontWeight: '600' }}>
                   {branch.phone}
                 </a>
+              ) : (
+                <span>{branch.phone}</span>
               )}
             </div>
 
-            {/* GET DIRECTIONS LINK (ONLY ACTIVE WHEN NOT BRACKETED) */}
+            {branch.email && !isEmailPlaceholder && (
+              <div style={{ display: 'flex', gap: '10px', fontSize: '0.88rem', color: '#bcd0cb' }}>
+                <Mail size={18} color="var(--mint)" style={{ flexShrink: 0 }} />
+                <a href={`mailto:${branch.email}`} style={{ color: '#ffffff', textDecoration: 'none' }}>
+                  {branch.email}
+                </a>
+              </div>
+            )}
+
+            {/* GET DIRECTIONS LINK */}
             {!isQueryPlaceholder && (
               <a
                 href={getDirectionsUrl(branch.mapQuery)}
@@ -196,7 +201,7 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
           }}
         >
           <div>
-            © {new Date().getFullYear()} {clinic.name}. All rights reserved. Medical emergency services operate 24/7.
+            © {new Date().getFullYear()} {clinic.name} (जीवक क्लीनिक, Estd. 2003). On Panel: LIC & Cabinet Secretariat.
           </div>
 
           <button
@@ -209,7 +214,10 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
               gap: '6px',
               color: '#bcd0cb',
               fontSize: '0.82rem',
-              fontWeight: '600'
+              fontWeight: '600',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
             <span>Back to top</span>
@@ -223,4 +231,3 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
 };
 
 export default LandingFooter;
-

@@ -1,83 +1,89 @@
-// Jivaka Clinic Central Mock Data Store & Persistence Service
+// Jeevak Clinic (जीवक क्लीनिक, Estd. 2003) Central Data Store & Persistence Service
+
+const STORE_VERSION = 'jeevak_data_v2003';
+const STORE_VERSION_KEY = 'jeevak_store_version';
 
 const STORAGE_KEYS = {
-  DOCTORS: 'aegis_doctors',
-  PATIENTS: 'aegis_patients',
-  APPOINTMENTS: 'aegis_appointments',
-  MEDICAL_RECORDS: 'aegis_medical_records',
-  CLINIC_INFO: 'aegis_clinic_info',
-  AUDIT_LOGS: 'aegis_audit_logs',
-  SESSION: 'aegis_user_session',
-  LAST_ROLE: 'aegis_last_role_tab'
+  DOCTORS: 'jeevak_doctors',
+  PATIENTS: 'jeevak_patients',
+  APPOINTMENTS: 'jeevak_appointments',
+  MEDICAL_RECORDS: 'jeevak_medical_records',
+  CLINIC_INFO: 'jeevak_clinic_info',
+  AUDIT_LOGS: 'jeevak_audit_logs',
+  SESSION: 'jeevak_user_session',
+  LAST_ROLE: 'jeevak_last_role_tab'
 };
 
+// Today's Date formatted YYYY-MM-DD
+export const getTodayStr = (offsetDays = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  return d.toISOString().split('T')[0];
+};
+
+/**
+ * Authentic Doctor Roster extracted strictly from official Jeevak Clinic prescription pad & stamps:
+ * 1. Dr. Shuchi Shivangi - General Practitioner (DMC Reg. 125003)
+ * 2. Dr. (Mrs.) Indu Kumari - Consultant Gynecologist & Obstetrician
+ * 3. Dr. Surendra Kumar - Senior General & Laparoscopic Surgeon
+ * Consultation Fee: Uniform ₹500 across all 3 doctors.
+ */
 const INITIAL_DOCTORS = [
   {
     id: 'DOC-101',
-    name: 'Dr. Ananya Sharma',
-    title: 'MD, DM (Cardiology), FACC - Senior Consultant Cardiologist',
-    specialization: 'Cardiology',
-    qualifications: 'MD, DM (AIIMS New Delhi), Fellowship in Interventional Cardiology',
-    experience: '14 Years',
-    room: 'Room 204 (2nd Floor)',
-    fee: 1200,
+    name: 'Dr. Shuchi Shivangi',
+    hindiName: 'डॉ शुचि शिवांगी',
+    title: 'MBBS (Hons), S.I.U. (Pune) • DMC Reg. 125003',
+    specialization: 'General Medicine & Family Practice',
+    subSpecialty: 'General Practitioner (जनरल प्रैक्टिशनर)',
+    qualifications: 'MBBS (Hons), S.I.U. (Pune), DMC Reg. 125003',
+    experience: 'General Practitioner',
+    room: 'Suite 1 (Chamber 1)',
+    fee: 500,
     rating: 4.9,
-    reviewsCount: 128,
-    avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300',
-    bio: 'Specializing in preventive cardiology, echocardiography, and complex coronary artery management. Dedicated to patient-centric cardiovascular wellness.',
-    hours: 'Mon - Fri: 8:30 AM - 4:30 PM',
-    availableSlots: ['09:00 AM', '10:00 AM', '11:30 AM', '02:00 PM', '03:30 PM'],
+    reviewsCount: 48,
+    avatar: '',
+    bio: 'Consultant General Practitioner with dedicated clinical expertise in adult outpatient evaluations, fever management, diabetes, hypertension, and primary healthcare.',
+    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   },
   {
     id: 'DOC-102',
-    name: 'Dr. Rohan Mehta',
-    title: 'MD (Pediatrics), DCH, FAAP - Senior Pediatric Specialist',
-    specialization: 'Pediatrics',
-    qualifications: 'MD (PGIMER Chandigarh), Pediatric Medicine Board Certified',
-    experience: '9 Years',
-    room: 'Room 108 (1st Floor)',
-    fee: 800,
-    rating: 4.85,
-    reviewsCount: 94,
-    avatar: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300',
-    bio: 'Compassionate pediatric healthcare provider focusing on childhood development, immunization schedules, and acute adolescent care.',
-    hours: 'Mon - Sat: 9:00 AM - 3:00 PM',
-    availableSlots: ['09:30 AM', '11:00 AM', '01:30 PM', '02:30 PM'],
+    name: 'Dr. (Mrs.) Indu Kumari',
+    hindiName: 'डॉ (श्रीमती) इंदु कुमारी',
+    title: 'MBBS (L.N.M.U, DAR) • Consultant Gynecologist & Obstetrician',
+    specialization: 'Obstetrics & Gynecology',
+    subSpecialty: 'Consultant Gynecologist (स्त्री रोग विशेषज्ञ)',
+    qualifications: 'MBBS (L.N.M.U, DAR)',
+    experience: 'Senior Consultant',
+    room: 'Suite 2 (Chamber 2)',
+    fee: 500,
+    rating: 4.95,
+    reviewsCount: 64,
+    avatar: '',
+    bio: 'Senior Consultant Gynecologist & Obstetrician specializing in women’s reproductive health, antenatal care, maternal wellness, and comprehensive gynecological treatments.',
+    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   },
   {
     id: 'DOC-103',
-    name: 'Dr. Meera Krishnan',
-    title: 'MD, DM (Neurology) - Consultant Neurologist',
-    specialization: 'Neurology',
-    qualifications: 'MD, DM (NIMHANS Bengaluru), Neurovascular Specialist',
-    experience: '16 Years',
-    room: 'Room 312 (3rd Floor)',
-    fee: 1400,
-    rating: 4.96,
-    reviewsCount: 156,
-    avatar: 'https://images.unsplash.com/photo-1594824813566-78a99478f244?auto=format&fit=crop&q=80&w=300',
-    bio: 'Expert diagnosis and therapeutic management of headaches, neuropathy, spine disorders, and neurovascular conditions.',
-    hours: 'Tue - Fri: 10:00 AM - 5:00 PM',
-    availableSlots: ['10:00 AM', '11:30 AM', '02:30 PM', '04:00 PM'],
-    isHoliday: false
-  },
-  {
-    id: 'DOC-104',
-    name: 'Dr. Vikram Malhotra',
-    title: 'MS (Ortho), MCh - Senior Orthopedic Surgeon',
-    specialization: 'Orthopedics',
-    qualifications: 'MS (CMC Vellore), Sports Medicine & Joint Reconstruction Fellow',
-    experience: '11 Years',
-    room: 'Room 105 (1st Floor)',
-    fee: 950,
-    rating: 4.78,
-    reviewsCount: 82,
-    avatar: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=300',
-    bio: 'Focused on joint reconstruction, sports injury rehabilitation, and non-surgical pain management for active adults.',
-    hours: 'Mon - Thu: 8:00 AM - 3:30 PM',
-    availableSlots: ['08:30 AM', '10:00 AM', '01:00 PM', '02:30 PM'],
+    name: 'Dr. Surendra Kumar',
+    hindiName: 'डॉ सुरेंद्र कुमार',
+    title: 'MBBS (Hons.) B.U., M.S. (General Surgery) Patna • General & Laparoscopic Surgeon',
+    specialization: 'General & Laparoscopic Surgery',
+    subSpecialty: 'Senior Surgeon (जनरल व लेप्रोस्कोपिक सर्जन)',
+    qualifications: 'MBBS (Hons.) (B.U.), M.S. (General Surgery) Patna',
+    experience: 'Senior Consultant Surgeon',
+    room: 'Suite 3 (Chamber 3)',
+    fee: 500,
+    rating: 4.92,
+    reviewsCount: 52,
+    avatar: '',
+    bio: 'Senior Consultant General & Laparoscopic Surgeon offering expert outpatient evaluations, surgical consultations, pre/post-operative care, and laparoscopic guidance.',
+    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   }
 ];
@@ -132,82 +138,75 @@ const INITIAL_PATIENTS = [
     allergies: 'Sulfa Antibiotics',
     emergencyContact: 'Kavita Verma (+91 98765 22110)',
     vitals: {
-      bloodPressure: '135/88 mmHg',
-      heartRate: '78 bpm',
-      bmi: '27.2 (Overweight)',
-      spO2: '96%',
-      temperature: '98.8 °F',
-      weight: '86 kg'
+      bloodPressure: '130/84 mmHg',
+      heartRate: '74 bpm',
+      bmi: '26.4 (Overweight)',
+      spO2: '97%',
+      temperature: '98.6 °F',
+      weight: '82 kg'
     }
   }
 ];
-
-// Today's Date formatted YYYY-MM-DD
-export const getTodayStr = (offsetDays = 0) => {
-  const d = new Date();
-  d.setDate(d.getDate() + offsetDays);
-  return d.toISOString().split('T')[0];
-};
 
 const INITIAL_APPOINTMENTS = [
   {
     id: 'APT-801',
     doctorId: 'DOC-101',
-    doctorName: 'Dr. Ananya Sharma',
+    doctorName: 'Dr. Shuchi Shivangi',
     patientId: 'P-1001',
     patientName: 'Rahul Sharma',
     patientPhone: '+91 98765 12345',
     date: getTodayStr(0),
-    time: '09:00 AM',
-    room: 'Room 204 (2nd Floor)',
+    time: '11:30 AM',
+    room: 'Suite 1 (Chamber 1)',
     status: 'confirmed',
-    visitReason: 'Routine Cardiovascular Follow-up & ECG Check',
-    notes: 'Patient reported slight dizziness during heavy exertion. Needs BP review.',
+    visitReason: 'General Health OPD Consultation',
+    notes: 'Routine health assessment and vitals review.',
     checkedIn: false
   },
   {
     id: 'APT-802',
-    doctorId: 'DOC-101',
-    doctorName: 'Dr. Ananya Sharma',
+    doctorId: 'DOC-102',
+    doctorName: 'Dr. (Mrs.) Indu Kumari',
     patientId: 'P-1002',
     patientName: 'Ananya Iyer',
     patientPhone: '+91 98765 23456',
     date: getTodayStr(0),
-    time: '11:30 AM',
-    room: 'Room 204 (2nd Floor)',
+    time: '12:00 PM',
+    room: 'Suite 2 (Chamber 2)',
     status: 'pending',
-    visitReason: 'Chest Tightness Consultation',
-    notes: 'First time visit.',
+    visitReason: 'Antenatal Consultation & Wellness Review',
+    notes: 'First trimester follow-up check.',
     checkedIn: false
   },
   {
     id: 'APT-803',
-    doctorId: 'DOC-102',
-    doctorName: 'Dr. Rohan Mehta',
+    doctorId: 'DOC-103',
+    doctorName: 'Dr. Surendra Kumar',
     patientId: 'P-1003',
     patientName: 'Suresh Verma',
     patientPhone: '+91 98765 34567',
     date: getTodayStr(1),
-    time: '09:30 AM',
-    room: 'Room 108 (1st Floor)',
+    time: '06:30 PM',
+    room: 'Suite 3 (Chamber 3)',
     status: 'confirmed',
-    visitReason: 'Annual Pediatric & Family Wellness Check',
-    notes: 'Bring vaccination records.',
+    visitReason: 'Surgical OPD Evaluation',
+    notes: 'Abdominal pain evaluation.',
     checkedIn: false
   },
   {
     id: 'APT-799',
     doctorId: 'DOC-101',
-    doctorName: 'Dr. Ananya Sharma',
+    doctorName: 'Dr. Shuchi Shivangi',
     patientId: 'P-1001',
     patientName: 'Rahul Sharma',
     patientPhone: '+91 98765 12345',
     date: getTodayStr(-7),
-    time: '10:00 AM',
-    room: 'Room 204 (2nd Floor)',
+    time: '12:00 PM',
+    room: 'Suite 1 (Chamber 1)',
     status: 'completed',
-    visitReason: 'Hypertension Screening',
-    notes: 'Prescribed Lisinopril 10mg daily. Re-check in 1 week.',
+    visitReason: 'Blood Pressure Screening',
+    notes: 'Prescribed lifestyle adjustments and follow-up.',
     checkedIn: true
   }
 ];
@@ -215,79 +214,61 @@ const INITIAL_APPOINTMENTS = [
 const INITIAL_MEDICAL_RECORDS = {
   'P-1001': {
     patientId: 'P-1001',
-    lastViewedBy: 'Dr. Ananya Sharma (DOC-101)',
-    lastViewedTime: '2026-09-23 09:14 AM',
-    notesPublic: 'Patient is maintaining healthy low-sodium diet. Continue current medication regimen.',
-    notesPrivate: 'Patient inquired about strenuous athletic conditioning. Advised baseline stress test first.',
+    lastViewedBy: 'Dr. Shuchi Shivangi (DOC-101)',
+    lastViewedTime: 'Today, 11:30 AM',
+    notesPublic: 'Patient is maintaining a balanced low-sodium diet and daily exercise regimen.',
+    notesPrivate: 'Blood pressure stable. Continue routine monitoring.',
     visitTimeline: [
       {
         id: 'VT-101',
-        date: '2026-09-16',
-        doctorName: 'Dr. Ananya Sharma',
-        diagnosis: 'I10 - Essential Primary Hypertension',
-        summary: 'Elevated systolic blood pressure noted during routine check-up.',
+        date: getTodayStr(-7),
+        doctorName: 'Dr. Shuchi Shivangi',
+        diagnosis: 'Routine OPD Examination & Blood Pressure Check',
+        summary: 'Normal baseline checkup. Encouraged adequate hydration and sleep.',
         prescription: [
-          { medication: 'Lisinopril', dosage: '10mg', frequency: 'Once daily after breakfast', duration: '30 Days' },
-          { medication: 'Aspirin (Low Dose)', dosage: '81mg', frequency: 'Once daily with meal', duration: '30 Days' }
-        ]
-      },
-      {
-        id: 'VT-98',
-        date: '2026-05-10',
-        doctorName: 'Dr. Vikram Malhotra',
-        diagnosis: 'M25.561 - Pain in Right Knee',
-        summary: 'Mild patellar tendon strain post-marathon training.',
-        prescription: [
-          { medication: 'Ibuprofen', dosage: '400mg', frequency: 'As needed for joint pain (Max 3x/day)', duration: '10 Days' }
+          { medication: 'Paracetamol', dosage: '500mg', frequency: 'SOS (as needed for fever/headache)', duration: '5 Days' },
+          { medication: 'Multivitamin & Zinc', dosage: '1 Tab', frequency: 'Once daily after breakfast', duration: '30 Days' }
         ]
       }
     ],
     labReports: [
       {
         id: 'LAB-409',
-        title: 'Comprehensive Lipid Panel',
-        date: '2026-09-15',
-        issuedBy: 'Jivaka Central Diagnostic Pathology Lab',
-        summary: 'Total Cholesterol: 192 mg/dL, HDL: 54 mg/dL, LDL: 118 mg/dL, Triglycerides: 110 mg/dL.',
+        title: 'Routine Blood Panel & Hemogram',
+        date: getTodayStr(-10),
+        issuedBy: 'Jeevak Clinic Diagnostics',
+        summary: 'Hemoglobin: 14.2 g/dL, Total WBC: 7,400 /mcL, Platelets: 2.4 Lakh. Parameters within normal range.',
         fileType: 'PDF',
-        fileSize: '1.4 MB'
-      },
-      {
-        id: 'LAB-388',
-        title: '12-Lead Electrocardiogram (ECG)',
-        date: '2026-09-16',
-        issuedBy: 'Jivaka Diagnostic Unit',
-        summary: 'Normal sinus rhythm at 72 bpm. No ST-segment elevation or ischmic shifts.',
-        fileType: 'PDF',
-        fileSize: '2.8 MB'
+        fileSize: '1.2 MB'
       }
     ]
   },
   'P-1002': {
     patientId: 'P-1002',
-    lastViewedBy: 'Dr. Rohan Mehta (DOC-102)',
-    lastViewedTime: '2026-09-22 04:30 PM',
-    notesPublic: 'Routine baseline vitals documented. All systems normal.',
-    notesPrivate: 'Patient requested allergen screening for seasonal rhinitis.',
+    lastViewedBy: 'Dr. (Mrs.) Indu Kumari (DOC-102)',
+    lastViewedTime: 'Yesterday, 12:15 PM',
+    notesPublic: 'Routine prenatal screening and maternal vitals in healthy reference range.',
+    notesPrivate: 'Patient advised to continue iron and calcium supplementation.',
     visitTimeline: [
       {
         id: 'VT-88',
-        date: '2026-04-12',
-        doctorName: 'Dr. Rohan Mehta',
-        diagnosis: 'J30.1 - Allergic Rhinitis due to Pollen',
-        summary: 'Mild seasonal nasal congestion.',
+        date: getTodayStr(-14),
+        doctorName: 'Dr. (Mrs.) Indu Kumari',
+        diagnosis: 'Routine Antenatal Assessment',
+        summary: 'Fetal growth appropriate for gestational age. Maternal blood pressure normal.',
         prescription: [
-          { medication: 'Cetirizine (Zyrtec)', dosage: '10mg', frequency: 'Once daily at bedtime', duration: '14 Days' }
+          { medication: 'Ferrous Ascorbate + Folic Acid', dosage: '1 Tab', frequency: 'Once daily after meals', duration: '30 Days' },
+          { medication: 'Calcium Carbonate + Vit D3', dosage: '500mg', frequency: 'Once daily after dinner', duration: '30 Days' }
         ]
       }
     ],
     labReports: [
       {
         id: 'LAB-290',
-        title: 'Complete Blood Count (CBC) with Differential',
-        date: '2026-04-12',
-        issuedBy: 'Jivaka Diagnostic Unit',
-        summary: 'WBC, RBC, Hemoglobin and Platelets within standard reference parameters.',
+        title: 'Antenatal Screen & Routine Urine Exam',
+        date: getTodayStr(-14),
+        issuedBy: 'Jeevak Clinic Diagnostics',
+        summary: 'All parameters normal. Nil albumin, nil sugar.',
         fileType: 'PDF',
         fileSize: '950 KB'
       }
@@ -295,32 +276,53 @@ const INITIAL_MEDICAL_RECORDS = {
   },
   'P-1003': {
     patientId: 'P-1003',
-    lastViewedBy: 'Dr. Meera Krishnan (DOC-103)',
-    lastViewedTime: '2026-09-20 11:00 AM',
-    notesPublic: 'Blood glucose level check recommended before next quarterly review.',
-    notesPrivate: 'Patient displays mild lumbar spine stiffness.',
+    lastViewedBy: 'Dr. Surendra Kumar (DOC-103)',
+    lastViewedTime: '2 days ago',
+    notesPublic: 'Surgical recovery review satisfactory.',
+    notesPrivate: 'Patient advised to avoid lifting heavy weights for 2 weeks.',
     visitTimeline: [],
     labReports: []
   }
 };
 
 const INITIAL_CLINIC_INFO = {
-  name: 'Jivaka Clinic',
-  tagline: 'Connected Clinical Excellence, Trusted Specialists, Elevated Care',
-  phone: '[Phone number]',
-  email: 'care@jivakaclinic.org',
-  address: '450 Health Sciences Parkway, Suite 200, Metro Health District',
+  name: 'Jeevak Clinic',
+  hindiName: 'जीवक क्लीनिक',
+  tagline: 'Quality Healthcare & In-Clinic Specialists Since 2003',
+  phone: '011 45680306',
+  email: 'jeevak.clinic03@gmail.com',
+  address: 'C-04, Shakti Vihar, Gali No.-6, off School Road, Meethapur, Badarpur, New Delhi-110044',
   operatingHours: {
-    weekdays: '8:00 AM - 8:00 PM',
-    saturday: '9:00 AM - 4:00 PM',
-    sunday: 'Closed for Emergency Services Only'
+    morning: '11:30 AM - 2:00 PM',
+    evening: '6:30 PM - 8:30 PM (Friday Evening Closed)',
+    sunday: 'Closed'
   },
-  activeAnnouncement: '📢 Annual Flu & Booster Vaccination Drive open this Saturday! Walk-ins welcome for registered Jivaka Clinic patients.',
-  checkInNotice: '📌 Please present a valid photo ID at Room 101 reception counter 10 minutes prior to your appointment time.'
+  empanelment: 'On Panel: LIC & Cabinet Secretariat',
+  disclaimer: 'You are free to take second opinion. Not valid for Medicolegal Purpose.',
+  activeAnnouncement: '📢 Jeevak Clinic operates regular OPD: 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM (Mon-Sat). Friday evening OPD closed. Sundays closed.',
+  checkInNotice: '📌 In-clinic consultation: Please arrive 10 minutes prior to your slot time at C-04, Shakti Vihar, Meethapur.'
 };
 
-// Helper to initialize LocalStorage if empty
+// Helper to initialize LocalStorage with migration check
 export const initializeStore = () => {
+  if (typeof window === 'undefined') return;
+
+  const currentVersion = localStorage.getItem(STORE_VERSION_KEY);
+  if (currentVersion !== STORE_VERSION) {
+    // Reset/migrate store to authentic Jeevak Clinic data
+    localStorage.setItem(STORE_VERSION_KEY, STORE_VERSION);
+    localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(INITIAL_DOCTORS));
+    localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(INITIAL_PATIENTS));
+    localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(INITIAL_APPOINTMENTS));
+    localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(INITIAL_MEDICAL_RECORDS));
+    localStorage.setItem(STORAGE_KEYS.CLINIC_INFO, JSON.stringify(INITIAL_CLINIC_INFO));
+    localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify([
+      { id: 'LOG-1', timestamp: new Date().toLocaleDateString('en-GB'), doctorId: 'DOC-101', action: 'System initialized with authentic Jeevak Clinic roster' }
+    ]));
+    return;
+  }
+
+  // Graceful initialization if keys missing
   if (!localStorage.getItem(STORAGE_KEYS.DOCTORS)) {
     localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(INITIAL_DOCTORS));
   }
@@ -337,9 +339,7 @@ export const initializeStore = () => {
     localStorage.setItem(STORAGE_KEYS.CLINIC_INFO, JSON.stringify(INITIAL_CLINIC_INFO));
   }
   if (!localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS)) {
-    localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify([
-      { id: 'LOG-1', timestamp: '2026-09-23 09:14 AM', doctorId: 'DOC-101', action: 'Accessed Patient Record P-1001 (Aarav Sharma)' }
-    ]));
+    localStorage.setItem(STORAGE_KEYS.AUDIT_LOGS, JSON.stringify([]));
   }
 };
 
@@ -350,15 +350,10 @@ export const getDoctors = () => {
   if (!raw) return INITIAL_DOCTORS;
   try {
     const docs = JSON.parse(raw);
-    let changed = false;
-    docs.forEach(d => {
-      if (d.name === 'Dr. Sarah Jenkins') { d.name = 'Dr. Ananya Sharma'; d.title = 'MD, DM (Cardiology), FACC - Senior Consultant Cardiologist'; d.qualifications = 'MD, DM (AIIMS New Delhi)'; changed = true; }
-      if (d.name === 'Dr. Marcus Vance') { d.name = 'Dr. Rohan Mehta'; d.title = 'MD (Pediatrics), DCH, FAAP - Senior Pediatric Specialist'; d.qualifications = 'MD (PGIMER Chandigarh)'; changed = true; }
-      if (d.name === 'Dr. Elena Rostova') { d.name = 'Dr. Meera Krishnan'; d.title = 'MD, DM (Neurology) - Consultant Neurologist'; d.qualifications = 'MD, DM (NIMHANS Bengaluru)'; changed = true; }
-      if (d.name === 'Dr. Aris Thorne') { d.name = 'Dr. Vikram Malhotra'; d.title = 'MS (Ortho), MCh - Senior Orthopedic Surgeon'; d.qualifications = 'MS (CMC Vellore)'; changed = true; }
-    });
-    if (changed) {
-      localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(docs));
+    // Sanity check: Ensure authentic doctors are present
+    if (!Array.isArray(docs) || docs.length === 0 || !docs.some(d => d.name?.includes('Shuchi') || d.name?.includes('Surendra'))) {
+      localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(INITIAL_DOCTORS));
+      return INITIAL_DOCTORS;
     }
     return docs;
   } catch (e) {
@@ -379,7 +374,7 @@ export const updateDoctorProfile = (doctorId, updatedData) => {
 export const getPatients = () => {
   initializeStore();
   const raw = localStorage.getItem(STORAGE_KEYS.PATIENTS);
-  if (!raw) return [];
+  if (!raw) return INITIAL_PATIENTS;
   try {
     const patients = JSON.parse(raw);
     let changed = false;
@@ -388,27 +383,25 @@ export const getPatients = () => {
         p.name = 'Rahul Sharma';
         changed = true;
       }
-      if (p.id === 'P-1002' && p.name === 'Emma Watson') {
-        p.name = 'Ananya Iyer';
-        changed = true;
-      }
-      if (p.id === 'P-1003' && p.name === 'Robert Vance') {
-        p.name = 'Suresh Verma';
-        changed = true;
-      }
     });
     if (changed) {
       localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
     }
     return patients;
   } catch (e) {
-    return [];
+    return INITIAL_PATIENTS;
   }
 };
 
 export const getAppointments = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.APPOINTMENTS));
+  const raw = localStorage.getItem(STORAGE_KEYS.APPOINTMENTS);
+  if (!raw) return INITIAL_APPOINTMENTS;
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return INITIAL_APPOINTMENTS;
+  }
 };
 
 export const saveAppointment = (appointmentData) => {
@@ -440,7 +433,13 @@ export const checkInPatient = (aptId) => {
 
 export const getMedicalRecords = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.MEDICAL_RECORDS));
+  const raw = localStorage.getItem(STORAGE_KEYS.MEDICAL_RECORDS);
+  if (!raw) return INITIAL_MEDICAL_RECORDS;
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return INITIAL_MEDICAL_RECORDS;
+  }
 };
 
 export const updatePatientRecord = (patientId, recordData, doctorId, doctorName = 'Attending Doctor') => {
@@ -556,7 +555,7 @@ export const addPatientVisit = (patientId, visitData, doctorId, doctorName = 'Do
 };
 
 // Family / Dependents Storage Service (User-managed, zero hardcoded dependents)
-const getDependentsKey = (patientId) => `aegis_dependents_${patientId || 'default'}`;
+const getDependentsKey = (patientId) => `jeevak_dependents_${patientId || 'default'}`;
 
 export const getDependents = (patientId) => {
   if (!patientId) return [];
@@ -609,7 +608,8 @@ export const deleteDependent = (patientId, depId) => {
 
 export const logAuditEntry = (doctorId, action) => {
   initializeStore();
-  const logs = JSON.parse(localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS)) || [];
+  const raw = localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS);
+  const logs = raw ? JSON.parse(raw) : [];
   const newLog = {
     id: `LOG-${logs.length + 1}`,
     timestamp: new Date().toLocaleString(),
@@ -623,15 +623,18 @@ export const logAuditEntry = (doctorId, action) => {
 
 export const getAuditLogs = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS));
+  const raw = localStorage.getItem(STORAGE_KEYS.AUDIT_LOGS);
+  return raw ? JSON.parse(raw) : [];
 };
 
 export const getClinicInfo = () => {
   initializeStore();
-  return JSON.parse(localStorage.getItem(STORAGE_KEYS.CLINIC_INFO));
+  const raw = localStorage.getItem(STORAGE_KEYS.CLINIC_INFO);
+  return raw ? JSON.parse(raw) : INITIAL_CLINIC_INFO;
 };
 
 export const getSavedSession = () => {
+  if (typeof window === 'undefined') return null;
   const s = localStorage.getItem(STORAGE_KEYS.SESSION);
   if (!s) return null;
   try {
@@ -657,9 +660,11 @@ export const clearSession = () => {
 };
 
 export const getLastRoleTab = () => {
+  if (typeof window === 'undefined') return 'patient';
   return localStorage.getItem(STORAGE_KEYS.LAST_ROLE) || 'patient';
 };
 
 export const saveLastRoleTab = (role) => {
+  if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEYS.LAST_ROLE, role);
 };

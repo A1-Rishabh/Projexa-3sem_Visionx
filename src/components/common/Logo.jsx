@@ -17,10 +17,10 @@ export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', classN
       className={className}
       style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', userSelect: 'none' }}
     >
-      {/* JIVAKA CLINIC LOGO IMAGE */}
+      {/* JEEVAK CLINIC LOGO IMAGE */}
       <img
         src="/images/logo.jpg"
-        alt="Jivaka Clinic Logo"
+        alt="Jeevak Clinic Logo"
         width={s.w}
         height={s.h}
         style={{
@@ -45,7 +45,7 @@ export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', classN
             lineHeight: 1
           }}
         >
-          Jivaka <span style={{ color: accentColor }}>Clinic</span>
+          Jeevak <span style={{ color: accentColor }}>Clinic</span>
         </span>
       )}
     </div>

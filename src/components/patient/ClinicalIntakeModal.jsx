@@ -39,7 +39,7 @@ export const ClinicalIntakeModal = ({ isOpen, onClose, patient, onComplete, show
       }
 
       if (showToast) {
-        showToast('Clinical profile successfully registered! Welcome to Jivaka Clinic.', 'success');
+        showToast('Clinical profile successfully registered! Welcome to Jeevak Clinic.', 'success');
       }
 
       if (onComplete) {
@@ -74,7 +74,7 @@ export const ClinicalIntakeModal = ({ isOpen, onClose, patient, onComplete, show
         >
           <ShieldCheck size={28} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
           <div style={{ fontSize: '0.84rem', color: 'var(--deep-teal)', lineHeight: 1.45 }}>
-            Welcome to <strong>Jivaka Clinic</strong>! Please verify your basic clinical details below. 
+            Welcome to <strong>Jeevak Clinic</strong>! Please verify your basic clinical details below. 
             This information is encrypted under electronic medical confidentiality standards and shared only with your attending physicians.
           </div>
         </div>

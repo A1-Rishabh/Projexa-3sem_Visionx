@@ -242,7 +242,7 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
               RBAC Restricted Zone — Patient Clinical Files
             </h3>
             <p style={{ fontSize: '0.8rem', color: '#cbd5e1', margin: 0 }}>
-              Protected under Jivaka Clinic Data Privacy Policy • All record accesses are immutably logged
+              Protected under Jeevak Clinic Data Privacy Policy • All record accesses are immutably logged
             </p>
           </div>
         </div>
@@ -589,7 +589,7 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
         {previewPdf && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ backgroundColor: 'var(--deep-teal)', color: '#ffffff', padding: '16px', borderRadius: '10px' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--warm-accent)', fontWeight: '700' }}>JIVAKA CLINIC DIAGNOSTIC REPORT</div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--warm-accent)', fontWeight: '700' }}>JEEVAK CLINIC DIAGNOSTIC REPORT</div>
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', fontFamily: 'Fraunces, serif', marginTop: '4px' }}>{previewPdf.title}</h3>
               <div style={{ fontSize: '0.8rem', color: '#CBD5E1', marginTop: '4px' }}>
                 Document ID: {previewPdf.id} • Issued: {previewPdf.date} • Format: {previewPdf.fileType} ({previewPdf.fileSize})

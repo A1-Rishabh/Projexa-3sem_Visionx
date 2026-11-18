@@ -37,7 +37,7 @@ export const PaymentOptions = ({
   const isGatewayConfigured = Boolean(razorpayKey && !isPlaceholder(razorpayKey));
 
   // Build the live or demo UPI link
-  const activeUpiId = isUpiConfigured ? clinic.upiId : 'jivakaclinic@icici';
+  const activeUpiId = isUpiConfigured ? clinic.upiId : 'jeevak.clinic03@upi';
   const activePayee = !isPlaceholder(clinic.payeeName) ? clinic.payeeName : clinic.name;
 
   const upiDeepLink = `upi://pay?pa=${encodeURIComponent(activeUpiId)}&pn=${encodeURIComponent(activePayee)}&am=${amount}&cu=INR&tn=${encodeURIComponent(`Consultation - ${doctorName}`)}`;
@@ -479,7 +479,7 @@ export const PaymentOptions = ({
             }}
           >
             <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-              Secure 256-bit encrypted checkout. No card numbers are stored on Jivaka servers.
+              Secure 256-bit encrypted checkout. No card numbers are stored on Jeevak Clinic servers.
             </div>
             <button
               type="button"

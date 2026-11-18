@@ -63,7 +63,7 @@ export const LandingWhyChooseUs = () => {
               marginBottom: '14px'
             }}
           >
-            Why Patients & Families Trust Jivaka Clinic.
+            Why Patients & Families Trust Jeevak Clinic.
           </h2>
           <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
             Every clinical protocol and workflow is designed to eliminate uncertainty, ensure diagnostic precision, and treat patients with the dignity they deserve.

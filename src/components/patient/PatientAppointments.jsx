@@ -117,13 +117,13 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
       const icsContent = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Jivaka Clinic//Appointment Scheduler//EN',
+        'PRODID:-//Jeevak Clinic//Appointment Scheduler//EN',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         'BEGIN:VEVENT',
         `SUMMARY:Consultation with ${apt.doctorName}`,
-        `DESCRIPTION:In-clinic consultation at Jivaka Clinic. Assigned Chamber: ${apt.room}. Reason: ${apt.visitReason || 'Clinical consultation'}`,
-        `LOCATION:${mainBranch.address || 'Jivaka Clinic'}`,
+        `DESCRIPTION:In-clinic consultation at Jeevak Clinic. Assigned Chamber: ${apt.room}. Reason: ${apt.visitReason || 'Clinical consultation'}`,
+        `LOCATION:${mainBranch.address || 'Jeevak Clinic'}`,
         `DTSTART:${startStr}`,
         `DTEND:${endStr}`,
         'STATUS:CONFIRMED',
@@ -135,7 +135,7 @@ export const PatientAppointments = ({ patient, showToast, onBookNew }) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `jivaka-appointment-${apt.id}.ics`);
+      link.setAttribute('download', `jeevak-appointment-${apt.id}.ics`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

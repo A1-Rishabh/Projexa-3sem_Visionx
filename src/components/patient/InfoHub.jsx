@@ -190,7 +190,7 @@ export const InfoHub = ({
               </span>
             </div>
             <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
-              {todayFormatted} • Jivaka Patient Health Hub
+              {todayFormatted} • Jeevak Patient Health Hub
             </p>
           </div>
         </div>
@@ -609,7 +609,7 @@ export const InfoHub = ({
                 </div>
               ) : (
                 <iframe
-                  title="Jivaka Clinic Location Map"
+                  title="Jeevak Clinic Location Map"
                   src={getMapEmbedUrl(mainBranch.mapQuery)}
                   width="100%"
                   height="100%"

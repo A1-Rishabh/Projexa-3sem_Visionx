@@ -11,9 +11,9 @@ export const PrescriptionRefillModal = ({ isOpen, onClose, patient, showToast })
   if (!isOpen) return null;
 
   const currentMeds = [
-    { name: 'Lisinopril 10mg', dose: '1 Tablet Daily (Morning)', doctor: 'Dr. Ananya Sharma' },
-    { name: 'Aspirin (Low Dose) 81mg', dose: '1 Tablet Daily With Food', doctor: 'Dr. Ananya Sharma' },
-    { name: 'Ibuprofen 400mg', dose: 'As Needed (Max 3x/day)', doctor: 'Dr. Vikram Malhotra' },
+    { name: 'Paracetamol 500mg', dose: 'SOS (as needed for fever/headache)', doctor: 'Dr. Shuchi Shivangi' },
+    { name: 'Multivitamin & Zinc', dose: '1 Tablet Daily (Morning)', doctor: 'Dr. Shuchi Shivangi' },
+    { name: 'Ferrous Ascorbate + Folic Acid', dose: '1 Tab Daily After Meals', doctor: 'Dr. (Mrs.) Indu Kumari' },
     { name: 'Other Prescribed Medication', dose: 'Custom request', doctor: 'Attending Physician' }
   ];
 
@@ -73,7 +73,7 @@ export const PrescriptionRefillModal = ({ isOpen, onClose, patient, showToast })
               onChange={(e) => setDeliveryMethod(e.target.value)}
               style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.86rem' }}
             >
-              <option value="clinic_pickup">Jivaka Clinic In-House Pharmacy</option>
+              <option value="clinic_pickup">Jeevak Clinic In-House Dispensary</option>
               <option value="home_delivery">Local Home Delivery (₹50)</option>
             </select>
           </div>

@@ -1,36 +1,34 @@
 import React from 'react';
-import { Award, HeartPulse, Users, ShieldCheck, Clock, FileCheck, Stethoscope, HeartHandshake } from 'lucide-react';
+import { Award, HeartPulse, Users, ShieldCheck, Clock, FileCheck, Stethoscope, Sparkles } from 'lucide-react';
 
 export const LandingAbout = () => {
-  // All stats shown as [00], suffixes styled without orange accent
   const stats = [
-    { label: 'Doctors', value: '[00]', icon: Award },
-    { label: 'Specialty areas', value: '[00]', icon: HeartPulse },
-    { label: 'Patient visits', value: '[00]', icon: Users },
-    { label: 'Patient satisfaction', value: '[00]%', icon: ShieldCheck }
+    { label: 'Years Serving Community', value: '20+', icon: Award },
+    { label: 'Consulting Specialists', value: '3', icon: HeartPulse },
+    { label: 'In-Clinic Consultation Fee', value: '₹500', icon: ShieldCheck },
+    { label: 'Official Panel Coverage', value: 'LIC & Cab. Sec.', icon: Users }
   ];
 
-  // Merged Why Jivaka care points into About (no repeated points, no unverified claims)
   const carePoints = [
     {
       icon: Clock,
       title: 'Attentive Doctor Consultations',
-      desc: 'Our doctors take the time needed to listen, perform careful examinations, and explain your treatment plan clearly.'
+      desc: 'Our doctors take the time needed to listen, perform careful physical examinations, and explain treatment plans clearly.'
     },
     {
       icon: Stethoscope,
-      title: 'Coordinated Family Care',
-      desc: 'From routine health checks to ongoing chronic condition support, our clinic cares for your entire family.'
+      title: 'Family & Primary Medicine',
+      desc: 'Routine health checkups, fever treatment, blood pressure monitoring, and diabetes care led by Dr. Shuchi Shivangi.'
+    },
+    {
+      icon: Sparkles,
+      title: "Women's Health & Maternity",
+      desc: "Comprehensive antenatal checkups, maternal wellness, and specialist gynecological care led by Dr. (Mrs.) Indu Kumari."
     },
     {
       icon: HeartPulse,
-      title: 'On-Site Diagnostic Sampling',
-      desc: 'Routine blood draws, urine tests, and diagnostic panels handled directly at the clinic.'
-    },
-    {
-      icon: FileCheck,
-      title: 'Digital Health Records',
-      desc: 'Access your doctor notes, verified prescriptions, and test results through your patient portal account.'
+      title: 'General & Laparoscopic Surgery',
+      desc: 'Outpatient surgical evaluations, procedural guidance, and post-operative recovery reviews led by Dr. Surendra Kumar.'
     }
   ];
 
@@ -63,7 +61,7 @@ export const LandingAbout = () => {
               letterSpacing: '0.08em'
             }}
           >
-            About Jivaka Clinic
+            About Jeevak Clinic (जीवक क्लीनिक)
           </div>
 
           <h2
@@ -76,7 +74,7 @@ export const LandingAbout = () => {
               margin: 0
             }}
           >
-            Care focused on listening, diagnosis, and patient trust.
+            Trusted community medical care in New Delhi since 2003.
           </h2>
 
           <p
@@ -87,10 +85,10 @@ export const LandingAbout = () => {
               margin: 0
             }}
           >
-            Named after the ancient healer Jivaka, our clinic is founded on unhurried, patient-centered diagnosis. We believe good medicine begins when doctors have the time to listen carefully and treat each patient with thorough attention.
+            Established in 2003 at Meethapur, Badarpur, Jeevak Clinic has served local families and patients across South Delhi for over two decades. On panel with LIC and the Cabinet Secretariat, our clinic is committed to patient-first diagnosis, unhurried consultations, and transparent medical care.
           </p>
 
-          {/* MERGED CARE POINTS (WHY JIVAKA) */}
+          {/* CARE POINTS */}
           <div
             style={{
               display: 'grid',
@@ -129,7 +127,7 @@ export const LandingAbout = () => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: STATS GRID ([00] PLACEHOLDERS, NO ORANGE ACCENT ON SUFFIX) */}
+        {/* RIGHT COLUMN: STATS GRID */}
         <div
           style={{
             display: 'grid',
@@ -162,10 +160,10 @@ export const LandingAbout = () => {
                 <div
                   style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '2.1rem',
-                    fontWeight: 500,
+                    fontSize: '1.8rem',
+                    fontWeight: 600,
                     color: 'var(--deep-teal)',
-                    lineHeight: 1
+                    lineHeight: 1.1
                   }}
                 >
                   <span>{stat.value}</span>
@@ -184,4 +182,3 @@ export const LandingAbout = () => {
 };
 
 export default LandingAbout;
-

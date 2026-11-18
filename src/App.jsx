@@ -126,7 +126,7 @@ export const App = () => {
     setSession(null);
     setBookingPref(null);
     navigateTo('landing');
-    showToast('Logged out of Jivaka Clinic platform', 'info');
+    showToast('Logged out of Jeevak Clinic platform', 'info');
   };
 
   const handleIntakeComplete = (updatedPatient) => {

@@ -77,7 +77,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-            aria-label="Jivaka Clinic Homepage"
+            aria-label="Jeevak Clinic Homepage"
           >
             <Logo size="medium" theme="dark" variant="full" />
           </a>

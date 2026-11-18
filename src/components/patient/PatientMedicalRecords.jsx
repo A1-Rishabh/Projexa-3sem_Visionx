@@ -736,15 +736,16 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
       <Modal
         isOpen={!!printPrescription}
         onClose={() => setPrintPrescription(null)}
-        title="Official Jivaka Clinic Prescription Slip"
+        title="Official Jeevak Clinic Prescription Slip"
         maxWidth="520px"
       >
         {printPrescription && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', border: '2px solid var(--primary-teal)', padding: '20px', borderRadius: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid var(--primary-teal)', paddingBottom: '12px' }}>
               <div>
-                <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--deep-teal)', fontFamily: 'Fraunces, serif', margin: '0 0 2px 0' }}>Jivaka Clinic</h3>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: 'var(--deep-teal)', fontFamily: 'Fraunces, serif', margin: '0 0 2px 0' }}>{clinic.name}</h3>
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{clinic.branches[0]?.address} • Tel: {clinic.branches[0]?.phone}</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--primary-teal)', fontWeight: '600', marginTop: '2px' }}>On Panel: LIC & Cabinet Secretariat</div>
               </div>
               <div style={{ textAlign: 'right', fontSize: '0.8rem' }}>
                 <strong>Rx Slip #{printPrescription.id}</strong>
@@ -767,6 +768,10 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
                   <strong>{idx + 1}. {p.medication}</strong> ({p.dosage}) — Take {p.frequency} for {p.duration}
                 </div>
               ))}
+            </div>
+
+            <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', fontStyle: 'italic', borderTop: '1px solid var(--border-color)', paddingTop: '8px' }}>
+              * You are free to take second opinion. Not valid for Medicolegal Purpose.
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '12px' }}>

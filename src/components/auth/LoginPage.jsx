@@ -206,7 +206,7 @@ export const LoginPage = ({
       subtitle={
         activeRole === 'patient'
           ? 'Access your consultation history, upcoming appointments, and diagnostic reports'
-          : 'Restricted electronic health records access for verified Jivaka Clinic physicians'
+          : 'Restricted electronic health records access for verified Jeevak Clinic physicians'
       }
       onBackToHome={onBackToHome}
     >
@@ -414,10 +414,11 @@ export const LoginPage = ({
               onChange={(e) => setDoctorId(e.target.value)}
               style={{ width: '100%', fontWeight: '600' }}
             >
-              <option value="DOC-101">Dr. Ananya Sharma (Cardiology • Room 204B)</option>
-              <option value="DOC-102">Dr. Rohan Mehta (Pediatrics • Room 108C)</option>
-              <option value="DOC-103">Dr. Meera Krishnan (Neurology • Room 310A)</option>
-              <option value="DOC-104">Dr. Vikram Malhotra (Orthopedics • Room 105A)</option>
+              {getDoctors().map((doc) => (
+                <option key={doc.id} value={doc.id}>
+                  {doc.name} ({doc.subSpecialty || doc.specialization} • {doc.room})
+                </option>
+              ))}
             </select>
           </div>
 
@@ -465,10 +466,11 @@ export const LoginPage = ({
           </button>
 
           <div style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '8px' }}>
-            Need credential assistance? Contact clinical administrator at{' '}
-            <a href="mailto:admin@jivakaclinic.org" style={{ color: 'var(--primary-teal)', fontWeight: '600' }}>
-              admin@jivakaclinic.org
+            Need credential assistance? Contact clinical desk at{' '}
+            <a href="mailto:jeevak.clinic03@gmail.com" style={{ color: 'var(--primary-teal)', fontWeight: '600' }}>
+              jeevak.clinic03@gmail.com
             </a>
+            {' '}or call 011 45680306
           </div>
         </form>
       )}

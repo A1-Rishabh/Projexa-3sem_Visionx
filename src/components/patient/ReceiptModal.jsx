@@ -218,14 +218,14 @@ export const ReceiptModal = ({ isOpen, onClose, appointment, patient, showToast 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', paddingTop: '10px', borderTop: '1px dashed var(--border-color)', fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--primary-teal)', fontWeight: '700' }}>
-                <ShieldCheck size={14} /> Jivaka Clinic Digital Billing Seal
+                <ShieldCheck size={14} /> Jeevak Clinic Official Billing Seal
               </div>
               <div>Electronically generated invoice • No physical signature required</div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontWeight: '700', color: 'var(--deep-teal)' }}>Accounts Department</div>
-              <div>Jivaka Healthcare Pvt. Ltd.</div>
+              <div style={{ fontWeight: '700', color: 'var(--deep-teal)' }}>Billing Desk</div>
+              <div>Jeevak Clinic (Estd. 2003)</div>
             </div>
           </div>
 

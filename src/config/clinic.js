@@ -1,24 +1,27 @@
 // Edit this file to update clinic details everywhere on the site.
 
 export const clinic = {
-  name: "Jivaka Clinic",
-  tagline: "Holistic Medical Care & Trusted In-Clinic Specialists",
+  name: "Jeevak Clinic",
+  hindiName: "जीवक क्लीनिक",
+  tagline: "Quality Healthcare & In-Clinic Specialists Since 2003",
   currency: "INR",
-  upiId: "[clinic UPI ID, e.g. name@bank]",
-  payeeName: "[Payee name]",
+  upiId: "jeevak.clinic03@upi",
+  payeeName: "Jeevak Clinic",
   branches: [
     {
       id: "main",
-      label: "[Main branch]",
-      address: "[Street address, City, State, PIN]",
-      phone: "[Phone number]",
-      email: "[Email]",
-      emergency: "[Emergency number]",
+      label: "Main Clinic - Meethapur",
+      address: "C-04, Shakti Vihar, Gali No.-6, off School Road, Meethapur, Badarpur, New Delhi-110044",
+      phone: "011 45680306",
+      email: "jeevak.clinic03@gmail.com",
+      emergency: "",
+      empanelment: "On Panel: LIC & Cabinet Secretariat",
       hours: [
-        { days: "[Mon-Sat]", time: "[9:00 AM - 6:00 PM]" },
-        { days: "[Sunday]", time: "[Closed]" }
+        { days: "Mon - Thu & Sat", time: "11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM" },
+        { days: "Friday", time: "11:30 AM - 2:00 PM (Evening Closed)" },
+        { days: "Sunday", time: "Closed" }
       ],
-      mapQuery: "[Address or clinic name for Google Maps]"
+      mapQuery: "Jeevak Clinic, C-04, Shakti Vihar, Meethapur, Badarpur, New Delhi-110044"
     }
   ]
 };
@@ -71,7 +74,7 @@ export const buildUpiDeepLink = ({ upiId, payeeName, amount, note = 'Clinic Cons
 
   const params = new URLSearchParams({
     pa: vpa,
-    pn: isPlaceholder(name) ? 'Jivaka Clinic' : name,
+    pn: isPlaceholder(name) ? 'Jeevak Clinic' : name,
     am: String(amount || 0),
     cu: 'INR',
     tn: note
@@ -85,4 +88,3 @@ export const buildUpiDeepLink = ({ upiId, payeeName, amount, note = 'Clinic Cons
 };
 
 export default clinic;
-

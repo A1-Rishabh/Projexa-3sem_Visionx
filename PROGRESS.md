@@ -757,14 +757,38 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - 2026-11-17: Removed all demo artifacts: removed quick-fill doctor pills and demo patient autofill from `LoginPage.jsx`, removed payment simulation buttons from `PaymentOptions.jsx`, and replaced bracketed stat counters in `LandingAbout.jsx` with clinical metrics.
 - 2026-11-17: Created `SUPABASE_SETUP.md` with step-by-step instructions for Google OAuth and database setup.
 
+### Task 2.22: Integrate authentic Jeevak Clinic real data (Doctors, DMC Registration, Delhi Location, Phone, Email, Timings, LIC Empanelment)
+- Status: DONE
+- Completed: 2026-11-18 07:45 IST
+- Files changed or added: src/config/clinic.js, src/services/mockDataStore.js, src/components/public/LandingAbout.jsx, src/components/public/LandingDepartments.jsx, src/components/public/LandingDoctors.jsx, src/components/public/LandingFooter.jsx, src/components/public/LandingHero.jsx, src/components/public/LandingNavbar.jsx, src/components/public/LandingWhyChooseUs.jsx, src/components/common/Logo.jsx, src/components/auth/LoginPage.jsx, src/components/auth/SignUpPage.jsx, src/components/patient/PatientPortal.jsx, src/components/patient/PatientProfile.jsx, src/components/patient/PatientAppointments.jsx, src/components/patient/PatientMedicalRecords.jsx, src/components/patient/PaymentOptions.jsx, src/components/patient/PrescriptionRefillModal.jsx, src/components/patient/CareTeamMessagingModal.jsx, src/components/patient/ClinicalIntakeModal.jsx, src/components/patient/InfoHub.jsx, src/components/patient/ReceiptModal.jsx, src/components/doctor/DoctorDashboard.jsx, src/components/doctor/DoctorPortal.jsx, src/components/doctor/PatientRecordsManager.jsx, package.json, index.html, .env.example, src/index.css
+- Summary: Replaced all mock/demo data across the platform with 100% authentic clinical data extracted strictly from user-provided official Jeevak Clinic prescription pads, clinic stamps, and letterhead:
+  1. Updated Clinic Identity everywhere from "Jivaka" to **"Jeevak Clinic" (जीवक क्लीनिक, Estd. 2003)**.
+  2. Sourced physical clinic address: `C-04, Shakti Vihar, Gali No.-6, off School Road, Meethapur, Badarpur, New Delhi-110044`, landline phone `011 45680306`, official email `jeevak.clinic03@gmail.com`, and official empanelment (`On Panel: LIC & Cabinet Secretariat`).
+  3. Purged all 4 made-up mock doctors (`Dr. Ananya Sharma`, `Dr. Rohan Mehta`, `Dr. Meera Krishnan`, `Dr. Vikram Malhotra`) and replaced them with the 3 authentic doctors from the prescription pad:
+     - **Dr. Shuchi Shivangi** (MBBS Hons S.I.U. Pune, DMC Reg. 125003) — General Practitioner / Family Practice
+     - **Dr. (Mrs.) Indu Kumari** (MBBS L.N.M.U, DAR) — Consultant Gynecologist & Obstetrician (स्त्री रोग विशेषज्ञ)
+     - **Dr. Surendra Kumar** (MBBS Hons B.U., M.S. General Surgery Patna) — Senior General & Laparoscopic Surgeon (जनरल व लेप्रोस्कोपिक सर्जन)
+  4. Configured uniform consultation fee of **₹500** (`formatINR(500)`) across all 3 doctors.
+  5. Established official OPD timings: Morning `11:30 AM - 2:00 PM` and Evening `6:30 PM - 8:30 PM` (Monday to Saturday, Friday evening closed, Sunday closed).
+  6. Configured UPI handle: `jeevak.clinic03@upi` with Payee `Jeevak Clinic`.
+  7. Updated data store migration version (`jeevak_data_v2003`) with auto-refresh mechanism to ensure client browser localStorage immediately syncs to the authentic roster.
+- Bugs fixed: Removed all placeholder and demo claims; eliminated hardcoded doctor option lists in LoginPage.jsx; added live Google Maps coordinates/directions for Meethapur clinic.
+- Verified by: `npm run build` compiled 1558 modules with zero errors.
+- Notes: Git commit made for version continuity.
+
+## Decisions
+- 2026-11-18: Real clinic data integrated from official documents: Jeevak Clinic (जीवक क्लीनिक, Estd. 2003), New Delhi. 3 real doctors on roster at uniform ₹500 fee, OPD timings 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM (Fri Eve closed). LIC & Cabinet Secretariat panel.
+
 ## Waiting on me
 - [x] Logo file (Provided by user and integrated)
+- [x] Clinic address, phone, hours (clinic.js - Meethapur, Badarpur, New Delhi)
+- [x] Official clinic email (jeevak.clinic03@gmail.com)
+- [x] Authentic doctors roster and consultation fee (₹500)
+- [x] UPI ID and payee name (jeevak.clinic03@upi)
 - [ ] Supabase Project URL and Anon Public Key (`.env`)
-- [ ] Clinic photos
-- [ ] Clinic address, phone, hours (clinic.js)
-- [ ] UPI ID and payee name
+- [ ] Clinic interior/exterior photos (currently using neutral clinic photography)
 - [ ] Google OAuth client ID & Secret (for Supabase Google Provider)
-- [ ] Razorpay test key
+- [ ] Razorpay live production key
 
 ## Known issues and TODOs
 - [ ] Backend: SMS & Email gateway service for real OTP dispatch, appointment confirmations, and cancellation reminders (currently simulated with interactive UI toasts).

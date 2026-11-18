@@ -18,8 +18,8 @@ export const CareTeamMessagingModal = ({ isOpen, onClose, patient, showToast }) 
   const [threads, setThreads] = useState([
     {
       id: 'TH-1',
-      recipient: 'Dr. Ananya Sharma',
-      role: 'Attending Cardiologist',
+      recipient: 'Dr. Shuchi Shivangi',
+      role: 'General Practitioner',
       subject: 'Post-visit BP monitoring question',
       unread: false,
       messages: [
@@ -28,20 +28,20 @@ export const CareTeamMessagingModal = ({ isOpen, onClose, patient, showToast }) 
           sender: 'patient',
           senderName: patient?.name || 'You',
           time: 'Yesterday, 04:15 PM',
-          text: 'Good afternoon Dr. Sharma, I logged a blood pressure of 122/82 this morning. Should I continue the same Lisinopril 10mg dosage?'
+          text: 'Good afternoon Dr. Shivangi, I logged a blood pressure of 120/80 this morning. Should I continue the same vitamin schedule?'
         },
         {
           id: 'M-2',
           sender: 'doctor',
-          senderName: 'Dr. Ananya Sharma',
+          senderName: 'Dr. Shuchi Shivangi',
           time: 'Today, 09:30 AM',
-          text: 'Hello! That is a very reassuring reading. Yes, please maintain your current dosage of Lisinopril 10mg once daily after breakfast. Keep recording readings twice weekly.'
+          text: 'Hello! That is an optimal reading. Yes, please maintain your current routine and stay well hydrated. Feel free to reach out if you have any questions.'
         }
       ]
     },
     {
       id: 'TH-2',
-      recipient: 'Jivaka Nursing Care Desk',
+      recipient: 'Jeevak Clinic Clinical Desk',
       role: 'Clinical Coordination',
       subject: 'Pre-visit fasting instructions for lipid panel',
       unread: true,

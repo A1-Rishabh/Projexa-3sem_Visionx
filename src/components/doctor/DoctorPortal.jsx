@@ -98,7 +98,7 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--slate-bg)' }}>
       
-      {/* FIXED LEFT SIDEBAR (240px JIVAKA DEEP TEAL) */}
+      {/* FIXED LEFT SIDEBAR (240px JEEVAK DEEP TEAL) */}
       <aside
         style={{
           width: '240px',

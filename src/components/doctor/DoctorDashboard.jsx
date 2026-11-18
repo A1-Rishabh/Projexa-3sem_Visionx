@@ -66,7 +66,7 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
       >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--warm-accent)', fontSize: '0.82rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '6px' }}>
-            <Sparkles size={16} color="var(--warm-accent)" /> Jivaka Clinic Clinical Command
+            <Sparkles size={16} color="var(--warm-accent)" /> Jeevak Clinic Clinical Command
           </div>
           <h2 style={{ fontSize: '1.65rem', fontWeight: '800', fontFamily: 'Fraunces, serif', marginBottom: '6px', color: '#ffffff' }}>
             Good day, {doctor.name}
