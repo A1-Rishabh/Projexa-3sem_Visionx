@@ -7,6 +7,7 @@ import { LandingDoctors } from './LandingDoctors';
 import { LandingLocations } from './LandingLocations';
 import { LandingCtaBand } from './LandingCtaBand';
 import { LandingFooter } from './LandingFooter';
+// LandingWhyChooseUs removed — contained unverified claims (NABH, ABDM, ABHA)
 
 export const LandingPage = ({ onNavigateToAuth, onQuickBookDoctor, showToast }) => {
   const handleStartBooking = (bookingPref = {}) => {

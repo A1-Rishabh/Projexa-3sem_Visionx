@@ -1,34 +1,34 @@
 import React from 'react';
-import { Award, HeartPulse, Users, ShieldCheck, Clock, FileCheck, Stethoscope, Sparkles } from 'lucide-react';
+import { Award, Users, ShieldCheck, Clock, Stethoscope, Sparkles, Activity } from 'lucide-react';
 
 export const LandingAbout = () => {
   const stats = [
     { label: 'Years Serving Community', value: '20+', icon: Award },
-    { label: 'Consulting Specialists', value: '3', icon: HeartPulse },
+    { label: 'Consulting Specialists', value: '3', icon: Users },
     { label: 'In-Clinic Consultation Fee', value: '₹500', icon: ShieldCheck },
-    { label: 'Official Panel Coverage', value: 'LIC & Cab. Sec.', icon: Users }
+    { label: 'Official Panel Coverage', value: 'LIC & Cab. Sec.', icon: ShieldCheck }
   ];
 
   const carePoints = [
     {
       icon: Clock,
       title: 'Attentive Doctor Consultations',
-      desc: 'Our doctors take the time needed to listen, perform careful physical examinations, and explain treatment plans clearly.'
+      desc: 'Unhurried examinations and dedicated diagnostic attention.'
     },
     {
       icon: Stethoscope,
       title: 'Family & Primary Medicine',
-      desc: 'Routine health checkups, fever treatment, blood pressure monitoring, and diabetes care led by Dr. Shuchi Shivangi.'
+      desc: 'Routine checkups, blood pressure, fever, and diabetes management.'
     },
     {
       icon: Sparkles,
       title: "Women's Health & Maternity",
-      desc: "Comprehensive antenatal checkups, maternal wellness, and specialist gynecological care led by Dr. (Mrs.) Indu Kumari."
+      desc: 'Antenatal care, prenatal guidance, and gynecological consultations.'
     },
     {
-      icon: HeartPulse,
+      icon: Activity,
       title: 'General & Laparoscopic Surgery',
-      desc: 'Outpatient surgical evaluations, procedural guidance, and post-operative recovery reviews led by Dr. Surendra Kumar.'
+      desc: 'Specialist surgical evaluations and pre/post-operative recovery reviews.'
     }
   ];
 
@@ -36,26 +36,28 @@ export const LandingAbout = () => {
     <section
       id="about"
       style={{
-        padding: '64px 24px',
+        padding: '72px 28px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
     >
+      {/* TOP SECTION: TWO-COLUMN COMPOSITION (TEXT + IMAGE/STATS) */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.05fr 0.95fr',
-          gap: '44px',
-          alignItems: 'center'
+          gridTemplateColumns: '1fr 1fr',
+          gap: '48px',
+          alignItems: 'center',
+          marginBottom: '48px'
         }}
         className="about-grid-container"
       >
-        {/* LEFT COLUMN: THE CLINIC STORY & CARE POINTS */}
+        {/* LEFT COLUMN: STORY */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <div
             style={{
-              fontSize: '0.82rem',
-              fontWeight: '600',
+              fontSize: '0.80rem',
+              fontWeight: '700',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
               letterSpacing: '0.08em'
@@ -67,8 +69,8 @@ export const LandingAbout = () => {
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
-              lineHeight: 1.25,
+              fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
+              lineHeight: 1.22,
               fontWeight: 500,
               color: 'var(--deep-teal)',
               margin: 0
@@ -87,95 +89,124 @@ export const LandingAbout = () => {
           >
             Established in 2003 at Meethapur, Badarpur, Jeevak Clinic has served local families and patients across South Delhi for over two decades. On panel with LIC and the Cabinet Secretariat, our clinic is committed to patient-first diagnosis, unhurried consultations, and transparent medical care.
           </p>
-
-          {/* CARE POINTS */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '12px',
-              marginTop: '6px'
-            }}
-          >
-            {carePoints.map((pt) => {
-              const Icon = pt.icon;
-              return (
-                <div
-                  key={pt.title}
-                  style={{
-                    backgroundColor: '#ffffff',
-                    padding: '16px',
-                    borderRadius: '14px',
-                    border: '1px solid var(--border-color)',
-                    boxShadow: 'var(--shadow-sm)'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                    <div className="mint-icon-box" style={{ width: '28px', height: '28px', borderRadius: '8px' }}>
-                      <Icon size={15} />
-                    </div>
-                    <span style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)' }}>
-                      {pt.title}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
-                    {pt.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
         </div>
 
-        {/* RIGHT COLUMN: STATS GRID */}
+        {/* RIGHT COLUMN: DOCTOR IMAGE + 4 STAT CARDS */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '16px'
+            gap: '16px',
+            alignItems: 'stretch'
           }}
-          className="about-stats-grid"
         >
-          {stats.map((stat) => {
+          {/* HEALTHCARE PROFESSIONAL PHOTO */}
+          <div
+            style={{
+              gridRow: 'span 2',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-md)',
+              border: '1px solid var(--border-color)',
+              minHeight: '260px',
+              backgroundColor: 'var(--mint-light)'
+            }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=900"
+              alt="Experienced medical specialist at Jeevak Clinic"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+              loading="lazy"
+            />
+          </div>
+
+          {/* 4 STAT CARDS */}
+          {stats.map((stat, idx) => {
             const Icon = stat.icon;
             return (
               <div
                 key={stat.label}
                 className="card-interactive"
                 style={{
-                  padding: '24px 20px',
+                  padding: '20px 18px',
                   backgroundColor: '#ffffff',
                   borderRadius: '16px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '10px',
+                  gap: '8px',
                   border: '1px solid var(--border-color)',
                   boxShadow: 'var(--shadow-sm)'
                 }}
               >
-                <div className="mint-icon-box" style={{ width: '40px', height: '40px', borderRadius: '10px' }}>
-                  <Icon size={20} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px' }}>
+                    <Icon size={18} />
+                  </div>
                 </div>
 
                 <div
                   style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '1.8rem',
+                    fontSize: idx === 3 ? '1.25rem' : '1.75rem',
                     fontWeight: 600,
                     color: 'var(--deep-teal)',
-                    lineHeight: 1.1
+                    lineHeight: 1.15
                   }}
                 >
-                  <span>{stat.value}</span>
+                  {stat.value}
                 </div>
 
-                <div style={{ fontSize: '0.84rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
+                <div style={{ fontSize: '0.80rem', fontWeight: '500', color: 'var(--text-secondary)' }}>
                   {stat.label}
                 </div>
               </div>
             );
           })}
         </div>
+      </div>
+
+      {/* BOTTOM ROW: 4 HORIZONTAL CARE POINT PILLS */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '16px'
+        }}
+        className="about-care-points-row"
+      >
+        {carePoints.map((pt) => {
+          const Icon = pt.icon;
+          return (
+            <div
+              key={pt.title}
+              className="card-interactive"
+              style={{
+                backgroundColor: '#ffffff',
+                padding: '20px 18px',
+                borderRadius: '16px',
+                border: '1px solid var(--border-color)',
+                boxShadow: 'var(--shadow-sm)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px'
+              }}
+            >
+              <div className="mint-icon-box" style={{ width: '42px', height: '42px', borderRadius: '12px', minWidth: '42px' }}>
+                <Icon size={20} color="var(--primary-teal)" />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--deep-teal)', lineHeight: 1.3 }}>
+                  {pt.title}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

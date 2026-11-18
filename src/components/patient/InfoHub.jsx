@@ -73,12 +73,24 @@ export const InfoHub = ({
   // Today's day of week to highlight in operating hours
   const currentDayIndex = new Date().getDay(); // 0 is Sunday, 1-6 Mon-Sat
 
-  // Check clinic Open/Closed status
+  // Check clinic Open/Closed status based on actual OPD timings
   const isClinicOpen = useMemo(() => {
-    const hour = new Date().getHours();
-    // Mon-Sat: 9am - 6pm (18:00), Sun: Closed
+    const now = new Date();
+    const hour = now.getHours();
+    const mins = now.getMinutes();
+    const timeInMinutes = hour * 60 + mins;
+    // Sunday: Closed
     if (currentDayIndex === 0) return false;
-    return hour >= 9 && hour < 18;
+    // Morning OPD: 11:30 AM (690) - 2:00 PM (840)
+    const morningStart = 11 * 60 + 30; // 11:30 AM
+    const morningEnd = 14 * 60; // 2:00 PM
+    // Evening OPD: 6:30 PM (1110) - 8:30 PM (1230)
+    const eveningStart = 18 * 60 + 30; // 6:30 PM
+    const eveningEnd = 20 * 60 + 30; // 8:30 PM
+    // Friday evening closed
+    if (currentDayIndex === 5 && timeInMinutes >= eveningStart) return false;
+    return (timeInMinutes >= morningStart && timeInMinutes < morningEnd) ||
+           (timeInMinutes >= eveningStart && timeInMinutes < eveningEnd);
   }, [currentDayIndex]);
 
   // Find patient's next upcoming appointment

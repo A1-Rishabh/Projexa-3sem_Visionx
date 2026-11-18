@@ -797,3 +797,17 @@ VITE_RAZORPAY_KEY_ID="rzp_test_yourKeyHere"
 - [ ] Backend: Digital prescription signing API and automated pharmacy refill fulfillment.
 - [ ] Backend: Waitlist automated scheduler daemon to trigger SMS/Email notifications upon slot cancellation.
 - [ ] Backend: Razorpay payment capture webhook endpoint for server-side verification.
+
+
+### Task 2.23: Complete Jeevak Clinic Website UI/UX Redesign & Schedule Locking
+- Status: DONE
+- Completed: 2026-11-18 10:28 IST
+- Files changed or added: src/components/public/LandingNavbar.jsx, src/components/public/LandingHero.jsx, src/components/public/LandingAbout.jsx, src/components/public/LandingDepartments.jsx, src/components/public/LandingDoctors.jsx, src/components/public/LandingLocations.jsx, src/components/public/LandingCtaBand.jsx, src/components/public/LandingFooter.jsx, src/components/public/LandingPage.jsx, src/components/doctor/DoctorPortal.jsx, src/components/doctor/DoctorDashboard.jsx, src/components/doctor/DoctorProfileEditor.jsx, src/components/patient/BookingWizardModal.jsx, src/components/patient/InfoHub.jsx, src/config/clinic.js, src/index.css, src/services/mockDataStore.js, .env
+- Summary: Executed comprehensive website redesign directly following the provided visual reference mockup while locking all operating timings:
+  1. Redesigned all public landing components (Navbar, Hero, About, Departments, Doctors, Location, CTA Band, Footer) with editorial typography, high-quality medical imagery, arched image frames, subtle shadows, and responsive layouts.
+  2. Locked fixed OPD timings across the clinic: Monday to Friday (11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM), Saturday & Sunday closed.
+  3. Removed the Schedule Manager editor from doctor navigation and replaced editable hours with an official read-only schedule card in DoctorProfileEditor.
+  4. Added a prominent fixed OPD timing and clinic reception banner (011 45680306) on the Doctor Dashboard.
+  5. Updated the booking wizard so patients can only choose weekdays (Mon-Fri) within valid morning/evening 30-min OPD consultation slots.
+  6. Verified production Google Authentication integration and created .env configuration template.
+- Verified by: `npm run build` compiled 1558 modules with 0 errors.

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, User, Stethoscope } from 'lucide-react';
+import { Menu, X, User, Stethoscope } from 'lucide-react';
 import { Logo } from '../common/Logo';
-import { clinic, isPlaceholder } from '../../config/clinic';
 
 export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -9,7 +8,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -42,18 +41,17 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        transition: 'all 0.3s ease'
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
       }}
     >
-      {/* MAIN NAVIGATION BAR */}
       <div
         className={`landing-navbar ${isScrolled ? 'frosted-navbar' : ''}`}
         style={{
-          backgroundColor: isScrolled ? 'rgba(250, 246, 236, 0.94)' : 'var(--warm-cream)',
+          backgroundColor: isScrolled ? 'rgba(250, 246, 236, 0.94)' : 'rgba(250, 246, 236, 0.98)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: isScrolled ? '1px solid rgba(15, 79, 74, 0.12)' : '1px solid rgba(15, 79, 74, 0.05)',
-          boxShadow: isScrolled ? '0 4px 20px rgba(15, 79, 74, 0.06)' : 'none',
+          borderBottom: isScrolled ? '1px solid rgba(15, 79, 74, 0.10)' : '1px solid rgba(15, 79, 74, 0.04)',
+          boxShadow: isScrolled ? '0 4px 20px rgba(15, 79, 74, 0.05)' : 'none',
           transition: 'all 0.25s ease'
         }}
       >
@@ -61,15 +59,15 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
           style={{
             maxWidth: '1280px',
             margin: '0 auto',
-            padding: '0 24px',
-            height: '70px',
+            padding: '0 28px',
+            height: '72px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '20px'
+            gap: '24px'
           }}
         >
-          {/* LOGO */}
+          {/* BRAND LOGO */}
           <a
             href="/"
             onClick={(e) => {
@@ -77,7 +75,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
-            aria-label="Jeevak Clinic Homepage"
+            aria-label="Jeevak Clinic Home"
           >
             <Logo size="medium" theme="dark" variant="full" />
           </a>
@@ -87,7 +85,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '28px'
+              gap: '32px'
             }}
             className="desktop-nav-links"
           >
@@ -99,11 +97,11 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
                 style={{
                   textDecoration: 'none',
                   color: 'var(--text-main)',
-                  fontSize: '0.92rem',
+                  fontSize: '0.90rem',
                   fontWeight: '500',
                   transition: 'color 0.2s ease',
-                  padding: '8px 4px',
-                  position: 'relative'
+                  padding: '6px 2px',
+                  letterSpacing: '0.01em'
                 }}
                 onMouseOver={(e) => (e.currentTarget.style.color = 'var(--primary-teal)')}
                 onMouseOut={(e) => (e.currentTarget.style.color = 'var(--text-main)')}
@@ -128,12 +126,14 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               className="btn btn-outline-teal btn-sm"
               style={{
                 borderRadius: '9999px',
-                padding: '8px 18px',
-                fontSize: '0.86rem',
-                fontWeight: '600'
+                padding: '7px 18px',
+                fontSize: '0.84rem',
+                fontWeight: '600',
+                borderWidth: '1.5px',
+                borderColor: 'var(--primary-teal)'
               }}
             >
-              <Stethoscope size={15} />
+              <Stethoscope size={14} />
               <span>Staff Login</span>
             </button>
 
@@ -144,12 +144,12 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               style={{
                 borderRadius: '9999px',
                 padding: '8px 22px',
-                fontSize: '0.88rem',
+                fontSize: '0.86rem',
                 fontWeight: '600',
-                boxShadow: '0 2px 10px rgba(15, 107, 99, 0.25)'
+                boxShadow: '0 2px 10px rgba(15, 107, 99, 0.22)'
               }}
             >
-              <User size={15} />
+              <User size={14} />
               <span>Sign In</span>
             </button>
           </div>
@@ -166,14 +166,14 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               padding: '8px',
               color: 'var(--deep-teal)',
               borderRadius: '8px',
-              minWidth: '44px',
-              minHeight: '44px',
+              minWidth: '42px',
+              minHeight: '42px',
               alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: 'var(--mint)'
             }}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
@@ -185,7 +185,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               display: 'flex',
               flexDirection: 'column',
               gap: '12px',
-              padding: '20px 24px 28px',
+              padding: '20px 28px 28px',
               backgroundColor: '#ffffff',
               borderBottom: '1px solid var(--border-color)',
               boxShadow: 'var(--shadow-lg)',
@@ -200,7 +200,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
                 style={{
                   textDecoration: 'none',
                   color: 'var(--text-main)',
-                  fontSize: '1rem',
+                  fontSize: '0.98rem',
                   fontWeight: '600',
                   padding: '10px 0',
                   borderBottom: '1px solid var(--border-color)'
@@ -210,7 +210,7 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
               </a>
             ))}
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
               <button
                 type="button"
                 onClick={() => {
@@ -243,4 +243,3 @@ export const LandingNavbar = ({ onNavigateToAuth, onNavigateToSection }) => {
 };
 
 export default LandingNavbar;
-

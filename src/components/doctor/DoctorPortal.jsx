@@ -89,7 +89,6 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'schedule', label: 'My Schedule', icon: Calendar },
     { id: 'appointments', label: 'Appointments', icon: Clock },
     { id: 'records', label: 'Patient Records', icon: Lock },
     { id: 'profile', label: 'Profile Settings', icon: UserCheck }

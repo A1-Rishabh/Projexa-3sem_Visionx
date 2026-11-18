@@ -445,9 +445,41 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     grid-template-columns: 1fr !important;
     gap: 36px !important;
   }
+
+  .departments-grid,
+  .doctors-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .about-care-points-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .hero-highlights-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
 }
 
 @media (max-width: 768px) {
+  .departments-header-row,
+  .doctors-header-row {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .departments-grid,
+  .doctors-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-care-points-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .hero-highlights-row {
+    grid-template-columns: 1fr !important;
+  }
   .modal-card {
     margin: 8px;
     max-height: 92vh;

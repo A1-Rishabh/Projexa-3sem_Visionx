@@ -1,6 +1,6 @@
 // Jeevak Clinic (जीवक क्लीनिक, Estd. 2003) Central Data Store & Persistence Service
 
-const STORE_VERSION = 'jeevak_data_v2003';
+const STORE_VERSION = 'jeevak_data_v2003_mf';
 const STORE_VERSION_KEY = 'jeevak_store_version';
 
 const STORAGE_KEYS = {
@@ -33,10 +33,10 @@ const INITIAL_DOCTORS = [
     id: 'DOC-101',
     name: 'Dr. Shuchi Shivangi',
     hindiName: 'डॉ शुचि शिवांगी',
-    title: 'MBBS (Hons), S.I.U. (Pune) • DMC Reg. 125003',
+    title: 'M.B.B.S. (Hons) S.I.U. (Pune) • DMC Reg. 125003',
     specialization: 'General Medicine & Family Practice',
     subSpecialty: 'General Practitioner (जनरल प्रैक्टिशनर)',
-    qualifications: 'MBBS (Hons), S.I.U. (Pune), DMC Reg. 125003',
+    qualifications: 'M.B.B.S. (Hons) S.I.U. (Pune)',
     experience: 'General Practitioner',
     room: 'Suite 1 (Chamber 1)',
     fee: 500,
@@ -44,7 +44,7 @@ const INITIAL_DOCTORS = [
     reviewsCount: 48,
     avatar: '',
     bio: 'Consultant General Practitioner with dedicated clinical expertise in adult outpatient evaluations, fever management, diabetes, hypertension, and primary healthcare.',
-    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    hours: 'Mon - Fri: 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
     availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   },
@@ -52,10 +52,10 @@ const INITIAL_DOCTORS = [
     id: 'DOC-102',
     name: 'Dr. (Mrs.) Indu Kumari',
     hindiName: 'डॉ (श्रीमती) इंदु कुमारी',
-    title: 'MBBS (L.N.M.U, DAR) • Consultant Gynecologist & Obstetrician',
+    title: 'M.B.B.S. (L.N.M.U, DAR) • Consultant Gynecologist & Obstetrician',
     specialization: 'Obstetrics & Gynecology',
     subSpecialty: 'Consultant Gynecologist (स्त्री रोग विशेषज्ञ)',
-    qualifications: 'MBBS (L.N.M.U, DAR)',
+    qualifications: 'M.B.B.S. (L.N.M.U, DAR)',
     experience: 'Senior Consultant',
     room: 'Suite 2 (Chamber 2)',
     fee: 500,
@@ -63,7 +63,7 @@ const INITIAL_DOCTORS = [
     reviewsCount: 64,
     avatar: '',
     bio: 'Senior Consultant Gynecologist & Obstetrician specializing in women’s reproductive health, antenatal care, maternal wellness, and comprehensive gynecological treatments.',
-    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    hours: 'Mon - Fri: 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
     availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   },
@@ -71,10 +71,10 @@ const INITIAL_DOCTORS = [
     id: 'DOC-103',
     name: 'Dr. Surendra Kumar',
     hindiName: 'डॉ सुरेंद्र कुमार',
-    title: 'MBBS (Hons.) B.U., M.S. (General Surgery) Patna • General & Laparoscopic Surgeon',
+    title: 'M.B.B.S. (Hons.) (B.U.), M.S. (General Surgery) Patna • General & Laparoscopic Surgeon',
     specialization: 'General & Laparoscopic Surgery',
     subSpecialty: 'Senior Surgeon (जनरल व लेप्रोस्कोपिक सर्जन)',
-    qualifications: 'MBBS (Hons.) (B.U.), M.S. (General Surgery) Patna',
+    qualifications: 'M.B.B.S. (Hons.) (B.U.), M.S. (General Surgery) Patna',
     experience: 'Senior Consultant Surgeon',
     room: 'Suite 3 (Chamber 3)',
     fee: 500,
@@ -82,7 +82,7 @@ const INITIAL_DOCTORS = [
     reviewsCount: 52,
     avatar: '',
     bio: 'Senior Consultant General & Laparoscopic Surgeon offering expert outpatient evaluations, surgical consultations, pre/post-operative care, and laparoscopic guidance.',
-    hours: 'Mon - Sat (Fri M only): 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
+    hours: 'Mon - Fri: 11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM',
     availableSlots: ['11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'],
     isHoliday: false
   }

@@ -17,9 +17,8 @@ export const clinic = {
       emergency: "",
       empanelment: "On Panel: LIC & Cabinet Secretariat",
       hours: [
-        { days: "Mon - Thu & Sat", time: "11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM" },
-        { days: "Friday", time: "11:30 AM - 2:00 PM (Evening Closed)" },
-        { days: "Sunday", time: "Closed" }
+        { days: "Mon - Fri", time: "11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM" },
+        { days: "Saturday & Sunday", time: "Closed" }
       ],
       mapQuery: "Jeevak Clinic, C-04, Shakti Vihar, Meethapur, Badarpur, New Delhi-110044"
     }

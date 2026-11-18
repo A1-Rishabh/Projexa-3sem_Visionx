@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { Calendar, Stethoscope, ArrowRight, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { Calendar, Stethoscope, ArrowRight, UserCheck, TestTube2, FileText, CheckCircle2 } from 'lucide-react';
 
 export const LandingHero = ({ onStartBooking, onSignIn }) => {
-  const [selectedDept] = useState('General Medicine');
-
-  const handleScrollToSection = (sectionId) => {
-    const el = document.getElementById(sectionId);
+  const handleScrollToDoctors = () => {
+    const el = document.getElementById('doctors');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
@@ -16,24 +14,25 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
       className="landing-hero-section"
       style={{
         position: 'relative',
-        padding: '36px 24px 48px',
+        padding: '36px 28px 48px',
         maxWidth: '1280px',
-        margin: '0 auto'
+        margin: '0 auto',
+        overflow: 'hidden'
       }}
     >
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.15fr 0.85fr',
-          gap: '36px',
+          gridTemplateColumns: '1.1fr 0.9fr',
+          gap: '48px',
           alignItems: 'center'
         }}
         className="hero-grid-container"
       >
-        {/* LEFT COLUMN: HEADLINE, COPY, ACTIONS, CHECKMARKS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {/* LEFT COLUMN */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', zIndex: 2 }}>
           
-          {/* SMALL WELCOME BADGE */}
+          {/* MINT BADGE */}
           <div
             style={{
               display: 'inline-flex',
@@ -41,71 +40,75 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
               gap: '6px',
               backgroundColor: 'var(--mint)',
               color: 'var(--deep-teal)',
-              padding: '4px 14px',
+              padding: '5px 14px',
               borderRadius: '9999px',
-              fontSize: '0.82rem',
-              fontWeight: '600',
-              width: 'fit-content'
+              fontSize: '0.80rem',
+              fontWeight: '700',
+              width: 'fit-content',
+              letterSpacing: '0.02em'
             }}
           >
             <span>Outpatient Medical Care</span>
           </div>
 
-          {/* MAIN HEADLINE (Fraunces 500, lighter, smaller) */}
+          {/* MAIN HEADLINE */}
           <h1
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
-              lineHeight: 1.2,
+              fontSize: 'clamp(2.1rem, 3.8vw, 3rem)',
+              lineHeight: 1.18,
               fontWeight: 500,
               color: 'var(--deep-teal)',
-              letterSpacing: 'normal',
+              letterSpacing: '-0.01em',
               margin: 0
             }}
           >
             Personalized medical care from doctors who take the time to listen.
           </h1>
 
-          {/* SHORT GROUNDED COPY */}
+          {/* EDITORIAL SUBTITLE */}
           <p
             style={{
               fontSize: '1.02rem',
               color: 'var(--text-secondary)',
               lineHeight: 1.6,
-              maxWidth: '540px',
+              maxWidth: '520px',
               margin: 0
             }}
           >
             Consult with our doctors in clinic, complete routine tests on site, and access your digital visit records anytime.
           </p>
 
-          {/* ACTION BUTTONS ROW */}
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          {/* ACTION BUTTONS */}
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', alignItems: 'center', paddingTop: '4px' }}>
             <button
               type="button"
-              onClick={() => onStartBooking({ department: selectedDept })}
+              onClick={() => onStartBooking()}
               className="btn btn-primary"
               style={{
-                fontSize: '0.96rem',
-                padding: '11px 26px',
+                fontSize: '0.94rem',
+                padding: '12px 28px',
                 borderRadius: '9999px',
-                fontWeight: '600'
+                fontWeight: '600',
+                boxShadow: '0 4px 16px rgba(15, 79, 74, 0.25)'
               }}
             >
-              <Calendar size={17} />
               <span>Book an appointment</span>
               <ArrowRight size={17} />
             </button>
 
             <button
               type="button"
-              onClick={() => handleScrollToSection('doctors')}
+              onClick={handleScrollToDoctors}
               className="btn btn-secondary"
               style={{
-                fontSize: '0.96rem',
-                padding: '11px 22px',
+                fontSize: '0.94rem',
+                padding: '12px 24px',
                 borderRadius: '9999px',
-                fontWeight: '500'
+                fontWeight: '600',
+                backgroundColor: '#ffffff',
+                border: '1.5px solid var(--border-color)',
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
               <Stethoscope size={16} color="var(--primary-teal)" />
@@ -113,51 +116,98 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
             </button>
           </div>
 
-          {/* CHECKMARKS: TWO ROWS OF TWO */}
+          {/* 4 FEATURE HIGHLIGHTS ROW */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(180px, 1fr))',
-              gap: '10px 16px',
-              paddingTop: '16px',
-              borderTop: '1px solid var(--border-color)'
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '12px',
+              paddingTop: '24px',
+              borderTop: '1px solid rgba(15, 79, 74, 0.10)',
+              marginTop: '4px'
             }}
+            className="hero-highlights-row"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
-              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
-              <span>In-person doctor visits</span>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <div className="mint-icon-box" style={{ width: '32px', height: '32px', borderRadius: '8px', minWidth: '32px' }}>
+                <UserCheck size={16} color="var(--primary-teal)" />
+              </div>
+              <span style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--text-main)', lineHeight: 1.35 }}>
+                In-person doctor visits
+              </span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
-              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
-              <span>Same-day appointment slots</span>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <div className="mint-icon-box" style={{ width: '32px', height: '32px', borderRadius: '8px', minWidth: '32px' }}>
+                <TestTube2 size={16} color="var(--primary-teal)" />
+              </div>
+              <span style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--text-main)', lineHeight: 1.35 }}>
+                On-site routine testing
+              </span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
-              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
-              <span>On-site routine testing</span>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <div className="mint-icon-box" style={{ width: '32px', height: '32px', borderRadius: '8px', minWidth: '32px' }}>
+                <Calendar size={16} color="var(--primary-teal)" />
+              </div>
+              <span style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--text-main)', lineHeight: 1.35 }}>
+                Same-day appointment slots
+              </span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500' }}>
-              <CheckCircle2 size={16} color="var(--primary-teal)" style={{ flexShrink: 0 }} />
-              <span>Digital prescriptions & notes</span>
+
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+              <div className="mint-icon-box" style={{ width: '32px', height: '32px', borderRadius: '8px', minWidth: '32px' }}>
+                <FileText size={16} color="var(--primary-teal)" />
+              </div>
+              <span style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--text-main)', lineHeight: 1.35 }}>
+                Digital prescriptions & notes
+              </span>
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: CLEAN CLINIC IMAGE (NO TEXT OVERLAY, NO DUPLICATE STATS) */}
-        <div>
+        {/* RIGHT COLUMN: ARCHED CLINIC RECEPTION IMAGE WITH STETHOSCOPE ACCENT */}
+        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+          
+          {/* TOP-RIGHT STETHOSCOPE DECORATIVE BADGE */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-16px',
+              right: '-12px',
+              zIndex: 3,
+              width: '84px',
+              height: '84px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.94)',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 8px 24px rgba(15, 79, 74, 0.12)',
+              border: '1.5px solid var(--border-color)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'var(--deep-teal)'
+            }}
+          >
+            <Stethoscope size={38} strokeWidth={1.7} color="var(--deep-teal)" />
+          </div>
+
+          {/* MAIN ARCHED IMAGE CONTAINER */}
           <div
             style={{
               position: 'relative',
-              borderRadius: '20px',
+              width: '100%',
+              height: '420px',
+              borderRadius: '240px 24px 24px 24px',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-md)',
-              border: '1px solid var(--border-color)',
-              height: '340px',
+              boxShadow: '0 20px 48px rgba(15, 79, 74, 0.14)',
+              border: '2px solid rgba(255, 255, 255, 0.8)',
               backgroundColor: 'var(--mint-light)'
             }}
           >
             <img
-              src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=900"
-              alt="Jeevak Clinic reception and consultation area"
+              src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200"
+              alt="Jeevak Clinic modern reception and consultation suite"
               style={{
                 width: '100%',
                 height: '100%',
@@ -170,7 +220,7 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
         </div>
       </div>
 
-      {/* MOBILE STICKY BOOK APPOINTMENT BAR */}
+      {/* MOBILE STICKY CTA */}
       <div
         className="mobile-sticky-cta-bar"
         style={{
@@ -179,7 +229,7 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
           left: 0,
           right: 0,
           backgroundColor: '#ffffff',
-          padding: '12px 16px',
+          padding: '12px 18px',
           borderTop: '1px solid var(--border-color)',
           boxShadow: '0 -4px 16px rgba(15, 79, 74, 0.12)',
           zIndex: 99,
@@ -190,22 +240,22 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
         }}
       >
         <div>
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
-            Consult our doctors
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+            In-Clinic OPD
           </div>
-          <div style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)' }}>
-            In-clinic appointments
+          <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--deep-teal)' }}>
+            Schedule Doctor Visit
           </div>
         </div>
 
         <button
           type="button"
-          onClick={() => onStartBooking({ department: selectedDept })}
+          onClick={() => onStartBooking()}
           className="btn btn-primary"
           style={{
-            padding: '9px 18px',
+            padding: '9px 20px',
             borderRadius: '9999px',
-            fontSize: '0.88rem',
+            fontSize: '0.86rem',
             fontWeight: '600'
           }}
         >
@@ -218,4 +268,3 @@ export const LandingHero = ({ onStartBooking, onSignIn }) => {
 };
 
 export default LandingHero;
-

@@ -1,36 +1,34 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Clock, AlertCircle, Copy, Check, Navigation } from 'lucide-react';
+import { MapPin, Phone, Clock, Copy, Check, Navigation, ExternalLink } from 'lucide-react';
 import { clinic, isPlaceholder, getMapEmbedUrl, getDirectionsUrl } from '../../config/clinic';
 
 export const LandingLocations = ({ showToast }) => {
-  const [activeBranchId, setActiveBranchId] = useState(clinic.branches[0]?.id || 'main');
   const [copiedText, setCopiedText] = useState(false);
 
-  const branches = clinic.branches || [];
-  const currentBranch = branches.find((b) => b.id === activeBranchId) || branches[0] || {};
-  const hasMultipleBranches = branches.length > 1;
+  const currentBranch = clinic.branches?.[0] || {
+    label: "Main Clinic - Meethapur",
+    address: "C-04, Shakti Vihar, Gali No.-6, off School Road, Meethapur, Badarpur, New Delhi-110044",
+    phone: "011 45680306",
+    mapQuery: "Jeevak Clinic, C-04, Shakti Vihar, Meethapur, Badarpur, New Delhi-110044",
+    hours: [
+      { days: "Mon - Fri", time: "11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM" },
+      { days: "Saturday & Sunday", time: "Closed" }
+    ]
+  };
 
-  const isQueryPlaceholder = isPlaceholder(currentBranch?.mapQuery);
-  const isAddressPlaceholder = isPlaceholder(currentBranch?.address);
-  const isPhonePlaceholder = isPlaceholder(currentBranch?.phone);
-  const isEmergencyPlaceholder = isPlaceholder(currentBranch?.emergency);
-
-  // Copy address handler
   const handleCopyAddress = () => {
-    if (isAddressPlaceholder || !currentBranch?.address) return;
+    if (!currentBranch.address) return;
     navigator.clipboard.writeText(currentBranch.address);
     setCopiedText(true);
     if (showToast) showToast('Address copied to clipboard', 'success');
     setTimeout(() => setCopiedText(false), 2000);
   };
 
-  const hasRealMap = !isAddressPlaceholder && !isQueryPlaceholder;
-
   return (
     <section
       id="locations"
       style={{
-        padding: '64px 24px',
+        padding: '72px 28px',
         backgroundColor: '#ffffff',
         borderTop: '1px solid var(--border-color)'
       }}
@@ -38,11 +36,11 @@ export const LandingLocations = ({ showToast }) => {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
         {/* SECTION HEADER */}
-        <div style={{ maxWidth: '640px', marginBottom: '36px' }}>
+        <div style={{ maxWidth: '640px', marginBottom: '40px' }}>
           <div
             style={{
-              fontSize: '0.82rem',
-              fontWeight: '600',
+              fontSize: '0.80rem',
+              fontWeight: '700',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
@@ -54,8 +52,8 @@ export const LandingLocations = ({ showToast }) => {
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
-              lineHeight: 1.25,
+              fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
+              lineHeight: 1.22,
               fontWeight: 500,
               color: 'var(--deep-teal)',
               marginBottom: '10px'
@@ -68,32 +66,7 @@ export const LandingLocations = ({ showToast }) => {
           </p>
         </div>
 
-        {/* BRANCH SELECTOR TABS (SHOWN AUTOMATICALLY IF >1 BRANCH) */}
-        {hasMultipleBranches && (
-          <div
-            style={{
-              display: 'flex',
-              gap: '10px',
-              marginBottom: '24px',
-              flexWrap: 'wrap'
-            }}
-          >
-            {branches.map((b) => (
-              <button
-                key={b.id}
-                type="button"
-                onClick={() => setActiveBranchId(b.id)}
-                className={`btn ${activeBranchId === b.id ? 'btn-primary' : 'btn-secondary'} btn-sm`}
-                style={{ borderRadius: '9999px', padding: '6px 18px' }}
-              >
-                <MapPin size={14} />
-                <span>{b.label}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* LOCATION DISPLAY: MAP OR LOCATION COMING SOON (LEFT) & INFO CARD (RIGHT) */}
+        {/* TWO-COLUMN LAYOUT: MAP (LEFT) & EXTERIOR PHOTO + DETAILS CARD (RIGHT) */}
         <div
           style={{
             display: 'grid',
@@ -103,202 +76,195 @@ export const LandingLocations = ({ showToast }) => {
           }}
           className="location-grid-container"
         >
-          {/* MAP OR "LOCATION COMING SOON" PANEL */}
+          {/* LEFT: INTERACTIVE GOOGLE MAP WITH RATING OVERLAY */}
           <div
             style={{
-              borderRadius: '16px',
+              borderRadius: '20px',
               overflow: 'hidden',
               border: '1px solid var(--border-color)',
-              minHeight: '340px',
+              minHeight: '440px',
               backgroundColor: 'var(--mint-light)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              position: 'relative',
               boxShadow: 'var(--shadow-sm)'
             }}
           >
-            {hasRealMap ? (
-              /* REAL GOOGLE MAPS EMBED IFRAME */
-              <iframe
-                title={`Map of ${clinic.name} - ${currentBranch?.label || 'Clinic'}`}
-                src={getMapEmbedUrl(currentBranch.mapQuery)}
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: '340px', display: 'block' }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            ) : (
-              /* CLEAN "LOCATION COMING SOON" PANEL */
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '36px 24px',
-                  textAlign: 'center',
-                  color: 'var(--deep-teal)',
-                  width: '100%',
-                  height: '100%'
-                }}
-              >
-                <div
-                  style={{
-                    width: '56px',
-                    height: '56px',
-                    borderRadius: '50%',
-                    backgroundColor: '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '14px',
-                    boxShadow: 'var(--shadow-sm)'
-                  }}
-                >
-                  <MapPin size={26} color="var(--primary-teal)" />
-                </div>
-                <h3
-                  style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontSize: '1.25rem',
-                    fontWeight: 500,
-                    marginBottom: '6px',
-                    color: 'var(--deep-teal)'
-                  }}
-                >
-                  Location coming soon
-                </h3>
-                <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', maxWidth: '320px', lineHeight: 1.5, margin: 0 }}>
-                  Clinic address and map location will be updated once finalized.
-                </p>
+            <iframe
+              title={`Map of ${clinic.name}`}
+              src={getMapEmbedUrl(currentBranch.mapQuery)}
+              width="100%"
+              height="100%"
+              style={{ border: 0, minHeight: '440px', display: 'block' }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            {/* GOOGLE MAP FLOATING CARD OVERLAY */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '16px',
+                left: '16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.96)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '12px',
+                padding: '12px 14px',
+                boxShadow: '0 4px 16px rgba(15, 79, 74, 0.12)',
+                border: '1px solid var(--border-color)',
+                maxWidth: '240px',
+                fontSize: '0.78rem'
+              }}
+            >
+              <div style={{ fontWeight: '700', color: 'var(--deep-teal)', fontSize: '0.85rem' }}>
+                Jeevak Clinic
               </div>
-            )}
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.74rem', margin: '2px 0 6px' }}>
+                C-04, Shakti Vihar Gali No 6, Meethapur, New Delhi, 110044
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ color: '#d97706', fontWeight: '700' }}>4.7 ★★★★★ (14)</span>
+                <a
+                  href={getDirectionsUrl(currentBranch.mapQuery)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--primary-teal)', fontWeight: '700', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
+                >
+                  <span>Open in Maps</span>
+                  <ExternalLink size={11} />
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* CLINIC CONTACT & HOURS CARD */}
-          <div
-            className="card-interactive"
-            style={{
-              backgroundColor: 'var(--warm-cream)',
-              borderRadius: '16px',
-              padding: '28px',
-              border: '1px solid var(--border-color)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '20px',
-              boxShadow: 'var(--shadow-sm)'
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              
-              {/* BRANCH LABEL */}
+          {/* RIGHT: EXTERIOR PHOTO + CONTACT & OPERATING HOURS CARD */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            
+            {/* CLINIC EXTERIOR PHOTOGRAPH WITH BRANDED BADGE */}
+            <div
+              style={{
+                height: '190px',
+                borderRadius: '18px',
+                overflow: 'hidden',
+                position: 'relative',
+                boxShadow: 'var(--shadow-sm)',
+                border: '1px solid var(--border-color)',
+                backgroundColor: 'var(--mint-light)'
+              }}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=900"
+                alt="Jeevak Clinic exterior and Meethapur consultation facility"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block'
+                }}
+                loading="lazy"
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '12px',
+                  left: '12px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  padding: '4px 12px',
+                  borderRadius: '9999px',
+                  fontSize: '0.76rem',
+                  fontWeight: '700',
+                  color: 'var(--deep-teal)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                }}
+              >
+                Jeevak Clinic (जीवक क्लीनिक)
+              </div>
+            </div>
+
+            {/* CLINIC DETAILS CARD */}
+            <div
+              className="card-interactive"
+              style={{
+                backgroundColor: 'var(--warm-cream)',
+                borderRadius: '18px',
+                padding: '24px',
+                border: '1px solid var(--border-color)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+                boxShadow: 'var(--shadow-sm)',
+                flex: 1,
+                justifyContent: 'space-between'
+              }}
+            >
               <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 500, color: 'var(--deep-teal)', margin: 0 }}>
-                  {currentBranch.label || clinic.name}
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', fontWeight: 600, color: 'var(--deep-teal)', margin: '0 0 14px' }}>
+                  Main Clinic - Meethapur
                 </h3>
-              </div>
 
-              {/* ADDRESS */}
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px' }}>
-                  <MapPin size={16} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    Address
+                {/* ADDRESS */}
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '12px' }}>
+                  <div className="mint-icon-box" style={{ width: '34px', height: '34px', borderRadius: '10px' }}>
+                    <MapPin size={16} />
                   </div>
-                  <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500', lineHeight: 1.45 }}>
-                    {currentBranch.address}
+                  <div>
+                    <div style={{ fontSize: '0.70rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                      Address
+                    </div>
+                    <div style={{ fontSize: '0.86rem', color: 'var(--text-main)', fontWeight: '500', lineHeight: 1.45 }}>
+                      {currentBranch.address}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* PHONE */}
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px' }}>
-                  <Phone size={16} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.72rem', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                    Phone
+                {/* PHONE */}
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
+                  <div className="mint-icon-box" style={{ width: '34px', height: '34px', borderRadius: '10px' }}>
+                    <Phone size={16} />
                   </div>
-                  {!isPhonePlaceholder ? (
+                  <div>
+                    <div style={{ fontSize: '0.70rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                      Phone Desk
+                    </div>
                     <a
                       href={`tel:${currentBranch.phone}`}
-                      style={{ fontSize: '0.90rem', color: 'var(--primary-teal)', fontWeight: '600', textDecoration: 'none' }}
+                      style={{ fontSize: '0.94rem', color: 'var(--primary-teal)', fontWeight: '700', textDecoration: 'none' }}
                     >
                       {currentBranch.phone}
                     </a>
-                  ) : (
-                    <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500' }}>
-                      {currentBranch.phone}
+                  </div>
+                </div>
+
+                {/* CONSULTATION HOURS */}
+                <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '12px' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: '700', color: 'var(--deep-teal)', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Clock size={13} color="var(--primary-teal)" />
+                    <span>Consultation Hours</span>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                      <span style={{ fontWeight: '600' }}>Mon - Fri</span>
+                      <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM</span>
                     </div>
-                  )}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                      <span>Saturday & Sunday</span>
+                      <span style={{ fontWeight: '600', color: '#991b1b' }}>Closed</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* EMERGENCY LINE (IF CONFIGURED) */}
-              {currentBranch.emergency && (
-                <div style={{ display: 'flex', gap: '10px' }}>
-                  <div className="mint-icon-box" style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#fee2e2', color: '#dc2626' }}>
-                    <AlertCircle size={16} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.72rem', fontWeight: '600', color: '#dc2626', textTransform: 'uppercase' }}>
-                      Emergency
-                    </div>
-                    {!isEmergencyPlaceholder ? (
-                      <a
-                        href={`tel:${currentBranch.emergency}`}
-                        style={{ fontSize: '0.90rem', color: '#dc2626', fontWeight: '600', textDecoration: 'none' }}
-                      >
-                        {currentBranch.emergency}
-                      </a>
-                    ) : (
-                      <div style={{ fontSize: '0.90rem', color: 'var(--text-main)', fontWeight: '500' }}>
-                        {currentBranch.emergency}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* OPERATING HOURS */}
-              <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
-                <div style={{ fontSize: '0.80rem', fontWeight: '600', color: 'var(--deep-teal)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Clock size={14} color="var(--primary-teal)" />
-                  <span>Consultation Hours</span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  {currentBranch.hours?.map((h, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.84rem', color: 'var(--text-secondary)' }}>
-                      <span>{h.days}</span>
-                      <span style={{ fontWeight: '500', color: 'var(--text-main)' }}>{h.time}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* ACTION BUTTONS */}
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
-              {hasRealMap && (
+              {/* ACTION BUTTONS */}
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
                 <a
                   href={getDirectionsUrl(currentBranch.mapQuery)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary btn-sm"
-                  style={{ flex: 1, textDecoration: 'none', minWidth: '120px', fontWeight: '600' }}
+                  style={{ flex: 1, textDecoration: 'none', fontWeight: '600', minWidth: '120px' }}
                 >
                   <Navigation size={14} />
                   <span>Get directions</span>
                 </a>
-              )}
 
-              {!isAddressPlaceholder && (
                 <button
                   type="button"
                   onClick={handleCopyAddress}
@@ -308,7 +274,7 @@ export const LandingLocations = ({ showToast }) => {
                   {copiedText ? <Check size={14} color="var(--primary-teal)" /> : <Copy size={14} />}
                   <span>{copiedText ? 'Copied' : 'Copy address'}</span>
                 </button>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -319,4 +285,3 @@ export const LandingLocations = ({ showToast }) => {
 };
 
 export default LandingLocations;
-

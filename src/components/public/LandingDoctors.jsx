@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, User, Clock, IndianRupee, Award, CheckCircle } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { getDoctors } from '../../services/mockDataStore';
 import { formatINR } from '../../config/clinic';
 import { Modal } from '../common/Modal';
@@ -19,65 +19,95 @@ export const LandingDoctors = ({ onBookDoctor }) => {
     <section
       id="doctors"
       style={{
-        padding: '64px 24px',
+        padding: '72px 28px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
     >
-      {/* HEADER */}
+      {/* HEADER ROW WITH SUBTLE MEDICAL PHOTO ACCENT */}
       <div
-        style={{
-          marginBottom: '36px',
-          maxWidth: '640px'
-        }}
-      >
-        <div
-          style={{
-            fontSize: '0.82rem',
-            fontWeight: '600',
-            color: 'var(--primary-teal)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            marginBottom: '6px'
-          }}
-        >
-          Our Doctors
-        </div>
-        <h2
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
-            lineHeight: 1.25,
-            fontWeight: 500,
-            color: 'var(--deep-teal)',
-            marginBottom: '10px'
-          }}
-        >
-          Experienced doctors dedicated to your care.
-        </h2>
-        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-          Consult with our verified clinical specialists for routine OPD assessments, maternity care, and surgical guidance.
-        </p>
-      </div>
-
-      {/* DOCTORS CAROUSEL / GRID */}
-      <div
-        className="doctors-carousel"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: '1.2fr 0.8fr',
+          gap: '36px',
+          alignItems: 'center',
+          marginBottom: '44px'
+        }}
+        className="doctors-header-row"
+      >
+        <div style={{ maxWidth: '640px' }}>
+          <div
+            style={{
+              fontSize: '0.80rem',
+              fontWeight: '700',
+              color: 'var(--primary-teal)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              marginBottom: '6px'
+            }}
+          >
+            Our Doctors
+          </div>
+          <h2
+            style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
+              lineHeight: 1.22,
+              fontWeight: 500,
+              color: 'var(--deep-teal)',
+              marginBottom: '10px'
+            }}
+          >
+            Experienced doctors dedicated to your care.
+          </h2>
+          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+            Consult with our verified clinical specialists for routine OPD assessments, maternity care, and surgical guidance.
+          </p>
+        </div>
+
+        {/* ACCENT STETHOSCOPE HEADER PHOTO */}
+        <div
+          style={{
+            height: '140px',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-sm)',
+            border: '1px solid var(--border-color)',
+            backgroundColor: 'var(--mint-light)'
+          }}
+        >
+          <img
+            src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=900"
+            alt="Clinical healthcare stethoscope and diagnostic equipment"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block'
+            }}
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      {/* 3 DOCTORS GRID */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '24px'
         }}
+        className="doctors-grid"
       >
         {doctors.map((doc, idx) => {
           const initials = getInitials(doc.name);
           return (
             <div
               key={doc.id || idx}
-              className="card-interactive doctor-card-snap"
+              className="card-interactive"
               style={{
                 backgroundColor: '#ffffff',
-                borderRadius: '16px',
+                borderRadius: '18px',
                 padding: '24px',
                 border: '1px solid var(--border-color)',
                 display: 'flex',
@@ -87,12 +117,12 @@ export const LandingDoctors = ({ onBookDoctor }) => {
               }}
             >
               <div>
-                {/* ONE CONSISTENT DOCTOR AVATAR STYLE WITH INITIALS */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '14px' }}>
+                {/* DOCTOR AVATAR & CREDENTIALS */}
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '16px' }}>
                   <div
                     style={{
-                      width: '56px',
-                      height: '56px',
+                      width: '54px',
+                      height: '54px',
                       borderRadius: '14px',
                       backgroundColor: 'var(--mint)',
                       display: 'flex',
@@ -101,8 +131,9 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                       flexShrink: 0,
                       color: 'var(--primary-teal)',
                       fontWeight: '700',
-                      fontSize: '1.15rem',
-                      fontFamily: 'var(--font-heading)'
+                      fontSize: '1.12rem',
+                      fontFamily: 'var(--font-heading)',
+                      border: '1px solid rgba(15, 107, 99, 0.18)'
                     }}
                   >
                     {initials}
@@ -113,7 +144,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                       <h3
                         style={{
                           fontFamily: 'var(--font-heading)',
-                          fontSize: '1.15rem',
+                          fontSize: '1.16rem',
                           fontWeight: 600,
                           color: 'var(--text-main)',
                           margin: 0,
@@ -122,14 +153,15 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                       >
                         {doc.name}
                       </h3>
-                      {doc.hindiName && (
-                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                          ({doc.hindiName})
-                        </span>
-                      )}
                     </div>
 
-                    <div style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--primary-teal)', marginTop: '2px' }}>
+                    {doc.hindiName && (
+                      <div style={{ fontSize: '0.80rem', color: 'var(--text-muted)', marginTop: '1px' }}>
+                        ({doc.hindiName})
+                      </div>
+                    )}
+
+                    <div style={{ fontSize: '0.84rem', fontWeight: '700', color: 'var(--primary-teal)', marginTop: '4px' }}>
                       {doc.subSpecialty || doc.specialization}
                     </div>
 
@@ -139,18 +171,19 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                   </div>
                 </div>
 
-                {/* OPD TIMINGS & FEE */}
+                {/* OPD TIMINGS & FEE PILL BOX */}
                 <div
                   style={{
                     backgroundColor: 'var(--warm-cream)',
                     borderRadius: '10px',
                     padding: '10px 12px',
-                    marginBottom: '12px',
+                    marginBottom: '14px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '4px',
-                    fontSize: '0.80rem',
-                    color: 'var(--deep-teal)'
+                    fontSize: '0.78rem',
+                    color: 'var(--deep-teal)',
+                    border: '1px solid rgba(15, 79, 74, 0.08)'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -158,20 +191,20 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                     <span>OPD: <strong>11:30 AM - 2:00 PM & 6:30 PM - 8:30 PM</strong></span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2px' }}>
-                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.76rem' }}>Fri Eve & Sun Closed</span>
-                    <span style={{ fontWeight: '700', color: 'var(--primary-teal)', fontSize: '0.85rem' }}>
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '0.74rem' }}>Mon - Fri (Sat & Sun Closed)</span>
+                    <span style={{ fontWeight: '700', color: 'var(--primary-teal)', fontSize: '0.84rem' }}>
                       Fee: {formatINR(doc.fee)}
                     </span>
                   </div>
                 </div>
 
-                {/* TWO-LINE BIO CLAMP WITH VIEW PROFILE */}
+                {/* TWO-LINE BIO CLAMP */}
                 <p
                   style={{
-                    fontSize: '0.85rem',
+                    fontSize: '0.84rem',
                     color: 'var(--text-secondary)',
                     lineHeight: 1.5,
-                    marginBottom: '6px',
+                    marginBottom: '8px',
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
@@ -189,7 +222,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                     color: 'var(--primary-teal)',
                     fontWeight: '600',
                     padding: 0,
-                    marginBottom: '16px',
+                    marginBottom: '18px',
                     background: 'none',
                     border: 'none',
                     textAlign: 'left',
@@ -201,17 +234,17 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                 </button>
               </div>
 
-              {/* FOOTER: BOOK BUTTON */}
+              {/* FOOTER: CHAMBER & BOOK BUTTON */}
               <div
                 style={{
-                  paddingTop: '14px',
+                  paddingTop: '16px',
                   borderTop: '1px solid var(--border-color)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center'
                 }}
               >
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)', fontWeight: '500' }}>
                   {doc.room}
                 </div>
 
@@ -219,7 +252,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                   type="button"
                   onClick={() => onBookDoctor(doc)}
                   className="btn btn-primary btn-sm"
-                  style={{ borderRadius: '9999px', padding: '7px 18px', fontWeight: '600', fontSize: '0.84rem' }}
+                  style={{ borderRadius: '9999px', padding: '7px 18px', fontWeight: '600', fontSize: '0.82rem' }}
                 >
                   <span>Book appointment</span>
                   <ArrowRight size={13} />
@@ -230,7 +263,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
         })}
       </div>
 
-      {/* DOCTOR PROFILE MODAL */}
+      {/* DOCTOR CREDENTIALS MODAL */}
       <Modal
         isOpen={!!selectedDoctorModal}
         onClose={() => setSelectedDoctorModal(null)}
@@ -284,8 +317,8 @@ export const LandingDoctors = ({ onBookDoctor }) => {
                 <span style={{ color: 'var(--text-secondary)' }}>OPD Schedule:</span>
                 <strong style={{ color: 'var(--deep-teal)' }}>{selectedDoctorModal.hours}</strong>
               </div>
-              <div style={{ fontSize: '0.78rem', color: '#991b1b', marginTop: '2px' }}>
-                * शुक्रवार सायं ओ.पी.डी. बन्द (Friday Evening OPD Closed). Sunday Closed.
+              <div style={{ fontSize: '0.78rem', color: 'var(--primary-teal)', marginTop: '2px' }}>
+                * Monday to Friday: 11:30 AM – 2:00 PM & 6:30 PM – 8:30 PM. Saturday & Sunday Closed.
               </div>
             </div>
 

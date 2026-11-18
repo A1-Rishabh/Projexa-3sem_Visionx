@@ -12,12 +12,12 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
       badge: 'Primary Care',
       icon: Activity,
       description: 'Adult health assessments, fever management, diabetes, blood pressure stabilization, and acute illness treatment.',
-      services: ['Routine health checkups', 'Diabetes & blood pressure care', 'Fever & infection care', 'Preventive health advice'],
+      services: ['Routine health checkups', 'Diabetes & BP care', 'Fever & infection care'],
       details: [
-        'Comprehensive outpatient consultations led by Dr. Shuchi Shivangi (MBBS Hons, DMC Reg. 125003)',
+        'Comprehensive outpatient consultations led by Dr. Shuchi Shivangi (M.B.B.S. Hons S.I.U. Pune)',
         'Ongoing clinical monitoring for high blood pressure, diabetes, and lifestyle conditions',
-        'Diagnosis and compassionate care for acute fevers, respiratory conditions, and infections',
-        'Long-term family medical guidance and wellness follow-ups'
+        'Diagnosis and compassionate care for acute fevers, respiratory conditions, and seasonal infections',
+        'Long-term family medical guidance and preventive wellness follow-ups'
       ]
     },
     {
@@ -25,12 +25,12 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
       name: 'Obstetrics & Gynecology (स्त्री रोग)',
       badge: "Women's Health",
       icon: Sparkles,
-      description: 'Comprehensive women’s health, antenatal care, maternal wellness, and specialist gynecological consultations.',
-      services: ['Antenatal checkups', "Women's health screenings", 'Maternal wellness counseling', 'Gynecological care'],
+      description: 'Comprehensive women’s health, antenatal care, maternal wellness, and specialist consultations.',
+      services: ['Antenatal checkups', "Women's health screenings", 'Maternal wellness counseling'],
       details: [
-        'Dedicated women’s health clinic led by Dr. (Mrs.) Indu Kumari (MBBS L.N.M.U, DAR)',
+        'Dedicated women’s health clinic led by Dr. (Mrs.) Indu Kumari (M.B.B.S. L.N.M.U, DAR)',
         'Antenatal monitoring, prenatal guidance, and maternal health reviews',
-        'Evaluation and treatment of menstrual irregularities, pelvic health, and infections',
+        'Evaluation and care for menstrual irregularities, pelvic health, and infections',
         'Confidential, compassionate care in a supportive clinical environment'
       ]
     },
@@ -39,10 +39,10 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
       name: 'General & Laparoscopic Surgery (लेप्रोस्कोपिक सर्जन)',
       badge: 'Surgical Consultations',
       icon: HeartPulse,
-      description: 'Expert outpatient surgical evaluations, laparoscopic assessments, minor procedural care, and pre/post-operative reviews.',
-      services: ['Surgical OPD evaluations', 'Laparoscopic guidance', 'Pre/post-op counseling', 'Wound & healing checkups'],
+      description: 'Expert surgical evaluations, laparoscopic assessments, minor pre/post-operative care.',
+      services: ['Surgical OPD evaluations', 'Laparoscopic guidance', 'Wound & healing checkups'],
       details: [
-        'Expert consultations led by Dr. Surendra Kumar (MBBS Hons B.U., M.S. General Surgery Patna)',
+        'Expert consultations led by Dr. Surendra Kumar (M.B.B.S. Hons B.U., M.S. General Surgery Patna)',
         'Comprehensive assessment for laparoscopic and general surgical indications',
         'Pre-operative patient evaluation, diagnostic review, and clear procedural guidance',
         'Post-operative follow-up, dressing reviews, and recovery monitoring'
@@ -53,8 +53,8 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
       name: 'Diagnostics & Health Sampling',
       badge: 'On-Site Testing',
       icon: Microscope,
-      description: 'Routine clinical laboratory sampling, blood tests, urine analysis, and secure digital reports.',
-      services: ['Blood cell counts (CBC)', 'Blood glucose & HbA1c', 'Routine urine analysis', 'Digital reports'],
+      description: 'Routine clinical sampling, blood tests, urine analysis, and secure digital reports.',
+      services: ['Blood cell counts (CBC)', 'Blood glucose & HbA1c', 'Routine urine analysis'],
       details: [
         'Routine laboratory sampling and rapid diagnostic tests on site',
         'Blood glucose, hemogram, and lipid profile screening',
@@ -68,7 +68,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
     <section
       id="departments"
       style={{
-        padding: '64px 24px',
+        padding: '72px 28px',
         backgroundColor: '#ffffff',
         borderTop: '1px solid var(--border-color)',
         borderBottom: '1px solid var(--border-color)'
@@ -76,44 +76,80 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
     >
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         
-        {/* SECTION HEADER */}
-        <div style={{ maxWidth: '640px', marginBottom: '40px' }}>
-          <div
-            style={{
-              fontSize: '0.82rem',
-              fontWeight: '600',
-              color: 'var(--primary-teal)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              marginBottom: '6px'
-            }}
-          >
-            Clinical Departments
-          </div>
-          <h2
-            style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(1.9rem, 3.2vw, 2.4rem)',
-              lineHeight: 1.25,
-              fontWeight: 500,
-              color: 'var(--deep-teal)',
-              marginBottom: '10px'
-            }}
-          >
-            Our core medical services.
-          </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-            Whether you need a routine checkup or specialized consultation, our departments provide coordinated care under one roof.
-          </p>
-        </div>
-
-        {/* DEPARTMENTS 4-CARD GRID */}
+        {/* SECTION HEADER ROW WITH MEDICAL EQUIPMENT VISUAL */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gridTemplateColumns: '1.2fr 0.8fr',
+            gap: '36px',
+            alignItems: 'center',
+            marginBottom: '44px'
+          }}
+          className="departments-header-row"
+        >
+          <div style={{ maxWidth: '640px' }}>
+            <div
+              style={{
+                fontSize: '0.80rem',
+                fontWeight: '700',
+                color: 'var(--primary-teal)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '6px'
+              }}
+            >
+              Clinical Departments
+            </div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
+                lineHeight: 1.22,
+                fontWeight: 500,
+                color: 'var(--deep-teal)',
+                marginBottom: '10px'
+              }}
+            >
+              Our core medical services.
+            </h2>
+            <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+              Whether you need a routine checkup or specialized consultation, our departments provide coordinated care under one roof.
+            </p>
+          </div>
+
+          {/* TOP ACCENT MEDICAL EQUIPMENT PHOTO */}
+          <div
+            style={{
+              height: '140px',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-sm)',
+              border: '1px solid var(--border-color)',
+              backgroundColor: 'var(--mint-light)'
+            }}
+          >
+            <img
+              src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=900"
+              alt="Medical diagnostic instruments and clinical care equipment"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block'
+              }}
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        {/* 4 DEPARTMENT CARDS GRID */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '20px'
           }}
+          className="departments-grid"
         >
           {departments.map((dept) => {
             const Icon = dept.icon;
@@ -122,9 +158,9 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                 key={dept.id}
                 className="card-interactive"
                 style={{
-                  padding: '28px 22px',
+                  padding: '26px 20px',
                   backgroundColor: 'var(--warm-cream)',
-                  borderRadius: '16px',
+                  borderRadius: '18px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
@@ -135,19 +171,19 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                 <div>
                   {/* TOP BADGE & ICON */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                    <div className="mint-icon-box" style={{ width: '44px', height: '44px', borderRadius: '12px' }}>
-                      <Icon size={22} />
+                    <div className="mint-icon-box" style={{ width: '42px', height: '42px', borderRadius: '12px' }}>
+                      <Icon size={20} color="var(--primary-teal)" />
                     </div>
 
                     <span
                       style={{
                         fontSize: '0.72rem',
-                        fontWeight: '600',
+                        fontWeight: '700',
                         color: 'var(--primary-teal)',
                         backgroundColor: '#ffffff',
-                        padding: '3px 10px',
+                        padding: '4px 10px',
                         borderRadius: '9999px',
-                        border: '1px solid rgba(15, 107, 99, 0.15)'
+                        border: '1px solid rgba(15, 107, 99, 0.16)'
                       }}
                     >
                       {dept.badge}
@@ -157,10 +193,11 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                   <h3
                     style={{
                       fontFamily: 'var(--font-heading)',
-                      fontSize: '1.2rem',
-                      fontWeight: 500,
+                      fontSize: '1.18rem',
+                      fontWeight: 600,
                       color: 'var(--deep-teal)',
-                      marginBottom: '8px'
+                      marginBottom: '8px',
+                      lineHeight: 1.3
                     }}
                   >
                     {dept.name}
@@ -168,7 +205,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
 
                   <p
                     style={{
-                      fontSize: '0.88rem',
+                      fontSize: '0.86rem',
                       color: 'var(--text-secondary)',
                       lineHeight: 1.55,
                       marginBottom: '16px'
@@ -177,23 +214,15 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                     {dept.description}
                   </p>
 
-                  {/* CLINICAL SERVICE PILLS */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+                  {/* CHECKLIST BULLETS */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
                     {dept.services.map((svc) => (
-                      <span
-                        key={svc}
-                        style={{
-                          fontSize: '0.72rem',
-                          fontWeight: '500',
-                          color: 'var(--text-main)',
-                          backgroundColor: '#ffffff',
-                          padding: '3px 8px',
-                          borderRadius: '6px',
-                          border: '1px solid var(--border-color)'
-                        }}
-                      >
-                        {svc}
-                      </span>
+                      <div key={svc} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.80rem', color: 'var(--text-main)' }}>
+                        <div style={{ width: '16px', height: '16px', borderRadius: '50%', backgroundColor: 'var(--mint)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <Check size={10} color="var(--primary-teal)" strokeWidth={3} />
+                        </div>
+                        <span style={{ fontWeight: '500' }}>{svc}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -209,8 +238,11 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                       gap: '4px',
                       color: 'var(--primary-teal)',
                       fontWeight: '600',
-                      fontSize: '0.84rem',
-                      textDecoration: 'none'
+                      fontSize: '0.82rem',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: 0
                     }}
                   >
                     <span>Learn more</span>
@@ -221,7 +253,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
                     type="button"
                     onClick={() => onSelectDepartment(dept.name)}
                     className="btn btn-primary btn-sm"
-                    style={{ borderRadius: '9999px', fontSize: '0.80rem', padding: '5px 14px', fontWeight: '600' }}
+                    style={{ borderRadius: '9999px', fontSize: '0.80rem', padding: '6px 16px', fontWeight: '600' }}
                   >
                     <span>Book</span>
                   </button>
@@ -247,8 +279,8 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
             </p>
 
             <div>
-              <div style={{ fontSize: '0.88rem', fontWeight: '600', color: 'var(--deep-teal)', marginBottom: '10px' }}>
-                Services & Capabilities:
+              <div style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--deep-teal)', marginBottom: '10px' }}>
+                Services & Clinical Capabilities:
               </div>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', padding: 0 }}>
                 {selectedDeptModal.details.map((item, idx) => (
@@ -292,4 +324,3 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
 };
 
 export default LandingDepartments;
-

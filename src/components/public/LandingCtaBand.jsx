@@ -1,71 +1,85 @@
 import React from 'react';
-import { ArrowRight, User, Calendar, Phone } from 'lucide-react';
-import { clinic, isPlaceholder } from '../../config/clinic';
+import { ArrowRight, User, Calendar, Phone, Plus } from 'lucide-react';
+import { clinic } from '../../config/clinic';
 
 export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
   const branch = clinic.branches?.[0] || {};
-  const hasRealPhone = !isPlaceholder(branch.phone);
 
   return (
     <section
       style={{
-        padding: '64px 24px',
+        padding: '72px 28px',
         backgroundColor: 'var(--deep-teal)',
         color: '#ffffff',
         position: 'relative',
         overflow: 'hidden'
       }}
     >
-      {/* WARM ACCENT GLOW ELEMENT */}
+      {/* BACKGROUND IMAGE OVERLAY (MODERN HEALTHCARE INTERIOR WITH TEAL GRADIENT OVERLAY) */}
       <div
         style={{
           position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '480px',
-          height: '480px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232, 162, 92, 0.22) 0%, rgba(15, 79, 74, 0) 70%)',
+          inset: 0,
+          backgroundImage: 'url("https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&q=80&w=1600")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.15,
+          mixBlendMode: 'luminosity',
           pointerEvents: 'none'
         }}
       />
 
+      {/* GLOWING MEDICAL CROSS DECORATIVE ELEMENT ON RIGHT */}
       <div
         style={{
-          maxWidth: '720px',
+          position: 'absolute',
+          right: '5%',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          opacity: 0.22,
+          pointerEvents: 'none'
+        }}
+      >
+        <Plus size={160} strokeWidth={4} color="var(--mint)" />
+      </div>
+
+      <div
+        style={{
+          maxWidth: '760px',
           margin: '0 auto',
           textAlign: 'center',
           position: 'relative',
-          zIndex: 1,
+          zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '18px'
+          gap: '20px'
         }}
       >
+        {/* PILL BADGE */}
         <div
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            backgroundColor: 'rgba(220, 239, 230, 0.16)',
-            border: '1px solid rgba(220, 239, 230, 0.25)',
-            padding: '5px 16px',
+            backgroundColor: 'rgba(220, 239, 230, 0.15)',
+            border: '1px solid rgba(220, 239, 230, 0.3)',
+            padding: '5px 18px',
             borderRadius: '9999px',
             color: 'var(--mint)',
-            fontSize: '0.82rem',
-            fontWeight: '600'
+            fontSize: '0.80rem',
+            fontWeight: '700'
           }}
         >
           <span>Appointments & In-Clinic Consultations</span>
         </div>
 
+        {/* HEADLINE */}
         <h2
           style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(1.9rem, 3.4vw, 2.5rem)',
-            lineHeight: 1.25,
+            fontSize: 'clamp(2.1rem, 3.6vw, 2.75rem)',
+            lineHeight: 1.2,
             fontWeight: 500,
             color: '#ffffff',
             margin: 0
@@ -74,20 +88,21 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
           Ready to schedule your visit?
         </h2>
 
+        {/* PARAGRAPH */}
         <p
           style={{
-            fontSize: '1rem',
-            color: '#d1e5df',
+            fontSize: '1.02rem',
+            color: '#d4e7e2',
             lineHeight: 1.6,
-            maxWidth: '560px',
+            maxWidth: '580px',
             margin: 0
           }}
         >
           Book an in-person consultation with our doctors, or sign in to your patient account to review your medical history and test reports.
         </p>
 
-        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '8px' }}>
-          {/* ORANGE ACCENT BUTTON ON FINAL CTA */}
+        {/* BUTTONS */}
+        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '6px' }}>
           <button
             type="button"
             onClick={onStartBooking}
@@ -97,7 +112,7 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
               padding: '12px 28px',
               borderRadius: '9999px',
               fontWeight: '600',
-              boxShadow: '0 4px 18px rgba(232, 162, 92, 0.4)'
+              boxShadow: '0 4px 18px rgba(232, 162, 92, 0.45)'
             }}
           >
             <Calendar size={17} />
@@ -112,11 +127,11 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.12)',
               color: '#ffffff',
-              border: '1.5px solid rgba(255, 255, 255, 0.25)',
+              border: '1.5px solid rgba(255, 255, 255, 0.28)',
               fontSize: '0.96rem',
-              padding: '12px 24px',
+              padding: '12px 26px',
               borderRadius: '9999px',
-              fontWeight: '500',
+              fontWeight: '600',
               backdropFilter: 'blur(8px)'
             }}
             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.22)')}
@@ -127,20 +142,17 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
           </button>
         </div>
 
-        {/* PHONE DESK FROM CLINIC.JS */}
-        {hasRealPhone && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.86rem', color: '#bcd0cb', marginTop: '6px' }}>
-            <Phone size={14} color="var(--mint)" />
-            <span>Questions? Call our clinic desk: </span>
-            <a href={`tel:${branch.phone}`} style={{ color: '#ffffff', fontWeight: '600', textDecoration: 'none' }}>
-              {branch.phone}
-            </a>
-          </div>
-        )}
+        {/* CLINIC PHONE DESK */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.88rem', color: '#cfe3de', marginTop: '4px' }}>
+          <Phone size={14} color="var(--mint)" />
+          <span>Questions? Call our clinic desk: </span>
+          <a href={`tel:${branch.phone || '011 45680306'}`} style={{ color: '#ffffff', fontWeight: '700', textDecoration: 'none' }}>
+            {branch.phone || '011 45680306'}
+          </a>
+        </div>
       </div>
     </section>
   );
 };
 
 export default LandingCtaBand;
-

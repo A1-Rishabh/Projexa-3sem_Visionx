@@ -77,12 +77,71 @@ export const DoctorDashboard = ({ doctor, onNavigate, showToast }) => {
         </div>
 
         <button
-          onClick={() => onNavigate('schedule')}
+          onClick={() => onNavigate('appointments')}
           className="btn btn-primary"
           style={{ minHeight: '42px', fontSize: '0.86rem' }}
         >
-          <Calendar size={17} /> Manage Schedule
+          <Clock size={17} /> View Appointments
         </button>
+      </div>
+
+      {/* PROMINENT FIXED OPD TIMINGS & CLINIC CONTACT CARD */}
+      <div
+        style={{
+          backgroundColor: '#ffffff',
+          borderRadius: '16px',
+          padding: '20px 24px',
+          border: '1.5px solid var(--border-color)',
+          boxShadow: 'var(--shadow-sm)',
+          display: 'grid',
+          gridTemplateColumns: '1.5fr 1fr 1fr',
+          gap: '20px',
+          alignItems: 'center'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div className="mint-icon-box" style={{ width: '48px', height: '48px', borderRadius: '12px' }}>
+            <Clock size={24} color="var(--primary-teal)" />
+          </div>
+          <div>
+            <div style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: '700' }}>
+              Official Fixed OPD Schedule
+            </div>
+            <div style={{ fontSize: '1.05rem', fontWeight: '700', color: 'var(--deep-teal)', fontFamily: 'var(--font-heading)' }}>
+              Monday – Friday (Sat & Sun Closed)
+            </div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+              Jeevak Clinic (जीवक क्लीनिक, Estd. 2003)
+            </div>
+          </div>
+        </div>
+
+        <div style={{ backgroundColor: 'var(--warm-cream)', padding: '10px 14px', borderRadius: '10px' }}>
+          <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', fontWeight: '600' }}>
+            DAILY SESSIONS:
+          </div>
+          <div style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--text-main)', marginTop: '2px' }}>
+            Morning: 11:30 AM – 2:00 PM
+          </div>
+          <div style={{ fontSize: '0.86rem', fontWeight: '700', color: 'var(--text-main)' }}>
+            Evening: 6:30 PM – 8:30 PM
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'right' }}>
+          <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: '600' }}>
+            CLINIC RECEPTION DESK
+          </div>
+          <a
+            href="tel:01145680306"
+            style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--primary-teal)', textDecoration: 'none' }}
+          >
+            011 45680306
+          </a>
+          <div style={{ fontSize: '0.76rem', color: 'var(--text-secondary)' }}>
+            C-04, Shakti Vihar, Meethapur, New Delhi
+          </div>
+        </div>
       </div>
 
       {/* THREE METRIC CARDS */}

@@ -138,26 +138,32 @@ export const BookingWizardModal = ({
     }
   };
 
-  // Standard 30-minute OPD consultation slots
+  // Authentic fixed OPD consultation slots (Morning: 11:30 AM - 2:00 PM & Evening: 6:30 PM - 8:30 PM)
   const standard30MinSlots = [
-    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM',
-    '11:00 AM', '11:30 AM', '02:00 PM', '02:30 PM',
-    '03:30 PM', '04:00 PM', '04:30 PM'
+    '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM',
+    '06:30 PM', '07:00 PM', '07:30 PM', '08:00 PM'
   ];
 
   const doctorAvailableSlots = currentDoctor?.availableSlots || standard30MinSlots;
   const todayIso = new Date().toISOString().split('T')[0];
 
-  // Upcoming 5 days
+  // Upcoming 5 working OPD days (Monday to Friday only; Saturday & Sunday closed)
   const upcomingDates = useMemo(() => {
     const dates = [];
-    for (let i = 0; i < 5; i++) {
+    let offset = 0;
+    while (dates.length < 5 && offset < 14) {
       const d = new Date();
-      d.setDate(d.getDate() + i);
+      d.setDate(d.getDate() + offset);
+      const dayOfWeek = d.getDay(); // 0 is Sun, 6 is Sat
+      offset++;
+
+      // Skip weekends (Saturday and Sunday closed)
+      if (dayOfWeek === 0 || dayOfWeek === 6) continue;
+
       const isoStr = d.toISOString().split('T')[0];
       const isToday = isoStr === todayIso;
       
-      const label = i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+      const label = isToday ? 'Today' : dates.length === 0 ? 'Tomorrow' : d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
       
       let freeCount = 0;
       if (currentDoctor && !currentDoctor.isHoliday) {
