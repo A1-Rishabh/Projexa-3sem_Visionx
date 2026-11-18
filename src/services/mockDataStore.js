@@ -465,6 +465,10 @@ export const updatePatientRecord = (patientId, recordData, doctorId, doctorName 
 
   localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
   
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('jeevak_record_updated', { detail: { patientId } }));
+  }
+  
   // Log Audit Entry
   logAuditEntry(doctorId, `Updated medical record & clinical notes for Patient ${patientId}`);
   
@@ -513,6 +517,10 @@ export const updatePatientVitals = (patientId, vitalsData, doctorId, doctorName 
     saveSession(session);
   }
 
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('jeevak_record_updated', { detail: { patientId } }));
+  }
+
   // Audit log
   logAuditEntry(doctorId, `Recorded clinical examination vitals for Patient ${patientId}: BP ${formattedVitals.bloodPressure || '--'}, HR ${formattedVitals.heartRate || '--'}`);
 
@@ -548,10 +556,53 @@ export const addPatientVisit = (patientId, visitData, doctorId, doctorName = 'Do
 
   localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
 
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('jeevak_record_updated', { detail: { patientId } }));
+  }
+
   // Log Audit Entry
   logAuditEntry(doctorId, `Documented new clinical consultation & prescription for Patient ${patientId}: ${newVisit.diagnosis}`);
 
   return newVisit;
+};
+
+export const addPatientLabReport = (patientId, reportData, doctorId, doctorName = 'Doctor') => {
+  initializeStore();
+  const records = getMedicalRecords();
+  if (!records[patientId]) {
+    records[patientId] = {
+      patientId,
+      visitTimeline: [],
+      labReports: [],
+      notesPublic: '',
+      notesPrivate: ''
+    };
+  }
+
+  const newReport = {
+    id: `LAB-${Math.floor(100 + Math.random() * 900)}`,
+    title: reportData.title || 'Diagnostic Pathology Report',
+    date: reportData.date || new Date().toISOString().split('T')[0],
+    issuedBy: doctorName ? `Dr. ${doctorName.replace(/^Dr\.\s*/, '')} (Jeevak Clinic)` : `Jeevak Clinic Diagnostics (${doctorId})`,
+    summary: reportData.summary || 'Laboratory parameters within clinical reference standards.',
+    fileType: reportData.fileType || 'PDF',
+    fileSize: reportData.fileSize || '1.1 MB',
+    parameters: reportData.parameters || []
+  };
+
+  records[patientId].labReports = [newReport, ...(records[patientId].labReports || [])];
+  records[patientId].lastViewedBy = `Dr. ${doctorName.replace(/^Dr\.\s*/, '')} (${doctorId})`;
+  records[patientId].lastViewedTime = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+
+  localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('jeevak_record_updated', { detail: { patientId } }));
+  }
+
+  logAuditEntry(doctorId, `Issued and uploaded diagnostic report for Patient ${patientId}: ${newReport.title}`);
+
+  return newReport;
 };
 
 // Family / Dependents Storage Service (User-managed, zero hardcoded dependents)

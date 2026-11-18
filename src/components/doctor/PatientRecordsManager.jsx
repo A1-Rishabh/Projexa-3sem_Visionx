@@ -27,6 +27,7 @@ import {
   updatePatientRecord, 
   updatePatientVitals,
   addPatientVisit,
+  addPatientLabReport,
   logAuditEntry 
 } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
@@ -63,6 +64,13 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
   const [prescriptions, setPrescriptions] = useState([
     { medication: '', dosage: '', frequency: '', duration: '' }
   ]);
+
+  // Add Diagnostic Lab Report Modal State
+  const [isLabModalOpen, setIsLabModalOpen] = useState(false);
+  const [labTitle, setLabTitle] = useState('');
+  const [labDate, setLabDate] = useState(new Date().toISOString().split('T')[0]);
+  const [labSummary, setLabSummary] = useState('');
+  const [labCategory, setLabCategory] = useState('Complete Blood Count (CBC)');
 
   useEffect(() => {
     loadData();
@@ -208,6 +216,36 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
     loadData();
     setIsVisitModalOpen(false);
     showToast(`Clinical visit consultation saved for ${selectedPatient?.name || selectedPatientId}`, 'success');
+  };
+
+  // Open Lab Report Modal
+  const handleOpenLabModal = () => {
+    setLabTitle('Complete Blood Count (CBC) with Platelets');
+    setLabDate(new Date().toISOString().split('T')[0]);
+    setLabSummary('Hemoglobin, WBC count, and platelet parameters reviewed. Values within physiological baseline.');
+    setLabCategory('Complete Blood Count (CBC)');
+    setIsLabModalOpen(true);
+  };
+
+  // Save Lab Report Submission
+  const handleSaveLabSubmit = (e) => {
+    e.preventDefault();
+    if (!labTitle.trim()) {
+      showToast('Please enter the report title.', 'error');
+      return;
+    }
+
+    addPatientLabReport(selectedPatientId, {
+      title: labTitle.trim(),
+      date: labDate,
+      summary: labSummary.trim() || 'Laboratory diagnostic evaluation recorded.',
+      fileType: 'PDF',
+      fileSize: '1.2 MB'
+    }, doctor.id, doctor.name);
+
+    loadData();
+    setIsLabModalOpen(false);
+    showToast(`Diagnostic lab report recorded for ${selectedPatient?.name || selectedPatientId}`, 'success');
   };
 
   const filteredPatients = patients.filter(p => 
@@ -467,9 +505,19 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
                 
                 {/* LAB REPORTS & PDF PREVIEW */}
                 <div style={{ backgroundColor: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', padding: '20px' }}>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <FileText size={18} color="var(--primary-teal)" /> Pathology & Diagnostic Lab Reports
-                  </h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
+                      <FileText size={18} color="var(--primary-teal)" /> Pathology & Diagnostic Lab Reports
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={handleOpenLabModal}
+                      className="btn btn-primary btn-sm"
+                      style={{ gap: '6px', fontSize: '0.78rem', padding: '6px 12px' }}
+                    >
+                      <Plus size={13} /> Add Report
+                    </button>
+                  </div>
 
                   {selectedRecord.labReports.length === 0 ? (
                     <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>No lab reports uploaded.</div>
@@ -883,6 +931,101 @@ export const PatientRecordsManager = ({ doctor, showToast }) => {
               className="btn btn-primary"
             >
               <Save size={15} /> Save Consultation Record
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* RECORD DIAGNOSTIC LAB REPORT MODAL */}
+      <Modal
+        isOpen={isLabModalOpen}
+        onClose={() => setIsLabModalOpen(false)}
+        title="Issue Pathology & Diagnostic Lab Report"
+        maxWidth="540px"
+      >
+        <form onSubmit={handleSaveLabSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ backgroundColor: 'var(--warm-cream)', padding: '12px 14px', borderRadius: '10px', border: '1px solid var(--border-color)', fontSize: '0.82rem' }}>
+            Documenting diagnostic lab report for <strong>{selectedPatient?.name} (ID: {selectedPatientId})</strong> by {doctor.name}.
+          </div>
+
+          <div className="form-group">
+            <label style={{ fontSize: '0.82rem', fontWeight: '700', marginBottom: '6px', display: 'block' }}>
+              Test / Investigation Title *
+            </label>
+            <input
+              type="text"
+              required
+              value={labTitle}
+              onChange={(e) => setLabTitle(e.target.value)}
+              placeholder="e.g. Complete Blood Count (CBC) with Platelets"
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.88rem' }}
+            />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="form-group">
+              <label style={{ fontSize: '0.82rem', fontWeight: '700', marginBottom: '6px', display: 'block' }}>
+                Test Category
+              </label>
+              <select
+                value={labCategory}
+                onChange={(e) => {
+                  setLabCategory(e.target.value);
+                  setLabTitle(e.target.value);
+                }}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+              >
+                <option value="Complete Blood Count (CBC) with Platelets">Complete Blood Count (CBC)</option>
+                <option value="Blood Glucose (Fasting & PP) + HbA1c">Blood Glucose & HbA1c</option>
+                <option value="Lipid Profile & Serum Cholesterol">Lipid Profile</option>
+                <option value="Routine Urine Analysis & Microscopy">Routine Urine Examination</option>
+                <option value="Liver Function Test (LFT)">Liver Function Test (LFT)</option>
+                <option value="Kidney Function Test (KFT / Serum Creatinine)">Kidney Function Test (KFT)</option>
+                <option value="Thyroid Profile (T3, T4, TSH)">Thyroid Profile (TSH)</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label style={{ fontSize: '0.82rem', fontWeight: '700', marginBottom: '6px', display: 'block' }}>
+                Report Issue Date
+              </label>
+              <input
+                type="date"
+                required
+                value={labDate}
+                onChange={(e) => setLabDate(e.target.value)}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label style={{ fontSize: '0.82rem', fontWeight: '700', marginBottom: '6px', display: 'block' }}>
+              Clinical Findings & Interpretation Summary *
+            </label>
+            <textarea
+              rows={3}
+              required
+              value={labSummary}
+              onChange={(e) => setLabSummary(e.target.value)}
+              placeholder="Summary of parameters, reference values, and medical interpretation..."
+              style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.85rem' }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '6px' }}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => setIsLabModalOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+            >
+              <Save size={15} /> Save & Issue Report
             </button>
           </div>
         </form>

@@ -25,7 +25,8 @@ import {
   Sparkles,
   FileCheck2,
   Upload,
-  Plus
+  Plus,
+  Stethoscope
 } from 'lucide-react';
 import { getMedicalRecords, getAppointments } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
@@ -57,11 +58,27 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
     });
   };
 
-  useEffect(() => {
+  const loadPatientData = () => {
     const recs = getMedicalRecords();
     setRecord(recs[patient.id] || { visitTimeline: [], labReports: [], notesPublic: '' });
     const apts = getAppointments();
     setPatientAppointments(apts.filter(a => a.patientId === patient.id));
+  };
+
+  useEffect(() => {
+    loadPatientData();
+
+    const handleUpdate = () => {
+      loadPatientData();
+    };
+
+    window.addEventListener('jeevak_record_updated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+
+    return () => {
+      window.removeEventListener('jeevak_record_updated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
   }, [patient.id]);
 
   // Group visits by Year
@@ -375,6 +392,37 @@ export const PatientMedicalRecords = ({ patient, showToast }) => {
           </div>
         );
       })()}
+
+      {/* ATTENDING DOCTOR CLINICAL OBSERVATIONS & ADVICE */}
+      {record.notesPublic && (
+        <div
+          style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '16px',
+            padding: '20px 24px',
+            border: '1px solid var(--border-color)',
+            boxShadow: 'var(--shadow-sm)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--deep-teal)', fontWeight: '700', fontSize: '0.94rem' }}>
+              <Stethoscope size={18} color="var(--primary-teal)" />
+              <span>Attending Doctor Clinical Observations & Advice</span>
+            </div>
+            {record.lastViewedBy && (
+              <span style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
+                {record.lastViewedBy} {record.lastViewedTime ? `• ${record.lastViewedTime}` : ''}
+              </span>
+            )}
+          </div>
+          <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-main)', lineHeight: 1.6, backgroundColor: 'var(--warm-cream)', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(15, 79, 74, 0.08)' }}>
+            {record.notesPublic}
+          </p>
+        </div>
+      )}
 
       {/* TWO COLUMN GRID: VISITS (GROUPED BY YEAR) & LABS/RECOMMENDATIONS */}
       <div 

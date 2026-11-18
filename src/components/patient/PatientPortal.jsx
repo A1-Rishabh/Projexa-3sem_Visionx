@@ -26,7 +26,7 @@ import {
 import { Logo } from '../common/Logo';
 import { BottomTabBar } from '../common/BottomTabBar';
 import { LandingFooter } from '../public/LandingFooter';
-import { getDoctors, getDependents } from '../../services/mockDataStore';
+import { getDoctors, getDependents, getPatients } from '../../services/mockDataStore';
 
 import { InfoHub } from './InfoHub';
 import { DoctorDirectory } from './DoctorDirectory';
@@ -173,6 +173,29 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   useEffect(() => {
     setDependents(getDependents(primaryPatientId));
   }, [primaryPatientId, activeTab]);
+
+  // Live sync patient details & vitals when updated by attending doctor
+  useEffect(() => {
+    const handleSync = () => {
+      const pats = getPatients();
+      const updated = pats.find(p => p.id === primaryPatientId);
+      if (updated) {
+        setCurrentPatient(prev => ({
+          ...prev,
+          ...updated,
+          vitals: updated.vitals
+        }));
+      }
+    };
+
+    window.addEventListener('jeevak_record_updated', handleSync);
+    window.addEventListener('storage', handleSync);
+
+    return () => {
+      window.removeEventListener('jeevak_record_updated', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, [primaryPatientId]);
 
   const primaryProfile = {
     id: primaryPatientId,
