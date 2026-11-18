@@ -19,7 +19,7 @@ export const LandingDoctors = ({ onBookDoctor }) => {
     <section
       id="doctors"
       style={{
-        padding: '72px 28px',
+        padding: '44px 28px',
         maxWidth: '1280px',
         margin: '0 auto'
       }}
@@ -28,17 +28,17 @@ export const LandingDoctors = ({ onBookDoctor }) => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1.2fr 0.8fr',
-          gap: '36px',
+          gridTemplateColumns: '1.3fr 0.7fr',
+          gap: '32px',
           alignItems: 'center',
-          marginBottom: '44px'
+          marginBottom: '32px'
         }}
         className="doctors-header-row"
       >
         <div style={{ maxWidth: '640px' }}>
           <div
             style={{
-              fontSize: '0.80rem',
+              fontSize: '0.78rem',
               fontWeight: '700',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
@@ -51,16 +51,16 @@ export const LandingDoctors = ({ onBookDoctor }) => {
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
-              lineHeight: 1.22,
+              fontSize: 'clamp(1.95rem, 3.2vw, 2.5rem)',
+              lineHeight: 1.2,
               fontWeight: 500,
               color: 'var(--deep-teal)',
-              marginBottom: '10px'
+              marginBottom: '8px'
             }}
           >
             Experienced doctors dedicated to your care.
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
             Consult with our verified clinical specialists for routine OPD assessments, maternity care, and surgical guidance.
           </p>
         </div>
@@ -68,11 +68,11 @@ export const LandingDoctors = ({ onBookDoctor }) => {
         {/* ACCENT STETHOSCOPE HEADER PHOTO */}
         <div
           style={{
-            height: '140px',
-            borderRadius: '20px',
+            height: '120px',
+            borderRadius: '16px',
             overflow: 'hidden',
             boxShadow: 'var(--shadow-sm)',
-            border: '1px solid var(--border-color)',
+            border: '1.5px solid var(--border-color)',
             backgroundColor: 'var(--mint-light)'
           }}
         >
@@ -90,12 +90,12 @@ export const LandingDoctors = ({ onBookDoctor }) => {
         </div>
       </div>
 
-      {/* 3 DOCTORS GRID */}
+      {/* 3 DOCTORS GRID WITH CRISP BORDERS */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '24px'
+          gap: '20px'
         }}
         className="doctors-grid"
       >

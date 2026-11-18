@@ -28,18 +28,48 @@ export const LandingLocations = ({ showToast }) => {
     <section
       id="locations"
       style={{
-        padding: '72px 28px',
+        padding: '44px 28px',
         backgroundColor: '#ffffff',
-        borderTop: '1px solid var(--border-color)'
+        borderTop: '1px solid var(--border-color)',
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+      {/* BOTANICAL WATERMARK DECORATION (MATCHING REFERENCE IMAGE) */}
+      <svg
+        width="120"
+        height="160"
+        viewBox="0 0 120 160"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          position: 'absolute',
+          left: '-15px',
+          bottom: '-10px',
+          pointerEvents: 'none',
+          opacity: 0.5,
+          zIndex: 1
+        }}
+      >
+        <path
+          d="M-10 140C20 120 40 85 35 40C20 65 10 80 -15 85Z"
+          fill="#A8D5C2"
+          opacity="0.65"
+        />
+        <path
+          d="M10 160C40 140 60 100 55 55C40 80 20 95 -5 100Z"
+          fill="#C4E8D7"
+          opacity="0.75"
+        />
+      </svg>
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
         
         {/* SECTION HEADER */}
-        <div style={{ maxWidth: '640px', marginBottom: '40px' }}>
+        <div style={{ maxWidth: '640px', marginBottom: '28px' }}>
           <div
             style={{
-              fontSize: '0.80rem',
+              fontSize: '0.78rem',
               fontWeight: '700',
               color: 'var(--primary-teal)',
               textTransform: 'uppercase',
@@ -52,16 +82,16 @@ export const LandingLocations = ({ showToast }) => {
           <h2
             style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
-              lineHeight: 1.22,
+              fontSize: 'clamp(1.95rem, 3.2vw, 2.5rem)',
+              lineHeight: 1.2,
               fontWeight: 500,
               color: 'var(--deep-teal)',
-              marginBottom: '10px'
+              marginBottom: '8px'
             }}
           >
             Clinic location and hours.
           </h2>
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
             Our clinic address, contact desk, and outpatient consultation hours.
           </p>
         </div>

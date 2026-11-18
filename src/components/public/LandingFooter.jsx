@@ -16,8 +16,8 @@ export const LandingFooter = ({ onNavigateToAuth }) => {
         backgroundColor: '#0a3632',
         color: '#ffffff',
         borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-        paddingTop: '64px',
-        paddingBottom: '32px'
+        paddingTop: '48px',
+        paddingBottom: '24px'
       }}
     >
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 28px' }}>

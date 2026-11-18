@@ -32,8 +32,8 @@
   --text-main: #1C2B29;
   --text-secondary: #51625F;
   --text-muted: #748885;
-  --border-color: #e3ebe7;
-  --border-hover: #c4d7d1;
+  --border-color: #cbdad3;
+  --border-hover: #0F6B63;
 
   /* Backward-compatibility theme mapping (replaces ocean/navy with teal) */
   --navy-deep: var(--deep-teal);
@@ -165,19 +165,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   box-shadow: 0 0 0 3px var(--primary-teal-focus) !important;
 }
 
-/* Interactive Cards with 4-6px Lift */
+/* Interactive Cards with Crisp 1.5px Borders & Refined Smooth Lift */
 .card-interactive {
   background: var(--card-bg);
   border-radius: var(--radius-card);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  border: 1.5px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(15, 79, 74, 0.05);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease;
 }
 
 .card-interactive:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lift);
-  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(15, 79, 74, 0.10);
+  border-color: rgba(15, 107, 99, 0.45);
 }
 
 /* Frosted Glass Navbar */

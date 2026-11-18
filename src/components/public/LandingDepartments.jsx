@@ -68,7 +68,7 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
     <section
       id="departments"
       style={{
-        padding: '72px 28px',
+        padding: '44px 28px',
         backgroundColor: '#ffffff',
         borderTop: '1px solid var(--border-color)',
         borderBottom: '1px solid var(--border-color)'
@@ -80,17 +80,17 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: '1.2fr 0.8fr',
-            gap: '36px',
+            gridTemplateColumns: '1.3fr 0.7fr',
+            gap: '32px',
             alignItems: 'center',
-            marginBottom: '44px'
+            marginBottom: '32px'
           }}
           className="departments-header-row"
         >
           <div style={{ maxWidth: '640px' }}>
             <div
               style={{
-                fontSize: '0.80rem',
+                fontSize: '0.78rem',
                 fontWeight: '700',
                 color: 'var(--primary-teal)',
                 textTransform: 'uppercase',
@@ -103,16 +103,16 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
             <h2
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: 'clamp(2rem, 3.2vw, 2.6rem)',
-                lineHeight: 1.22,
+                fontSize: 'clamp(1.95rem, 3.2vw, 2.5rem)',
+                lineHeight: 1.2,
                 fontWeight: 500,
                 color: 'var(--deep-teal)',
-                marginBottom: '10px'
+                marginBottom: '8px'
               }}
             >
               Our core medical services.
             </h2>
-            <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+            <p style={{ fontSize: '0.96rem', color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
               Whether you need a routine checkup or specialized consultation, our departments provide coordinated care under one roof.
             </p>
           </div>
@@ -120,11 +120,11 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
           {/* TOP ACCENT MEDICAL EQUIPMENT PHOTO */}
           <div
             style={{
-              height: '140px',
-              borderRadius: '20px',
+              height: '120px',
+              borderRadius: '16px',
               overflow: 'hidden',
               boxShadow: 'var(--shadow-sm)',
-              border: '1px solid var(--border-color)',
+              border: '1.5px solid var(--border-color)',
               backgroundColor: 'var(--mint-light)'
             }}
           >
@@ -142,12 +142,12 @@ export const LandingDepartments = ({ onSelectDepartment }) => {
           </div>
         </div>
 
-        {/* 4 DEPARTMENT CARDS GRID */}
+        {/* 4 DEPARTMENT CARDS GRID WITH CRISP BORDERS */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '20px'
+            gap: '16px'
           }}
           className="departments-grid"
         >

@@ -8,7 +8,7 @@ export const LandingCtaBand = ({ onStartBooking, onSignIn }) => {
   return (
     <section
       style={{
-        padding: '72px 28px',
+        padding: '52px 28px',
         backgroundColor: 'var(--deep-teal)',
         color: '#ffffff',
         position: 'relative',
