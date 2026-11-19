@@ -17,9 +17,9 @@ export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', classN
       className={className}
       style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', userSelect: 'none' }}
     >
-      {/* JEEVAK CLINIC LOGO IMAGE */}
+      {/* JEEVAK CLINIC LOGO IMAGE (TRANSPARENT EMBLEM) */}
       <img
-        src="/images/logo.jpg"
+        src="/images/logo-icon.png"
         alt="Jeevak Clinic Logo"
         width={s.w}
         height={s.h}
@@ -27,9 +27,8 @@ export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', classN
           width: `${s.w}px`,
           height: `${s.h}px`,
           objectFit: 'contain',
-          borderRadius: '10px',
-          boxShadow: '0 2px 8px rgba(15, 79, 74, 0.15)',
-          flexShrink: 0
+          flexShrink: 0,
+          filter: theme === 'light' ? 'drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3))' : 'drop-shadow(0 2px 4px rgba(15, 79, 74, 0.12))'
         }}
       />
 
