@@ -1,4 +1,5 @@
 import React from 'react';
+import logoIcon from '../../assets/logo-icon.png';
 
 export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', className = '' }) => {
   // Size presets
@@ -19,7 +20,7 @@ export const Logo = ({ size = 'medium', theme = 'dark', variant = 'full', classN
     >
       {/* JEEVAK CLINIC LOGO IMAGE (TRANSPARENT EMBLEM) */}
       <img
-        src="/images/logo-icon.png"
+        src={logoIcon}
         alt="Jeevak Clinic Logo"
         width={s.w}
         height={s.h}
