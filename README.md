@@ -51,5 +51,5 @@ An enterprise-grade, accessible outpatient healthcare portal and clinic manageme
 ---
 
 ## 🚀 Deployment & Live Links
-- **GitHub Repository:** [https://github.com/A1-Rishabh/Projexa-3sem_Visionx](https://github.com/A1-Rishabh/Projexa-3sem_Visionx)
-- **Live GitHub Pages:** [https://a1-rishabh.github.io/Projexa-3sem_Visionx/](https://a1-rishabh.github.io/Projexa-3sem_Visionx/)
+- **GitHub Repository:** [https://github.com/A1-Rishabh/Prrojexa-3Sem_Visionx](https://github.com/A1-Rishabh/Prrojexa-3Sem_Visionx)
+- **Live GitHub Pages:** [https://a1-rishabh.github.io/Prrojexa-3Sem_Visionx/](https://a1-rishabh.github.io/Prrojexa-3Sem_Visionx/)
