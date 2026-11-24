@@ -225,11 +225,27 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
       }
     };
 
+    const handleDispatchedAlert = (e) => {
+      const notif = e.detail;
+      if (!notif) return;
+      if (notif.target === 'all' || notif.targetPatientId === primaryPatientId) {
+        setNotifications(prev => {
+          if (prev.some(n => n.id === notif.id)) return prev;
+          return [notif, ...prev];
+        });
+        if (showToast) {
+          showToast(`New Notification: ${notif.title}`, 'info');
+        }
+      }
+    };
+
     window.addEventListener('jeevak_record_updated', handleSync);
+    window.addEventListener('jeevak_notification_dispatched', handleDispatchedAlert);
     window.addEventListener('storage', handleSync);
 
     return () => {
       window.removeEventListener('jeevak_record_updated', handleSync);
+      window.removeEventListener('jeevak_notification_dispatched', handleDispatchedAlert);
       window.removeEventListener('storage', handleSync);
     };
   }, [primaryPatientId, showToast]);

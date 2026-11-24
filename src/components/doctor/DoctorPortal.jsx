@@ -12,7 +12,8 @@ import {
   MapPin, 
   AlertTriangle,
   RefreshCw,
-  CheckCircle2
+  CheckCircle2,
+  Megaphone
 } from 'lucide-react';
 import { Logo } from '../common/Logo';
 
@@ -20,6 +21,7 @@ import { DoctorDashboard } from './DoctorDashboard';
 import { ScheduleManager } from './ScheduleManager';
 import { AppointmentManager } from './AppointmentManager';
 import { PatientRecordsManager } from './PatientRecordsManager';
+import { CommunicationsManager } from './CommunicationsManager';
 import { DoctorProfileEditor } from './DoctorProfileEditor';
 import { getAppointments, clearSession } from '../../services/mockDataStore';
 import { Modal } from '../common/Modal';
@@ -91,6 +93,7 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'appointments', label: 'Appointments', icon: Clock },
     { id: 'records', label: 'Patient Records', icon: Lock },
+    { id: 'communications', label: 'Communications & Alerts', icon: Megaphone },
     { id: 'profile', label: 'Profile Settings', icon: UserCheck }
   ];
 
@@ -365,6 +368,13 @@ export const DoctorPortal = ({ session, onLogout, showToast }) => {
 
           {activeTab === 'records' && (
             <PatientRecordsManager
+              doctor={currentDoctor}
+              showToast={showToast}
+            />
+          )}
+
+          {activeTab === 'communications' && (
+            <CommunicationsManager
               doctor={currentDoctor}
               showToast={showToast}
             />
