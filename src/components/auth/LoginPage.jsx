@@ -10,7 +10,8 @@ import {
   AlertCircle, 
   CheckCircle2, 
   HelpCircle,
-  KeyRound
+  KeyRound,
+  ShieldCheck
 } from 'lucide-react';
 import { AuthLayout } from './AuthLayout';
 import { GoogleButton } from '../common/GoogleButton';
@@ -502,6 +503,109 @@ export const LoginPage = ({
             <span>{isLoading ? 'Verifying staff badge...' : 'Enter Clinical Command'}</span>
             {!isLoading && <ArrowRight size={16} />}
           </button>
+
+          {/* ASSIGNED DOCTORS CREDENTIALS CARD */}
+          <div
+            style={{
+              marginTop: '10px',
+              backgroundColor: 'var(--warm-cream)',
+              borderRadius: '12px',
+              padding: '14px',
+              border: '1px solid var(--border-color)',
+              fontSize: '0.8rem'
+            }}
+          >
+            <div style={{ fontWeight: '800', color: 'var(--primary-teal)', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ShieldCheck size={16} /> Assigned Doctor Login Credentials:
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              
+              {/* Doctor 1 */}
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  backgroundColor: '#ffffff', 
+                  padding: '8px 12px', 
+                  borderRadius: '8px', 
+                  border: '1px solid rgba(15, 107, 99, 0.12)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  setDoctorEmail('dr.shuchi@jeevakclinic.com');
+                  setDoctorPassword('Shuchi@2003');
+                }}
+                title="Click to quickly fill Dr. Shuchi's credentials"
+              >
+                <div>
+                  <div style={{ fontWeight: '700', color: 'var(--text-main)', fontSize: '0.82rem' }}>Dr. Shuchi Shivangi</div>
+                  <div style={{ color: 'var(--text-secondary)', fontSize: '0.72rem' }}>dr.shuchi@jeevakclinic.com (DOC-101)</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <code style={{ backgroundColor: 'var(--warm-cream)', padding: '3px 7px', borderRadius: '4px', fontWeight: '800', color: 'var(--primary-teal)', fontSize: '0.75rem' }}>Shuchi@2003</code>
+                </div>
+              </div>
+
+              {/* Doctor 2 */}
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  backgroundColor: '#ffffff', 
+                  padding: '8px 12px', 
+                  borderRadius: '8px', 
+                  border: '1px solid rgba(15, 107, 99, 0.12)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  setDoctorEmail('dr.indu@jeevakclinic.com');
+                  setDoctorPassword('Indu@2003');
+                }}
+                title="Click to quickly fill Dr. Indu's credentials"
+              >
+                <div>
+                  <div style={{ fontWeight: '700', color: 'var(--text-main)', fontSize: '0.82rem' }}>Dr. (Mrs.) Indu Kumari</div>
+                  <div style={{ color: 'var(--text-secondary)', fontSize: '0.72rem' }}>dr.indu@jeevakclinic.com (DOC-102)</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <code style={{ backgroundColor: 'var(--warm-cream)', padding: '3px 7px', borderRadius: '4px', fontWeight: '800', color: 'var(--primary-teal)', fontSize: '0.75rem' }}>Indu@2003</code>
+                </div>
+              </div>
+
+              {/* Doctor 3 */}
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center', 
+                  backgroundColor: '#ffffff', 
+                  padding: '8px 12px', 
+                  borderRadius: '8px', 
+                  border: '1px solid rgba(15, 107, 99, 0.12)',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  setDoctorEmail('dr.surendra@jeevakclinic.com');
+                  setDoctorPassword('Surendra@2003');
+                }}
+                title="Click to quickly fill Dr. Surendra's credentials"
+              >
+                <div>
+                  <div style={{ fontWeight: '700', color: 'var(--text-main)', fontSize: '0.82rem' }}>Dr. Surendra Kumar</div>
+                  <div style={{ color: 'var(--text-secondary)', fontSize: '0.72rem' }}>dr.surendra@jeevakclinic.com (DOC-103)</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <code style={{ backgroundColor: 'var(--warm-cream)', padding: '3px 7px', borderRadius: '4px', fontWeight: '800', color: 'var(--primary-teal)', fontSize: '0.75rem' }}>Surendra@2003</code>
+                </div>
+              </div>
+
+            </div>
+            <div style={{ fontSize: '0.70rem', color: 'var(--text-muted)', marginTop: '8px', textAlign: 'center' }}>
+              💡 Tip: Click any doctor card above to instantly fill their credentials for testing.
+            </div>
+          </div>
 
           <div style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '8px' }}>
             Need credential assistance? Contact clinical desk at{' '}
