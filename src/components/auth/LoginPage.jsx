@@ -20,7 +20,8 @@ import {
   getPatients, 
   saveSession, 
   getLastRoleTab, 
-  saveLastRoleTab 
+  saveLastRoleTab,
+  findDoctorByEmailOrId
 } from '../../services/mockDataStore';
 import { handleGoogleAuth } from '../../services/googleAuth';
 import { signInWithGoogle, isSupabaseConfigured } from '../../services/supabase';
@@ -41,9 +42,9 @@ export const LoginPage = ({
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  // Doctor inputs
-  const [doctorId, setDoctorId] = useState('DOC-101');
-  const [doctorPassword, setDoctorPassword] = useState('password123');
+  // Doctor inputs (strictly manual entry - no autofill)
+  const [doctorEmail, setDoctorEmail] = useState('');
+  const [doctorPassword, setDoctorPassword] = useState('');
   const [showDoctorPassword, setShowDoctorPassword] = useState(false);
 
   // UI state
@@ -128,16 +129,28 @@ export const LoginPage = ({
     }, 600);
   };
 
-  // Doctor Login handler
+  // Doctor Login handler with email & credential verification
   const handleDoctorSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
 
-    if (!doctorId) {
-      newErrors.doctorId = 'Please select your Doctor ID';
+    const cleanInput = doctorEmail.trim();
+
+    if (!cleanInput) {
+      newErrors.doctorEmail = 'Enter your authorized doctor email or Doctor ID';
     }
-    if (!doctorPassword) {
+
+    if (!doctorPassword.trim()) {
       newErrors.doctorPassword = 'Enter your clinical credentials password';
+    } else if (doctorPassword.trim().length < 6) {
+      newErrors.doctorPassword = 'Password must be at least 6 characters';
+    }
+
+    if (cleanInput) {
+      const matchedDoctor = findDoctorByEmailOrId(cleanInput);
+      if (!matchedDoctor) {
+        newErrors.doctorEmail = 'Unauthorized email or ID. Access is restricted to verified Jeevak Clinic physicians.';
+      }
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -150,8 +163,12 @@ export const LoginPage = ({
 
     setTimeout(() => {
       setIsLoading(false);
-      const doctors = getDoctors();
-      const doctor = doctors.find((d) => d.id === doctorId) || doctors[0];
+      const doctor = findDoctorByEmailOrId(cleanInput);
+
+      if (!doctor) {
+        setErrors({ doctorEmail: 'Physician credentials could not be verified' });
+        return;
+      }
 
       const session = { role: 'doctor', user: doctor, doctorId: doctor.id };
       saveSession(session);
@@ -406,20 +423,31 @@ export const LoginPage = ({
       {activeRole === 'doctor' && (
         <form onSubmit={handleDoctorSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
           
+          {/* DOCTOR EMAIL / ID INPUT */}
           <div className="form-group" style={{ margin: 0 }}>
-            <label htmlFor="doctor-select">Select Doctor / Staff Profile</label>
-            <select
-              id="doctor-select"
-              value={doctorId}
-              onChange={(e) => setDoctorId(e.target.value)}
-              style={{ width: '100%', fontWeight: '600' }}
-            >
-              {getDoctors().map((doc) => (
-                <option key={doc.id} value={doc.id}>
-                  {doc.name} ({doc.subSpecialty || doc.specialization} • {doc.room})
-                </option>
-              ))}
-            </select>
+            <label htmlFor="doctor-identifier">Doctor Email / Clinical ID</label>
+            <div className="input-with-icon">
+              <Mail className="input-icon" size={17} />
+              <input
+                id="doctor-identifier"
+                type="text"
+                placeholder="e.g. dr.shuchi@jeevakclinic.com or DOC-101"
+                value={doctorEmail}
+                onChange={(e) => {
+                  setDoctorEmail(e.target.value);
+                  if (errors.doctorEmail) setErrors((prev) => ({ ...prev, doctorEmail: '' }));
+                }}
+                className={errors.doctorEmail ? 'input-error' : ''}
+                autoComplete="off"
+                autoFocus
+              />
+            </div>
+            {errors.doctorEmail && (
+              <div className="error-msg">
+                <AlertCircle size={14} />
+                <span>{errors.doctorEmail}</span>
+              </div>
+            )}
           </div>
 
           {/* DOCTOR PASSWORD */}
@@ -430,10 +458,14 @@ export const LoginPage = ({
               <input
                 id="doctor-pass"
                 type={showDoctorPassword ? 'text' : 'password'}
-                placeholder="Enter password"
+                placeholder="Enter clinical credentials password"
                 value={doctorPassword}
-                onChange={(e) => setDoctorPassword(e.target.value)}
-                autoComplete="current-password"
+                onChange={(e) => {
+                  setDoctorPassword(e.target.value);
+                  if (errors.doctorPassword) setErrors((prev) => ({ ...prev, doctorPassword: '' }));
+                }}
+                className={errors.doctorPassword ? 'input-error' : ''}
+                autoComplete="new-password"
                 style={{ paddingRight: '44px' }}
               />
               <button
@@ -453,6 +485,12 @@ export const LoginPage = ({
                 {showDoctorPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
+            {errors.doctorPassword && (
+              <div className="error-msg">
+                <AlertCircle size={14} />
+                <span>{errors.doctorPassword}</span>
+              </div>
+            )}
           </div>
 
           <button

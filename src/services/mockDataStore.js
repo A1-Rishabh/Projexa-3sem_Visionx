@@ -31,6 +31,7 @@ export const getTodayStr = (offsetDays = 0) => {
 const INITIAL_DOCTORS = [
   {
     id: 'DOC-101',
+    email: 'dr.shuchi@jeevakclinic.com',
     name: 'Dr. Shuchi Shivangi',
     hindiName: 'डॉ शुचि शिवांगी',
     title: 'M.B.B.S. (Hons) S.I.U. (Pune) • DMC Reg. 125003',
@@ -50,6 +51,7 @@ const INITIAL_DOCTORS = [
   },
   {
     id: 'DOC-102',
+    email: 'dr.indu@jeevakclinic.com',
     name: 'Dr. (Mrs.) Indu Kumari',
     hindiName: 'डॉ (श्रीमती) इंदु कुमारी',
     title: 'M.B.B.S. (L.N.M.U, DAR) • Consultant Gynecologist & Obstetrician',
@@ -69,6 +71,7 @@ const INITIAL_DOCTORS = [
   },
   {
     id: 'DOC-103',
+    email: 'dr.surendra@jeevakclinic.com',
     name: 'Dr. Surendra Kumar',
     hindiName: 'डॉ सुरेंद्र कुमार',
     title: 'M.B.B.S. (Hons.) (B.U.), M.S. (General Surgery) Patna • General & Laparoscopic Surgeon',
@@ -369,6 +372,19 @@ export const updateDoctorProfile = (doctorId, updatedData) => {
     localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(doctors));
   }
   return doctors;
+};
+
+export const findDoctorByEmailOrId = (identifier = '') => {
+  if (!identifier) return null;
+  const clean = identifier.trim().toLowerCase();
+  const doctors = getDoctors();
+  
+  return doctors.find(d => {
+    const idMatch = d.id?.toLowerCase() === clean;
+    const emailMatch = d.email?.toLowerCase() === clean;
+    const clinicEmailMatch = clean === 'jeevak.clinic03@gmail.com' && d.id === 'DOC-101';
+    return idMatch || emailMatch || clinicEmailMatch;
+  }) || null;
 };
 
 export const getPatients = () => {
