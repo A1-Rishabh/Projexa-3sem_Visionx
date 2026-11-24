@@ -47,8 +47,8 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   const profileDropdownRef = useRef(null);
   const notificationsRef = useRef(null);
 
-  // Clinic Notifications state (including seasonal health advisory)
-  const [notifications, setNotifications] = useState([
+  // Clinic Notifications state (persisted per patient in localStorage)
+  const defaultNotifications = [
     {
       id: 'notif-1',
       category: 'Clinic Advisory',
@@ -81,7 +81,25 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
       actionLabel: 'View Records',
       type: 'records'
     }
-  ]);
+  ];
+
+  const [notifications, setNotifications] = useState(() => {
+    try {
+      const saved = localStorage.getItem(`jeevak_notifications_${primaryPatientId}`);
+      return saved ? JSON.parse(saved) : defaultNotifications;
+    } catch {
+      return defaultNotifications;
+    }
+  });
+
+  // Keep notifications stored in localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(`jeevak_notifications_${primaryPatientId}`, JSON.stringify(notifications));
+    } catch (e) {
+      console.warn('Could not save notifications to localStorage', e);
+    }
+  }, [notifications, primaryPatientId]);
 
   const unreadNotificationCount = notifications.filter(n => n.unread).length;
 
@@ -176,7 +194,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
 
   // Live sync patient details & vitals when updated by attending doctor
   useEffect(() => {
-    const handleSync = () => {
+    const handleSync = (e) => {
       const pats = getPatients();
       const updated = pats.find(p => p.id === primaryPatientId);
       if (updated) {
@@ -185,6 +203,25 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
           ...updated,
           vitals: updated.vitals
         }));
+      }
+
+      // Add real-time notification if doctor updated patient records
+      if (e?.type === 'jeevak_record_updated') {
+        const updateNotif = {
+          id: `notif-${Date.now()}`,
+          category: 'Medical Update',
+          title: 'Prescription & Records Updated',
+          description: 'Attending physician has updated your clinical findings, prescription notes, and diagnostic investigations.',
+          time: 'Just now',
+          unread: true,
+          actionTab: 'records',
+          actionLabel: 'View Records',
+          type: 'records'
+        };
+        setNotifications(prev => [updateNotif, ...prev]);
+        if (showToast) {
+          showToast('New clinical records updated by attending doctor', 'info');
+        }
       }
     };
 
@@ -195,7 +232,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
       window.removeEventListener('jeevak_record_updated', handleSync);
       window.removeEventListener('storage', handleSync);
     };
-  }, [primaryPatientId]);
+  }, [primaryPatientId, showToast]);
 
   const primaryProfile = {
     id: primaryPatientId,
@@ -1358,7 +1395,21 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
         selectedDoctor={bookingDoctor}
         preselectedDepartment={preselectedDept}
         patient={{ ...currentPatient, name: displayName }}
-        onBookingConfirmed={() => setActiveTab('appointments')}
+        onBookingConfirmed={() => {
+          setActiveTab('appointments');
+          const bookingNotif = {
+            id: `notif-${Date.now()}`,
+            category: 'Upcoming Visit',
+            title: 'OPD Consultation Booked',
+            description: `Confirmed appointment with ${bookingDoctor?.name || 'Consulting Specialist'}. Your digital token & QR receipt have been generated.`,
+            time: 'Just now',
+            unread: true,
+            actionTab: 'appointments',
+            actionLabel: 'View Details',
+            type: 'appointment'
+          };
+          setNotifications(prev => [bookingNotif, ...prev]);
+        }}
         showToast={showToast}
       />
 
