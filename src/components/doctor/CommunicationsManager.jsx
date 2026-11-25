@@ -160,14 +160,52 @@ export const CommunicationsManager = ({ doctor, showToast }) => {
   return (
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
       
-      {/* SECTION HEADER */}
-      <div style={{ marginBottom: '28px' }}>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', margin: '0 0 6px 0' }}>
-          Communications & Patient Alerts
-        </h2>
-        <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-          Compose and dispatch real-time notifications to all clinic patients or directly to an individual patient regarding visits and diagnostics.
-        </p>
+      {/* SECTION HEADER CARD */}
+      <div 
+        style={{ 
+          backgroundColor: '#ffffff',
+          borderRadius: '18px',
+          padding: '24px 28px',
+          marginBottom: '28px',
+          border: '1px solid var(--border-color)',
+          boxShadow: 'var(--shadow-sm)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '16px'
+        }}
+      >
+        <div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '9999px', backgroundColor: 'var(--mint)', color: 'var(--primary-teal)', fontSize: '0.72rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
+            <Megaphone size={12} color="var(--primary-teal)" />
+            <span>Staff Communications Hub</span>
+          </div>
+          <h2 style={{ fontSize: '1.65rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', margin: '0 0 6px 0', letterSpacing: '-0.01em' }}>
+            Communications <span style={{ color: 'var(--primary-teal)' }}>&</span> Patient Alerts
+          </h2>
+          <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5, maxWidth: '640px' }}>
+            Compose and dispatch real-time notifications to all clinic patients or directly to an individual patient regarding visits and diagnostics.
+          </p>
+        </div>
+
+        <div 
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '8px 14px',
+            borderRadius: '9999px',
+            backgroundColor: 'var(--warm-cream)',
+            border: '1px solid var(--border-color)',
+            fontSize: '0.78rem',
+            fontWeight: '700',
+            color: 'var(--primary-teal)'
+          }}
+        >
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#16A34A', display: 'inline-block', boxShadow: '0 0 0 3px rgba(22, 163, 74, 0.2)' }} />
+          <span>Real-Time Patient Feed Active</span>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(0, 1fr)', gap: '28px', alignItems: 'start' }}>
