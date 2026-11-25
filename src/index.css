@@ -113,14 +113,16 @@ section[id] {
   scroll-margin-top: 88px;
 }
 
-/* Global Form Controls Fix (Never Black!) */
+/* Global Form Controls (Solid Black text when filled for maximum readability) */
 input, select, textarea {
   font-family: var(--font-body);
   background-color: #ffffff !important;
-  color: var(--text-main) !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   font-size: 0.95rem;
+  font-weight: 500;
   padding: 10px 14px;
   min-height: 44px;
   outline: none;
@@ -128,13 +130,32 @@ input, select, textarea {
 }
 
 input::placeholder, textarea::placeholder {
-  color: var(--text-muted) !important;
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
   opacity: 1;
+  font-weight: 400;
 }
 
 input:focus, select:focus, textarea:focus {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
   border-color: var(--primary-teal) !important;
   box-shadow: 0 0 0 3px var(--primary-teal-focus) !important;
+}
+
+/* Chrome / Safari / Edge Autofill Fix: Keep background white and text solid crisp black */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+  caret-color: #000000 !important;
+  font-weight: 500 !important;
 }
 
 select {
@@ -287,6 +308,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .input-with-icon select {
   width: 100%;
   padding-left: 40px !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 .input-icon {
   position: absolute;
