@@ -27,7 +27,8 @@ import {
   getDependents, 
   addDependent, 
   updateDependent, 
-  deleteDependent 
+  deleteDependent,
+  updatePatientProfileData
 } from '../../services/mockDataStore';
 import { clinic } from '../../config/clinic';
 import { Logo } from '../common/Logo';
@@ -184,13 +185,8 @@ export const PatientProfile = ({
       avatar
     };
 
-    // Update in localStorage
-    const patients = getPatients();
-    const idx = patients.findIndex(p => p.id === patient.id);
-    if (idx !== -1) {
-      patients[idx] = updated;
-      localStorage.setItem('aegis_patients', JSON.stringify(patients));
-    }
+    // Update and persist in central store and active session
+    updatePatientProfileData(patient.id, updated);
 
     if (onUpdateProfile) onUpdateProfile(updated);
     else if (onUpdatePatient) onUpdatePatient(updated);
@@ -217,6 +213,9 @@ export const PatientProfile = ({
       setPasswordError('New passwords do not match.');
       return;
     }
+
+    // Persist new password to central patient record
+    updatePatientProfileData(patient.id, { password: newPassword });
 
     setPasswordError('');
     setIsPasswordModalOpen(false);

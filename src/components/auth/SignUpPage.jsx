@@ -15,7 +15,7 @@ import {
 import { AuthLayout } from './AuthLayout';
 import { GoogleButton } from '../common/GoogleButton';
 import { Modal } from '../common/Modal';
-import { getPatients, saveSession } from '../../services/mockDataStore';
+import { getPatients, saveSession, saveNewPatient } from '../../services/mockDataStore';
 import { handleGoogleAuth } from '../../services/googleAuth';
 
 export const SignUpPage = ({
@@ -152,6 +152,7 @@ export const SignUpPage = ({
         name: name.trim(),
         phone: phone.trim(),
         email: email.trim(),
+        password: password, // Store password so patient can sign in with credentials
         gender: 'Not Specified',
         age: 30,
         bloodGroup: 'B+',
@@ -160,37 +161,9 @@ export const SignUpPage = ({
         vitals: null // Only recorded by attending doctors during in-person clinical exam
       };
 
-      patients.push(newPatient);
-      localStorage.setItem('jeevak_patients', JSON.stringify(patients));
+      // Permanently save to central store, initialize onboarding records & notifications, and activate session
+      const session = saveNewPatient(newPatient);
 
-      // Seed initial welcoming notifications for newly registered patient
-      const initialNotifs = [
-        {
-          id: `notif-setup-${newPatient.id}`,
-          category: 'Account Setup',
-          title: 'Complete Your Medical Profile',
-          description: 'Welcome to Jeevak Clinic! Please complete your medical history, blood group, emergency contact, and allergies to ensure faster in-clinic consultations.',
-          time: 'Just now',
-          unread: true,
-          actionTab: 'profile',
-          actionLabel: 'Complete Profile',
-          type: 'profile'
-        },
-        {
-          id: `notif-advisory-${newPatient.id}`,
-          category: 'Clinic Advisory',
-          title: 'Flu Vaccination & Health Packages',
-          description: 'Annual preventive health packages & seasonal flu shots are now available. Walk-ins welcomed before 12:00 PM at OPD Reception.',
-          time: 'Just now',
-          unread: false,
-          actionTab: null,
-          type: 'announcement'
-        }
-      ];
-      localStorage.setItem(`jeevak_notifications_${newPatient.id}`, JSON.stringify(initialNotifs));
-
-      const session = { role: 'patient', user: newPatient, patientId: newPatient.id };
-      saveSession(session);
       showToast(`Welcome to Jeevak Clinic, ${newPatient.name}!`, 'success');
       onLoginSuccess(session);
     }, 800);

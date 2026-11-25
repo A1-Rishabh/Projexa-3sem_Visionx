@@ -22,7 +22,8 @@ import {
   saveSession, 
   getLastRoleTab, 
   saveLastRoleTab,
-  findDoctorByEmailOrId
+  findDoctorByEmailOrId,
+  findPatientByIdentifier
 } from '../../services/mockDataStore';
 import { handleGoogleAuth } from '../../services/googleAuth';
 import { signInWithGoogle, isSupabaseConfigured } from '../../services/supabase';
@@ -105,29 +106,37 @@ export const LoginPage = ({
     setIsLoading(true);
 
     setTimeout(() => {
-      const patients = getPatients();
-      const patient = patients.find(
-        (p) =>
-          p.email.toLowerCase() === identifier.trim().toLowerCase() ||
-          p.phone.replace(/\D/g, '') === identifier.replace(/\D/g, '')
-      );
+      const patient = findPatientByIdentifier(identifier);
 
       setIsLoading(false);
 
       if (patient) {
+        // If password was stored for this account, verify it
+        if (patient.password && patient.password !== password) {
+          setErrors({ password: 'Incorrect account password. Please check and try again.' });
+          return;
+        }
+
         const session = { role: 'patient', user: patient, patientId: patient.id };
         saveSession(session);
         showToast(`Welcome back, ${patient.name}!`, 'success');
         onLoginSuccess(session);
       } else {
-        // Allow demonstration login for testing
-        const fallbackPatient = patients[0];
-        const session = { role: 'patient', user: fallbackPatient, patientId: fallbackPatient.id };
-        saveSession(session);
-        showToast(`Signed in as ${fallbackPatient.name} (Demo)`, 'success');
-        onLoginSuccess(session);
+        setErrors({
+          identifier: 'No registered patient account found with this email, mobile number, or Patient ID. Please check your details or create an account.'
+        });
       }
     }, 600);
+  };
+
+  // Instant demo patient login helper
+  const handleDemoPatientLogin = () => {
+    const patients = getPatients();
+    const demoPatient = patients[0];
+    const session = { role: 'patient', user: demoPatient, patientId: demoPatient.id };
+    saveSession(session);
+    showToast(`Signed in as ${demoPatient.name} (Demo)`, 'success');
+    onLoginSuccess(session);
   };
 
   // Doctor Login handler with email & credential verification
@@ -415,6 +424,25 @@ export const LoginPage = ({
               }}
             >
               Create patient account
+            </button>
+          </div>
+
+          {/* QUICK DEMO PATIENT ACCESS */}
+          <div style={{ textAlign: 'center', marginTop: '6px' }}>
+            <button
+              type="button"
+              onClick={handleDemoPatientLogin}
+              style={{
+                fontSize: '0.78rem',
+                color: 'var(--text-secondary)',
+                opacity: 0.8,
+                textDecoration: 'underline',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
+              Or test with Demo Patient (Rahul Sharma)
             </button>
           </div>
         </form>

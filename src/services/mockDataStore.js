@@ -3,7 +3,7 @@
 const STORE_VERSION = 'jeevak_data_v2003_fresh_zero_apt';
 const STORE_VERSION_KEY = 'jeevak_store_version';
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   DOCTORS: 'jeevak_doctors',
   PATIENTS: 'jeevak_patients',
   APPOINTMENTS: 'jeevak_appointments',
@@ -252,10 +252,25 @@ export const initializeStore = () => {
 
   const currentVersion = localStorage.getItem(STORE_VERSION_KEY);
   if (currentVersion !== STORE_VERSION) {
-    // Reset/migrate store to authentic Jeevak Clinic data
+    // Before migrating store, PRESERVE any user-created registered patient accounts!
+    let customPatients = [];
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.PATIENTS) || localStorage.getItem('aegis_patients');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          customPatients = parsed.filter(p => p && p.id && !INITIAL_PATIENTS.some(ip => ip.id === p.id));
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    const mergedPatients = [...INITIAL_PATIENTS, ...customPatients];
+
     localStorage.setItem(STORE_VERSION_KEY, STORE_VERSION);
     localStorage.setItem(STORAGE_KEYS.DOCTORS, JSON.stringify(INITIAL_DOCTORS));
-    localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(INITIAL_PATIENTS));
+    localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(mergedPatients));
     localStorage.setItem(STORAGE_KEYS.APPOINTMENTS, JSON.stringify(INITIAL_APPOINTMENTS));
     localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(INITIAL_MEDICAL_RECORDS));
     localStorage.setItem(STORAGE_KEYS.CLINIC_INFO, JSON.stringify(INITIAL_CLINIC_INFO));
@@ -330,23 +345,152 @@ export const findDoctorByEmailOrId = (identifier = '') => {
 export const getPatients = () => {
   initializeStore();
   const raw = localStorage.getItem(STORAGE_KEYS.PATIENTS);
-  if (!raw) return INITIAL_PATIENTS;
-  try {
-    const patients = JSON.parse(raw);
-    let changed = false;
-    patients.forEach(p => {
-      if (p.name && (p.name.includes('Dr.') || p.name.includes('Google User') || p.name === 'John Doe')) {
-        p.name = 'Rahul Sharma';
-        changed = true;
-      }
-    });
-    if (changed) {
-      localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+  let patients = INITIAL_PATIENTS;
+  if (raw) {
+    try {
+      patients = JSON.parse(raw);
+    } catch (e) {
+      patients = INITIAL_PATIENTS;
     }
-    return patients;
-  } catch (e) {
-    return INITIAL_PATIENTS;
   }
+
+  // Auto-import any accounts saved under legacy 'aegis_patients'
+  try {
+    const legacyRaw = localStorage.getItem('aegis_patients');
+    if (legacyRaw) {
+      const legacyPatients = JSON.parse(legacyRaw);
+      if (Array.isArray(legacyPatients)) {
+        let changed = false;
+        legacyPatients.forEach(lp => {
+          if (lp && lp.id && !patients.some(p => p.id === lp.id || (lp.email && p.email?.toLowerCase() === lp.email.toLowerCase()))) {
+            patients.push(lp);
+            changed = true;
+          }
+        });
+        if (changed) {
+          localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+        }
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  return patients;
+};
+
+// Normalize mobile digits for reliable login & lookup (last 10 digits)
+export const normalizePhoneDigits = (phone = '') => {
+  if (!phone) return '';
+  const digits = String(phone).replace(/\D/g, '');
+  return digits.length > 10 ? digits.slice(-10) : digits;
+};
+
+// Lookup patient by email, 10-digit mobile, or Patient ID (P-XXXX)
+export const findPatientByIdentifier = (identifier = '') => {
+  if (!identifier) return null;
+  const clean = identifier.trim().toLowerCase();
+  const cleanDigits = normalizePhoneDigits(identifier);
+  const patients = getPatients();
+
+  return patients.find(p => {
+    const idMatch = p.id && p.id.toLowerCase() === clean;
+    const emailMatch = p.email && p.email.toLowerCase() === clean;
+    const phoneMatch = cleanDigits && p.phone && normalizePhoneDigits(p.phone) === cleanDigits;
+    return idMatch || emailMatch || phoneMatch;
+  }) || null;
+};
+
+// Create and permanently persist newly registered patient
+export const saveNewPatient = (newPatient) => {
+  initializeStore();
+  const patients = getPatients();
+
+  // If patient already exists with same email or phone, update record
+  const cleanDigits = normalizePhoneDigits(newPatient.phone);
+  const existingIdx = patients.findIndex(
+    p => (newPatient.email && p.email?.toLowerCase() === newPatient.email.toLowerCase()) ||
+         (cleanDigits && p.phone && normalizePhoneDigits(p.phone) === cleanDigits)
+  );
+
+  let patientToSave = newPatient;
+  if (existingIdx !== -1) {
+    patients[existingIdx] = { ...patients[existingIdx], ...newPatient };
+    patientToSave = patients[existingIdx];
+  } else {
+    patients.push(newPatient);
+  }
+
+  localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+
+  // Initialize empty medical records entry
+  try {
+    const rawRecords = localStorage.getItem(STORAGE_KEYS.MEDICAL_RECORDS);
+    const records = rawRecords ? JSON.parse(rawRecords) : {};
+    if (!records[patientToSave.id]) {
+      records[patientToSave.id] = {
+        patientId: patientToSave.id,
+        lastViewedBy: null,
+        lastViewedTime: null,
+        notesPublic: 'New patient registered at Jeevak Clinic. Awaiting initial in-person OPD consultation.',
+        notesPrivate: 'Initial registration complete. Detailed clinical history to be documented during consultation.',
+        visitTimeline: [],
+        labReports: []
+      };
+      localStorage.setItem(STORAGE_KEYS.MEDICAL_RECORDS, JSON.stringify(records));
+    }
+  } catch {
+    // ignore
+  }
+
+  // Seed welcome notification
+  const initialNotifs = [
+    {
+      id: `notif-setup-${patientToSave.id}`,
+      category: 'Account Setup',
+      title: 'Complete Your Medical Profile',
+      description: 'Welcome to Jeevak Clinic! Please complete your medical history, blood group, emergency contact, and allergies to ensure faster in-clinic consultations.',
+      time: 'Just now',
+      unread: true,
+      actionTab: 'profile',
+      actionLabel: 'Complete Profile',
+      type: 'profile'
+    },
+    {
+      id: `notif-advisory-${patientToSave.id}`,
+      category: 'Clinic Advisory',
+      title: 'Flu Vaccination & Health Packages',
+      description: 'Annual preventive health packages & seasonal flu shots are now available. Walk-ins welcomed before 12:00 PM at OPD Reception.',
+      time: 'Just now',
+      unread: false,
+      actionTab: null,
+      type: 'announcement'
+    }
+  ];
+  localStorage.setItem(`jeevak_notifications_${patientToSave.id}`, JSON.stringify(initialNotifs));
+
+  // Save active session
+  const session = { role: 'patient', user: patientToSave, patientId: patientToSave.id };
+  saveSession(session);
+  return session;
+};
+
+// Update existing patient profile and keep session in sync
+export const updatePatientProfileData = (patientId, updatedData) => {
+  const patients = getPatients();
+  const idx = patients.findIndex(p => p.id === patientId);
+  if (idx !== -1) {
+    patients[idx] = { ...patients[idx], ...updatedData };
+    localStorage.setItem(STORAGE_KEYS.PATIENTS, JSON.stringify(patients));
+
+    // Keep active session in sync if this patient is currently logged in
+    const s = getSavedSession();
+    if (s && s.patientId === patientId) {
+      saveSession({ ...s, user: patients[idx] });
+    }
+    return patients[idx];
+  }
+  return null;
 };
 
 export const getAppointments = () => {
