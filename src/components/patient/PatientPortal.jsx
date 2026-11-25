@@ -37,6 +37,7 @@ import { PatientProfile } from './PatientProfile';
 import { CareTeamMessagingModal } from './CareTeamMessagingModal';
 
 export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref }) => {
+  const primaryPatientId = session?.user?.id || 'P-1001';
   const [currentPatient, setCurrentPatient] = useState(session?.user || {});
   const [activeTab, setActiveTab] = useState('home');
   const [profileSection, setProfileSection] = useState('details');
@@ -186,8 +187,6 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   };
 
   // Family & Dependents (User-managed, zero hardcoded presets)
-  const primaryPatientId = session?.user?.id || 'P-1001';
-  
   useEffect(() => {
     setDependents(getDependents(primaryPatientId));
   }, [primaryPatientId, activeTab]);
