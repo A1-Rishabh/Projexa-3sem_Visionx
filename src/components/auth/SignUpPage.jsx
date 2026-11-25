@@ -161,7 +161,33 @@ export const SignUpPage = ({
       };
 
       patients.push(newPatient);
-      localStorage.setItem('aegis_patients', JSON.stringify(patients));
+      localStorage.setItem('jeevak_patients', JSON.stringify(patients));
+
+      // Seed initial welcoming notifications for newly registered patient
+      const initialNotifs = [
+        {
+          id: `notif-setup-${newPatient.id}`,
+          category: 'Account Setup',
+          title: 'Complete Your Medical Profile',
+          description: 'Welcome to Jeevak Clinic! Please complete your medical history, blood group, emergency contact, and allergies to ensure faster in-clinic consultations.',
+          time: 'Just now',
+          unread: true,
+          actionTab: 'profile',
+          actionLabel: 'Complete Profile',
+          type: 'profile'
+        },
+        {
+          id: `notif-advisory-${newPatient.id}`,
+          category: 'Clinic Advisory',
+          title: 'Flu Vaccination & Health Packages',
+          description: 'Annual preventive health packages & seasonal flu shots are now available. Walk-ins welcomed before 12:00 PM at OPD Reception.',
+          time: 'Just now',
+          unread: false,
+          actionTab: null,
+          type: 'announcement'
+        }
+      ];
+      localStorage.setItem(`jeevak_notifications_${newPatient.id}`, JSON.stringify(initialNotifs));
 
       const session = { role: 'patient', user: newPatient, patientId: newPatient.id };
       saveSession(session);

@@ -74,11 +74,39 @@ const createGoogleSession = (isSignUp = false) => {
       vitals: null // Vitals must be recorded by clinical doctor during in-person OPD consultation
     };
     patients.push(googlePatient);
-    localStorage.setItem('aegis_patients', JSON.stringify(patients));
+    localStorage.setItem('jeevak_patients', JSON.stringify(patients));
+
+    // Seed profile completion notification if not present
+    if (!localStorage.getItem(`jeevak_notifications_${googlePatient.id}`)) {
+      const initialNotifs = [
+        {
+          id: `notif-setup-${googlePatient.id}`,
+          category: 'Account Setup',
+          title: 'Complete Your Medical Profile',
+          description: 'Welcome to Jeevak Clinic! Please complete your medical history, blood group, emergency contact, and allergies to ensure faster in-clinic consultations.',
+          time: 'Just now',
+          unread: true,
+          actionTab: 'profile',
+          actionLabel: 'Complete Profile',
+          type: 'profile'
+        },
+        {
+          id: `notif-advisory-${googlePatient.id}`,
+          category: 'Clinic Advisory',
+          title: 'Flu Vaccination & Health Packages',
+          description: 'Annual preventive health packages & seasonal flu shots are now available. Walk-ins welcomed before 12:00 PM at OPD Reception.',
+          time: 'Just now',
+          unread: false,
+          actionTab: null,
+          type: 'announcement'
+        }
+      ];
+      localStorage.setItem(`jeevak_notifications_${googlePatient.id}`, JSON.stringify(initialNotifs));
+    }
   } else if (googlePatient.name && (googlePatient.name.includes('Dr.') || googlePatient.name.includes('Google User') || googlePatient.name === 'John Doe')) {
     googlePatient.name = 'Rahul Sharma';
     googlePatient.emergencyContact = 'Priya Sharma (+91 98765 43210)';
-    localStorage.setItem('aegis_patients', JSON.stringify(patients));
+    localStorage.setItem('jeevak_patients', JSON.stringify(patients));
   }
 
   const session = {

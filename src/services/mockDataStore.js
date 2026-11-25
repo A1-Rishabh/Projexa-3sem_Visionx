@@ -1,6 +1,6 @@
 // Jeevak Clinic (जीवक क्लीनिक, Estd. 2003) Central Data Store & Persistence Service
 
-const STORE_VERSION = 'jeevak_data_v2003_mf';
+const STORE_VERSION = 'jeevak_data_v2003_fresh_zero_apt';
 const STORE_VERSION_KEY = 'jeevak_store_version';
 
 const STORAGE_KEYS = {
@@ -151,68 +151,8 @@ const INITIAL_PATIENTS = [
   }
 ];
 
-const INITIAL_APPOINTMENTS = [
-  {
-    id: 'APT-801',
-    doctorId: 'DOC-101',
-    doctorName: 'Dr. Shuchi Shivangi',
-    patientId: 'P-1001',
-    patientName: 'Rahul Sharma',
-    patientPhone: '+91 98765 12345',
-    date: getTodayStr(0),
-    time: '11:30 AM',
-    room: 'Suite 1 (Chamber 1)',
-    status: 'confirmed',
-    visitReason: 'General Health OPD Consultation',
-    notes: 'Routine health assessment and vitals review.',
-    checkedIn: false
-  },
-  {
-    id: 'APT-802',
-    doctorId: 'DOC-102',
-    doctorName: 'Dr. (Mrs.) Indu Kumari',
-    patientId: 'P-1002',
-    patientName: 'Ananya Iyer',
-    patientPhone: '+91 98765 23456',
-    date: getTodayStr(0),
-    time: '12:00 PM',
-    room: 'Suite 2 (Chamber 2)',
-    status: 'pending',
-    visitReason: 'Antenatal Consultation & Wellness Review',
-    notes: 'First trimester follow-up check.',
-    checkedIn: false
-  },
-  {
-    id: 'APT-803',
-    doctorId: 'DOC-103',
-    doctorName: 'Dr. Surendra Kumar',
-    patientId: 'P-1003',
-    patientName: 'Suresh Verma',
-    patientPhone: '+91 98765 34567',
-    date: getTodayStr(1),
-    time: '06:30 PM',
-    room: 'Suite 3 (Chamber 3)',
-    status: 'confirmed',
-    visitReason: 'Surgical OPD Evaluation',
-    notes: 'Abdominal pain evaluation.',
-    checkedIn: false
-  },
-  {
-    id: 'APT-799',
-    doctorId: 'DOC-101',
-    doctorName: 'Dr. Shuchi Shivangi',
-    patientId: 'P-1001',
-    patientName: 'Rahul Sharma',
-    patientPhone: '+91 98765 12345',
-    date: getTodayStr(-7),
-    time: '12:00 PM',
-    room: 'Suite 1 (Chamber 1)',
-    status: 'completed',
-    visitReason: 'Blood Pressure Screening',
-    notes: 'Prescribed lifestyle adjustments and follow-up.',
-    checkedIn: true
-  }
-];
+// Zero appointments by default for all accounts until booked
+const INITIAL_APPOINTMENTS = [];
 
 const INITIAL_MEDICAL_RECORDS = {
   'P-1001': {

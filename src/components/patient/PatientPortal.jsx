@@ -51,36 +51,25 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
   // Clinic Notifications state (persisted per patient in localStorage)
   const defaultNotifications = [
     {
-      id: 'notif-1',
+      id: `notif-setup-${primaryPatientId}`,
+      category: 'Account Setup',
+      title: 'Complete Your Medical Profile',
+      description: 'Welcome to Jeevak Clinic! Please complete your medical history, blood group, emergency contact, and allergies to ensure faster in-clinic consultations.',
+      time: 'Just now',
+      unread: true,
+      actionTab: 'profile',
+      actionLabel: 'Complete Profile',
+      type: 'profile'
+    },
+    {
+      id: 'notif-advisory',
       category: 'Clinic Advisory',
       title: 'Flu Vaccination & Health Packages',
       description: 'Annual preventive health packages & seasonal flu shots are now available. Walk-ins welcomed before 12:00 PM at OPD Reception.',
       time: 'Just now',
-      unread: true,
+      unread: false,
       actionTab: null,
       type: 'announcement'
-    },
-    {
-      id: 'notif-2',
-      category: 'Upcoming Visit',
-      title: 'OPD Consultation Tomorrow',
-      description: 'Confirmed visit with Dr. Shuchi Shivangi tomorrow at 11:30 AM (Suite 1). Please arrive 10 minutes prior.',
-      time: '2h ago',
-      unread: true,
-      actionTab: 'appointments',
-      actionLabel: 'View Details',
-      type: 'appointment'
-    },
-    {
-      id: 'notif-3',
-      category: 'Lab Diagnostics',
-      title: 'Diagnostic Report Uploaded',
-      description: 'Fasting Lipid Profile results have been verified by pathology and uploaded to your Electronic Health Records.',
-      time: '1d ago',
-      unread: false,
-      actionTab: 'records',
-      actionLabel: 'View Records',
-      type: 'records'
     }
   ];
 
@@ -581,8 +570,8 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                             width: '32px',
                             height: '32px',
                             borderRadius: '10px',
-                            backgroundColor: item.type === 'announcement' ? '#FFF7ED' : item.type === 'appointment' ? 'var(--mint)' : '#EFF6FF',
-                            color: item.type === 'announcement' ? '#EA580C' : item.type === 'appointment' ? 'var(--primary-teal)' : '#2563EB',
+                            backgroundColor: item.type === 'announcement' ? '#FFF7ED' : item.type === 'appointment' ? 'var(--mint)' : item.type === 'profile' ? '#FEF3C7' : '#EFF6FF',
+                            color: item.type === 'announcement' ? '#EA580C' : item.type === 'appointment' ? 'var(--primary-teal)' : item.type === 'profile' ? '#D97706' : '#2563EB',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -593,6 +582,7 @@ export const PatientPortal = ({ session, onLogout, showToast, initialBookingPref
                           {item.type === 'announcement' && <AlertCircle size={16} />}
                           {item.type === 'appointment' && <Calendar size={16} />}
                           {item.type === 'records' && <FileText size={16} />}
+                          {item.type === 'profile' && <User size={16} />}
                         </div>
 
                         {/* Content */}

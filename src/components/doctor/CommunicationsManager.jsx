@@ -164,11 +164,12 @@ export const CommunicationsManager = ({ doctor, showToast }) => {
       <div 
         style={{ 
           backgroundColor: '#ffffff',
-          borderRadius: '18px',
+          borderRadius: '16px',
           padding: '24px 28px',
           marginBottom: '28px',
-          border: '1px solid var(--border-color)',
-          boxShadow: 'var(--shadow-sm)',
+          border: '1px solid #E2E8F0',
+          borderLeft: '5px solid var(--primary-teal, #0F6B63)',
+          boxShadow: '0 8px 24px -4px rgba(15, 107, 99, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -177,14 +178,14 @@ export const CommunicationsManager = ({ doctor, showToast }) => {
         }}
       >
         <div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '9999px', backgroundColor: 'var(--mint)', color: 'var(--primary-teal)', fontSize: '0.72rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
-            <Megaphone size={12} color="var(--primary-teal)" />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '9999px', backgroundColor: 'rgba(15, 107, 99, 0.08)', color: 'var(--primary-teal, #0F6B63)', fontSize: '0.72rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+            <Megaphone size={12} color="var(--primary-teal, #0F6B63)" />
             <span>Staff Communications Hub</span>
           </div>
-          <h2 style={{ fontSize: '1.65rem', fontWeight: '800', color: 'var(--text-main)', fontFamily: 'Fraunces, serif', margin: '0 0 6px 0', letterSpacing: '-0.01em' }}>
-            Communications <span style={{ color: 'var(--primary-teal)' }}>&</span> Patient Alerts
+          <h2 style={{ fontSize: '1.65rem', fontWeight: '800', color: '#0F172A', fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", margin: '0 0 6px 0', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            Communications <span style={{ color: 'var(--primary-teal, #0F6B63)', fontWeight: '700' }}>&amp;</span> Patient Alerts
           </h2>
-          <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5, maxWidth: '640px' }}>
+          <p style={{ margin: 0, fontSize: '0.88rem', color: '#64748B', fontFamily: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", lineHeight: 1.55, maxWidth: '640px' }}>
             Compose and dispatch real-time notifications to all clinic patients or directly to an individual patient regarding visits and diagnostics.
           </p>
         </div>
@@ -194,16 +195,16 @@ export const CommunicationsManager = ({ doctor, showToast }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            padding: '8px 14px',
+            padding: '8px 16px',
             borderRadius: '9999px',
-            backgroundColor: 'var(--warm-cream)',
-            border: '1px solid var(--border-color)',
+            backgroundColor: '#F0FDF4',
+            border: '1px solid #BBF7D0',
             fontSize: '0.78rem',
             fontWeight: '700',
-            color: 'var(--primary-teal)'
+            color: '#15803D'
           }}
         >
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#16A34A', display: 'inline-block', boxShadow: '0 0 0 3px rgba(22, 163, 74, 0.2)' }} />
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#16A34A', display: 'inline-block', boxShadow: '0 0 0 3px rgba(22, 163, 74, 0.25)' }} />
           <span>Real-Time Patient Feed Active</span>
         </div>
       </div>
